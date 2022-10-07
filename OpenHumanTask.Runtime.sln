@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DE9C402B-E461-4C45-908D-6A374E998EBF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Domain", "src\core\OpenHumanTask.Runtime.Domain\OpenHumanTask.Runtime.Domain.csproj", "{EF8BBE8B-262D-4FC5-B734-0A6778F335AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Integration", "src\core\OpenHumanTask.Runtime.Integration\OpenHumanTask.Runtime.Integration.csproj", "{20D48BC9-65C7-47E4-8C06-32C0DEADAE07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Application", "src\core\OpenHumanTask.Runtime.Application\OpenHumanTask.Runtime.Application.csproj", "{0AC1A648-C30F-42F4-BEFE-E31D49896BE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{1377BD7E-FAD9-4D53-8550-CC7A830507DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apps", "apps", "{F4DC25A0-EB0A-4DFD-B3C4-F798409D5CB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Api", "src\apps\OpenHumanTask.Runtime.Api\OpenHumanTask.Runtime.Api.csproj", "{BFF74AF4-3666-4404-B3CD-835AB710EA3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Dashboard", "src\apps\OpenHumanTask.Runtime.Dashboard\OpenHumanTask.Runtime.Dashboard.csproj", "{8466A53F-B0CE-441E-9C84-B5842FEF164A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B9512F4-70C1-4BB5-B517-4C8A91DFF945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.UnitTests", "tests\OpenHumanTask.Runtime.UnitTests\OpenHumanTask.Runtime.UnitTests.csproj", "{AC831A5B-B0C1-4198-851C-6C91EDDA8604}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.IntegrationTests", "tests\OpenHumanTask.Runtime.IntegrationTests\OpenHumanTask.Runtime.IntegrationTests.csproj", "{A8DCD56F-CB02-4176-8983-223576744AF0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF8BBE8B-262D-4FC5-B734-0A6778F335AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF8BBE8B-262D-4FC5-B734-0A6778F335AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF8BBE8B-262D-4FC5-B734-0A6778F335AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF8BBE8B-262D-4FC5-B734-0A6778F335AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D48BC9-65C7-47E4-8C06-32C0DEADAE07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D48BC9-65C7-47E4-8C06-32C0DEADAE07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D48BC9-65C7-47E4-8C06-32C0DEADAE07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20D48BC9-65C7-47E4-8C06-32C0DEADAE07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC1A648-C30F-42F4-BEFE-E31D49896BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC1A648-C30F-42F4-BEFE-E31D49896BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC1A648-C30F-42F4-BEFE-E31D49896BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC1A648-C30F-42F4-BEFE-E31D49896BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFF74AF4-3666-4404-B3CD-835AB710EA3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFF74AF4-3666-4404-B3CD-835AB710EA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFF74AF4-3666-4404-B3CD-835AB710EA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFF74AF4-3666-4404-B3CD-835AB710EA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8466A53F-B0CE-441E-9C84-B5842FEF164A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8466A53F-B0CE-441E-9C84-B5842FEF164A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8466A53F-B0CE-441E-9C84-B5842FEF164A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8466A53F-B0CE-441E-9C84-B5842FEF164A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC831A5B-B0C1-4198-851C-6C91EDDA8604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC831A5B-B0C1-4198-851C-6C91EDDA8604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC831A5B-B0C1-4198-851C-6C91EDDA8604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC831A5B-B0C1-4198-851C-6C91EDDA8604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8DCD56F-CB02-4176-8983-223576744AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8DCD56F-CB02-4176-8983-223576744AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8DCD56F-CB02-4176-8983-223576744AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8DCD56F-CB02-4176-8983-223576744AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EF8BBE8B-262D-4FC5-B734-0A6778F335AF} = {1377BD7E-FAD9-4D53-8550-CC7A830507DE}
+		{20D48BC9-65C7-47E4-8C06-32C0DEADAE07} = {1377BD7E-FAD9-4D53-8550-CC7A830507DE}
+		{0AC1A648-C30F-42F4-BEFE-E31D49896BE2} = {1377BD7E-FAD9-4D53-8550-CC7A830507DE}
+		{1377BD7E-FAD9-4D53-8550-CC7A830507DE} = {DE9C402B-E461-4C45-908D-6A374E998EBF}
+		{F4DC25A0-EB0A-4DFD-B3C4-F798409D5CB0} = {DE9C402B-E461-4C45-908D-6A374E998EBF}
+		{BFF74AF4-3666-4404-B3CD-835AB710EA3A} = {F4DC25A0-EB0A-4DFD-B3C4-F798409D5CB0}
+		{8466A53F-B0CE-441E-9C84-B5842FEF164A} = {F4DC25A0-EB0A-4DFD-B3C4-F798409D5CB0}
+		{AC831A5B-B0C1-4198-851C-6C91EDDA8604} = {2B9512F4-70C1-4BB5-B517-4C8A91DFF945}
+		{A8DCD56F-CB02-4176-8983-223576744AF0} = {2B9512F4-70C1-4BB5-B517-4C8A91DFF945}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBB5C2EB-0935-4742-A54D-7D7E2F09A376}
+	EndGlobalSection
+EndGlobal

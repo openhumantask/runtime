@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<Version>0.1.0</Version>
+	<VersionSuffix>draft1</VersionSuffix>
+    <NeutralLanguage>en-US</NeutralLanguage>	  
+    <Authors>The Open Human Task Specification Authors</Authors>
+    <Copyright>Copyright © 2022 - Present The Open Human Task Specification Authors. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Include="Properties\.editorconfig" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\OpenHumanTask.Runtime.Domain\OpenHumanTask.Runtime.Domain.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Events\Domain\" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Neuroglia.Mapping" Version="2.0.3" />
+    <PackageReference Include="Neuroglia.Mediation" Version="2.0.3" />
+  </ItemGroup>
+
+</Project>
