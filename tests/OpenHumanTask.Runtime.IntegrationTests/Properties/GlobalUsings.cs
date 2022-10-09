@@ -12,7 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-global using Microsoft.Extensions.Logging;
+global using FluentAssertions;
+global using Neuroglia;
 global using Neuroglia.Data;
-global using Neuroglia.Mapping;
-global using Neuroglia.Mediation;
+global using OpenHumanTask.Runtime.Domain.Events.HumanTasks;
+global using OpenHumanTask.Runtime.Domain.Models;
+global using OpenHumanTask.Runtime.IntegrationTests.Data;
+global using OpenHumanTask.Sdk;
+global using OpenHumanTask.Sdk.Models;
+global using Xunit;

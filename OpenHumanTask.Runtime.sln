@@ -15,15 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{1377BD7E-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apps", "apps", "{F4DC25A0-EB0A-4DFD-B3C4-F798409D5CB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Api", "src\apps\OpenHumanTask.Runtime.Api\OpenHumanTask.Runtime.Api.csproj", "{BFF74AF4-3666-4404-B3CD-835AB710EA3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Api", "src\apps\OpenHumanTask.Runtime.Api\OpenHumanTask.Runtime.Api.csproj", "{BFF74AF4-3666-4404-B3CD-835AB710EA3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Dashboard", "src\apps\OpenHumanTask.Runtime.Dashboard\OpenHumanTask.Runtime.Dashboard.csproj", "{8466A53F-B0CE-441E-9C84-B5842FEF164A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Dashboard", "src\apps\OpenHumanTask.Runtime.Dashboard\OpenHumanTask.Runtime.Dashboard.csproj", "{8466A53F-B0CE-441E-9C84-B5842FEF164A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B9512F4-70C1-4BB5-B517-4C8A91DFF945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.UnitTests", "tests\OpenHumanTask.Runtime.UnitTests\OpenHumanTask.Runtime.UnitTests.csproj", "{AC831A5B-B0C1-4198-851C-6C91EDDA8604}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.UnitTests", "tests\OpenHumanTask.Runtime.UnitTests\OpenHumanTask.Runtime.UnitTests.csproj", "{AC831A5B-B0C1-4198-851C-6C91EDDA8604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.IntegrationTests", "tests\OpenHumanTask.Runtime.IntegrationTests\OpenHumanTask.Runtime.IntegrationTests.csproj", "{A8DCD56F-CB02-4176-8983-223576744AF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.IntegrationTests", "tests\OpenHumanTask.Runtime.IntegrationTests\OpenHumanTask.Runtime.IntegrationTests.csproj", "{A8DCD56F-CB02-4176-8983-223576744AF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Client", "OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj", "{45B17DBD-6F1F-466A-B2FD-014CBCDDFFAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{A8DCD56F-CB02-4176-8983-223576744AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8DCD56F-CB02-4176-8983-223576744AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8DCD56F-CB02-4176-8983-223576744AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45B17DBD-6F1F-466A-B2FD-014CBCDDFFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B17DBD-6F1F-466A-B2FD-014CBCDDFFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B17DBD-6F1F-466A-B2FD-014CBCDDFFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B17DBD-6F1F-466A-B2FD-014CBCDDFFAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{8466A53F-B0CE-441E-9C84-B5842FEF164A} = {F4DC25A0-EB0A-4DFD-B3C4-F798409D5CB0}
 		{AC831A5B-B0C1-4198-851C-6C91EDDA8604} = {2B9512F4-70C1-4BB5-B517-4C8A91DFF945}
 		{A8DCD56F-CB02-4176-8983-223576744AF0} = {2B9512F4-70C1-4BB5-B517-4C8A91DFF945}
+		{45B17DBD-6F1F-466A-B2FD-014CBCDDFFAC} = {1377BD7E-FAD9-4D53-8550-CC7A830507DE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBB5C2EB-0935-4742-A54D-7D7E2F09A376}

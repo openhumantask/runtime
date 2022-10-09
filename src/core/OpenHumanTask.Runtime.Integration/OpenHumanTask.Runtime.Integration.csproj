@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<Version>0.1.0</Version>
 	<VersionSuffix>draft1</VersionSuffix>
@@ -11,6 +10,10 @@
     <Authors>The Open Human Task Specification Authors</Authors>
     <Copyright>Copyright © 2022 - Present The Open Human Task Specification Authors. All rights reserved.</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\.editorconfig" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\..\assets\images\oht-logo.png">
@@ -24,14 +27,98 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Include="Properties\.editorconfig" />
+    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Commands\" />
-    <Folder Include="Events\" />
-    <Folder Include="Templates\" />
+    <None Update="Templates\commands.tst">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>commands.tt</DependentUpon>
+    </None>
+    <None Update="Templates\commands.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>commands.tst</LastGenOutput>
+    </None>
+    <None Update="Templates\events.tst">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>events.tt</DependentUpon>
+    </None>
+    <None Update="Templates\events.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>events.tst</LastGenOutput>
+    </None>
+    <None Update="Templates\models.tst">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>models.tt</DependentUpon>
+    </None>
+    <None Update="Templates\models.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>models.tst</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Commands\TaskDefinitions\Generated\CreateTaskDefinitionCommand.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\TaskDefinitions\CreateTaskDefinitionCommand.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\AttachmentAddedToHumanTaskIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\AttachmentAddedToHumanTaskDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\AttachmentRemovedFromHumanTaskIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\AttachmentRemovedFromHumanTaskDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\CommentAddedToHumanTaskIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\CommentAddedToHumanTaskDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\CommentRemovedFromHumanTaskIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\CommentRemovedFromHumanTaskDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskClaimedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskClaimedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskCommentUpdatedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskCommentUpdatedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskCreatedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskCreatedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskDelegatedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskDelegatedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskForwardedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskForwardedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskReleasedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskReleasedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskStatusChangedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskStatusChangedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\Attachment.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Attachment.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\Comment.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Comment.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\HumanTask.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTask.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\PeopleAssignments.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\PeopleAssignments.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\Subtask.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Subtask.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\UserReference.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\UserReference.cs</CustomToolNamespace>
+    </Compile>
   </ItemGroup>
 
 </Project>

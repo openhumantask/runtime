@@ -12,3 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+global using Neuroglia;
+global using Neuroglia.Data;
+global using OpenHumanTask.Runtime.Domain.Models;
+global using OpenHumanTask.Sdk;
+global using OpenHumanTask.Sdk.Models;
+global using System.Text.Json.Serialization;

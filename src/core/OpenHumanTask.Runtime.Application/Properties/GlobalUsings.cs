@@ -13,6 +13,8 @@
 // limitations under the License.
 
 global using Microsoft.Extensions.Logging;
+global using Neuroglia;
 global using Neuroglia.Data;
 global using Neuroglia.Mapping;
 global using Neuroglia.Mediation;
+global using OpenHumanTask.Sdk.Models;

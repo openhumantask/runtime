@@ -1,0 +1,27 @@
+﻿[
+  {
+    "outputFile": "wwwroot/lib/bootstrap/scss/bootstrap.css",
+    "inputFile": "wwwroot/lib/bootstrap/scss/bootstrap.scss",
+    "minify": { "enabled": true }
+  },
+  {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "wwwroot/css/app.scss",
+    "minify": { "enabled": true }
+  },
+  {
+    "outputFile": "Components/Shared/Layout/Footer.razor.css",
+    "inputFile": "Components/Shared/Layout/Footer.razor.scss",
+    "minify": { "enabled": true }
+  },
+  {
+    "outputFile": "Components/Shared/Layout/Layout.razor.css",
+    "inputFile": "Components/Shared/Layout/Layout.razor.scss",
+    "minify": { "enabled": true }
+  },
+  {
+    "outputFile": "Components/Shared/Layout/Header.razor.css",
+    "inputFile": "Components/Shared/Layout/Header.razor.scss",
+    "minify": { "enabled": true }
+  }
+]

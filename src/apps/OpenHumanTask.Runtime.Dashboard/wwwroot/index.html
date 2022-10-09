@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>OpenHumanTask.Runtime.Dashboard</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="lib/bootstrap/scss/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="OpenHumanTask.Runtime.Dashboard.styles.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
@@ -14,7 +14,8 @@
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
+
     <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">
@@ -22,6 +23,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>

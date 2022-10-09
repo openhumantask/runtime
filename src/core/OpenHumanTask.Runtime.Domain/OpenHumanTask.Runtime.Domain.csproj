@@ -20,4 +20,23 @@
    <ProjectReference Include="..\OpenHumanTask.Runtime.Integration\OpenHumanTask.Runtime.Integration.csproj" />
  </ItemGroup>
 
+ <ItemGroup>
+   <Folder Include="Events\HumanTaskDefinitions\" />
+ </ItemGroup>
+
+ <ItemGroup>
+   <Compile Update="Properties\DomainExceptionResources.Designer.cs">
+     <DesignTime>True</DesignTime>
+     <AutoGen>True</AutoGen>
+     <DependentUpon>DomainExceptionResources.resx</DependentUpon>
+   </Compile>
+ </ItemGroup>
+
+ <ItemGroup>
+   <EmbeddedResource Update="Properties\DomainExceptionResources.resx">
+     <Generator>ResXFileCodeGenerator</Generator>
+     <LastGenOutput>DomainExceptionResources.Designer.cs</LastGenOutput>
+   </EmbeddedResource>
+ </ItemGroup>
+
 </Project>

@@ -8,8 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="Components\Shared\Breadcrumb\Breadcrumb.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
+    <PackageReference Include="Neuroglia.Data.Flux.ReduxDevTools" Version="2.0.3" />
+    <PackageReference Include="OData.QueryBuilder" Version="2.9.6" />
+    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

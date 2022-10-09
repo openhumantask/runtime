@@ -15,10 +15,6 @@
   <ItemGroup>
     <None Remove="Properties\.editorconfig" />
   </ItemGroup>
-
-  <ItemGroup>
-    <EditorConfigFiles Include="Properties\.editorconfig" />
-  </ItemGroup>
 	
   <ItemGroup>
     <ProjectReference Include="..\OpenHumanTask.Runtime.Domain\OpenHumanTask.Runtime.Domain.csproj" />
