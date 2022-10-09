@@ -1,7 +1,4 @@
-﻿using Neuroglia;
-using OpenHumanTask.Runtime.Domain.Models;
-
-namespace OpenHumanTask.Runtime.IntegrationTests.Data
+﻿namespace OpenHumanTask.Runtime.IntegrationTests.Data
 {
     internal static class HumanTaskFactory
     {
@@ -11,6 +8,7 @@ namespace OpenHumanTask.Runtime.IntegrationTests.Data
             var definition = HumanTaskDefinitionFactory.Create();
             var key = "fake-key";
             var peopleAssignments = PeopleAssignmentsFactory.Create();
+            var priority = 1;
             var title = definition.Title?.ToDictionary<string>();
             var subject = definition.Subject?.ToDictionary<string>();
             var description = definition.Description?.ToDictionary<string>();
@@ -18,7 +16,7 @@ namespace OpenHumanTask.Runtime.IntegrationTests.Data
             var subtasks = new Subtask[] { new(HumanTaskDefinitionFactory.Create()) };
             var attachments = new Attachment[] { AttachmentFactory.Create() };
             var comments = new Comment[] { CommentFactory.Create() };
-            var task = new HumanTask(definition, key, peopleAssignments, title, subject, description, input, subtasks, attachments, comments);
+            var task = new HumanTask(definition, key, peopleAssignments, priority, title, subject, description, input, subtasks, attachments, comments);
             task.ClearPendingEvents();
             return task;
         }

@@ -120,6 +120,9 @@
   <data name="ownerless_human_task" xml:space="preserve">
     <value>The human task with id '{id}' is currently ownerless</value>
   </data>
+  <data name="unskipable_human_task" xml:space="preserve">
+    <value>The human task with id '{id}' cannot be skipped</value>
+  </data>
   <data name="user_not_in_role" xml:space="preserve">
     <value>The specified user '{username}' does not have any of the required role(s) '{roles}' to perform the operation '{operation}'</value>
   </data>

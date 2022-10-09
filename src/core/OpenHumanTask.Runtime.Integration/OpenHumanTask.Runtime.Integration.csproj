@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.2" />
+    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -80,11 +80,20 @@
     <Compile Update="Events\HumanTasks\Generated\CommentRemovedFromHumanTaskIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\CommentRemovedFromHumanTaskDomainEvent.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Events\HumanTasks\Generated\FaultRemovedFromHumanTaskIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\FaultRemovedFromHumanTaskDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskCancelledIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskCancelledDomainEvent.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Events\HumanTasks\Generated\HumanTaskClaimedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskClaimedDomainEvent.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Events\HumanTasks\Generated\HumanTaskCommentUpdatedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskCommentUpdatedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskCompletedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskCompletedDomainEvent.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Events\HumanTasks\Generated\HumanTaskCreatedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskCreatedDomainEvent.cs</CustomToolNamespace>
@@ -92,20 +101,47 @@
     <Compile Update="Events\HumanTasks\Generated\HumanTaskDelegatedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskDelegatedDomainEvent.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskDeletedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskDeletedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskFaultedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskFaultedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Events\HumanTasks\Generated\HumanTaskForwardedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskForwardedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskPriorityChangedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskPriorityChangedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskReassignedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskReassignedDomainEvent.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Events\HumanTasks\Generated\HumanTaskReleasedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskReleasedDomainEvent.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskResumedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskResumedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskSkippedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskSkippedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskStartedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskStartedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Events\HumanTasks\Generated\HumanTaskStatusChangedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskStatusChangedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTasks\Generated\HumanTaskSuspendedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskSuspendedDomainEvent.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Models\Generated\Attachment.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Attachment.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Models\Generated\Comment.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Comment.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\Fault.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Fault.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Models\Generated\HumanTask.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTask.cs</CustomToolNamespace>

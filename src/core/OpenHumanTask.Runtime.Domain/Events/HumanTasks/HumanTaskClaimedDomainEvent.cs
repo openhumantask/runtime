@@ -13,10 +13,7 @@ namespace OpenHumanTask.Runtime.Domain.Events.HumanTasks
         /// <summary>
         /// Initializes a new <see cref="HumanTaskClaimedDomainEvent"/>
         /// </summary>
-        protected HumanTaskClaimedDomainEvent()
-        {
-
-        }
+        protected HumanTaskClaimedDomainEvent() { }
 
         /// <summary>
         /// Initializes a new <see cref="HumanTaskClaimedDomainEvent"/>
@@ -35,6 +32,5 @@ namespace OpenHumanTask.Runtime.Domain.Events.HumanTasks
         public virtual UserReference User { get; protected set; } = null!;
 
     }
-    
 
 }

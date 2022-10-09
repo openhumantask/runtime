@@ -3,7 +3,7 @@
 namespace OpenHumanTask.Runtime.Domain.Events.HumanTasks
 {
     /// <summary>
-    /// Represents the <see cref="IDomainEvent"/> fired when a new <see cref="CommentId"/> has been removed from a <see cref="HumanTask"/>
+    /// Represents the <see cref="IDomainEvent"/> fired when a new <see cref="Comment"/> has been removed from a <see cref="HumanTask"/>
     /// </summary>
     [DataTransferObjectType(typeof(CommentRemovedFromHumanTaskIntegrationEvent))]
     public class CommentRemovedFromHumanTaskDomainEvent

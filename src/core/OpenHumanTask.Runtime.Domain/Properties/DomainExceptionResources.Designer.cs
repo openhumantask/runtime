@@ -70,6 +70,15 @@ namespace OpenHumanTask.Runtime.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The human task with id &apos;{id}&apos; cannot be skipped.
+        /// </summary>
+        internal static string unskipable_human_task {
+            get {
+                return ResourceManager.GetString("unskipable_human_task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified user &apos;{username}&apos; does not have any of the required role(s) &apos;{roles}&apos; to perform the operation &apos;{operation}&apos;.
         /// </summary>
         internal static string user_not_in_role {

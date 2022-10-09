@@ -62,6 +62,7 @@ namespace OpenHumanTask.Runtime.IntegrationTests.Data
                 .AddSubtask("fake-subtask-2", subtask =>
                     subtask.WithDefinition("fake-namespace.fake-other-task:1.5.1-unitTest"))
                 .AnnotateWith("fake-annotation-key", "fake-annotation-value")
+                .CanBeSkipped()
                 .Build();
             return definition;
         }

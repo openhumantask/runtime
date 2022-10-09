@@ -67,51 +67,65 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 		public virtual PeopleAssignments PeopleAssignments { get; set; }
 
 		/// <summary>
+		/// The HumanTask's priority
+		/// </summary>
+		[DataMember(Name = "priority", Order = 6)]
+		[Description("The HumanTask's priority")]
+		public virtual int Priority { get; set; }
+
+		/// <summary>
+		/// A boolean indicating whether or not the HumanTask can be skipped
+		/// </summary>
+		[DataMember(Name = "skipable", Order = 7)]
+		[Description("A boolean indicating whether or not the HumanTask can be skipped")]
+		public virtual bool Skipable { get; set; }
+
+		/// <summary>
 		/// A Dictionary that contains the HumanTask's localized title language/value pairs
 		/// </summary>
-		[DataMember(Name = "title", Order = 6)]
+		[DataMember(Name = "title", Order = 8)]
 		[Description("A Dictionary that contains the HumanTask's localized title language/value pairs")]
 		public virtual IDictionary<string, string> Title { get; set; }
 
 		/// <summary>
 		/// A Dictionary that contains the HumanTask's localized subject language/value pairs
 		/// </summary>
-		[DataMember(Name = "subject", Order = 7)]
+		[DataMember(Name = "subject", Order = 9)]
 		[Description("A Dictionary that contains the HumanTask's localized subject language/value pairs")]
 		public virtual IDictionary<string, string> Subject { get; set; }
 
 		/// <summary>
 		/// A Dictionary that contains the HumanTask's localized description language/value pairs
 		/// </summary>
-		[DataMember(Name = "description", Order = 8)]
+		[DataMember(Name = "description", Order = 10)]
 		[Description("A Dictionary that contains the HumanTask's localized description language/value pairs")]
 		public virtual IDictionary<string, string> Description { get; set; }
 
 		/// <summary>
 		/// The HumanTask's input
 		/// </summary>
-		[DataMember(Name = "input", Order = 9)]
+		[DataMember(Name = "input", Order = 11)]
 		[Description("The HumanTask's input")]
 		public virtual object Input { get; set; }
 
 		/// <summary>
 		/// An IEnumerable containing the HumanTask's Subtasks
 		/// </summary>
-		[DataMember(Name = "subtasks", Order = 10)]
+		[DataMember(Name = "subtasks", Order = 12)]
 		[Description("An IEnumerable containing the HumanTask's Subtasks")]
 		public virtual IEnumerable<Subtask> Subtasks { get; set; }
 
 		/// <summary>
 		/// An IEnumerable containing the HumanTask's Attachments
 		/// </summary>
-		[DataMember(Name = "attachments", Order = 11)]
+		[DataMember(Name = "attachments", Order = 13)]
 		[Description("An IEnumerable containing the HumanTask's Attachments")]
 		public virtual IEnumerable<Attachment> Attachments { get; set; }
 
 		/// <summary>
 		/// An IEnumerable containing the HumanTask's Comments
 		/// </summary>
-		[DataMember(Name = "comments", Order = 12)]
+		[DataMember(Name = "comments", Order = 14)]
 		[Description("An IEnumerable containing the HumanTask's Comments")]
 		public virtual IEnumerable<Comment> Comments { get; set; }
 

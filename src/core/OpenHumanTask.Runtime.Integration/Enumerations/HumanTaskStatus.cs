@@ -43,15 +43,30 @@ namespace OpenHumanTask.Runtime
         [EnumMember(Value = "inProgress")]
         InProgress,
         /// <summary>
-        /// Indicates that the task has been completed
+        /// Indicates that the task is in progress
         /// </summary>
-        [EnumMember(Value = "completed")]
-        Completed,
+        [EnumMember(Value = "suspended")]
+        Suspended,
         /// <summary>
         /// Indicates that the task has been skipped
         /// </summary>
         [EnumMember(Value = "obsolete")]
-        Obsolete
+        Obsolete,
+        /// <summary>
+        /// Indicates that the task has been cancelled
+        /// </summary>
+        [EnumMember(Value = "cancelled")]
+        Cancelled,
+        /// <summary>
+        /// Indicates that the task has faulted
+        /// </summary>
+        [EnumMember(Value = "faulted")]
+        Faulted,
+        /// <summary>
+        /// Indicates that the task has been completed
+        /// </summary>
+        [EnumMember(Value = "completed")]
+        Completed
     }
 
 }

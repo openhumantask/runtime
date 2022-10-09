@@ -61,39 +61,60 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		public virtual PeopleAssignments PeopleAssignments { get; set; }
 
 		/// <summary>
+		/// The HumanTask's priority
+		/// </summary>
+		[DataMember(Name = "priority", Order = 5)]
+		[Description("The HumanTask's priority")]
+		public virtual int Priority { get; set; }
+
+		/// <summary>
+		/// A boolean indicating whether or not the HumanTask can be skipped
+		/// </summary>
+		[DataMember(Name = "skipable", Order = 6)]
+		[Description("A boolean indicating whether or not the HumanTask can be skipped")]
+		public virtual bool Skipable { get; set; }
+
+		/// <summary>
 		/// The HumanTask's input
 		/// </summary>
-		[DataMember(Name = "input", Order = 5)]
+		[DataMember(Name = "input", Order = 7)]
 		[Description("The HumanTask's input")]
 		public virtual object Input { get; set; }
 
 		/// <summary>
 		/// The HumanTask's output
 		/// </summary>
-		[DataMember(Name = "output", Order = 6)]
+		[DataMember(Name = "output", Order = 8)]
 		[Description("The HumanTask's output")]
 		public virtual object Output { get; set; }
 
 		/// <summary>
-		/// An IReadOnlyCollection containing the HumanTask's Subtasks
+		/// The HumanTask's outcome
 		/// </summary>
-		[DataMember(Name = "subtasks", Order = 7)]
-		[Description("An IReadOnlyCollection containing the HumanTask's Subtasks")]
-		public virtual IReadOnlyCollection<Subtask> Subtasks { get; set; }
+		[DataMember(Name = "outcome", Order = 9)]
+		[Description("The HumanTask's outcome")]
+		public virtual object Outcome { get; set; }
 
 		/// <summary>
-		/// An IReadOnlyCollection containing the HumanTask's Attachments
+		/// The name of the completion behavior that allowed the HumanTask's completion, if any
 		/// </summary>
-		[DataMember(Name = "attachments", Order = 8)]
-		[Description("An IReadOnlyCollection containing the HumanTask's Attachments")]
-		public virtual IReadOnlyCollection<Attachment> Attachments { get; set; }
+		[DataMember(Name = "completionBehaviorName", Order = 10)]
+		[Description("The name of the completion behavior that allowed the HumanTask's completion, if any")]
+		public virtual string CompletionBehaviorName { get; set; }
 
 		/// <summary>
-		/// An IReadOnlyCollection containing the HumanTask's Comments
+		/// The date and time at which the HumanTask has started
 		/// </summary>
-		[DataMember(Name = "comments", Order = 9)]
-		[Description("An IReadOnlyCollection containing the HumanTask's Comments")]
-		public virtual IReadOnlyCollection<Comment> Comments { get; set; }
+		[DataMember(Name = "startedAt", Order = 11)]
+		[Description("The date and time at which the HumanTask has started")]
+		public virtual DateTimeOffset? StartedAt { get; set; }
+
+		/// <summary>
+		/// The date and time at which the HumanTask has been completed
+		/// </summary>
+		[DataMember(Name = "completedAt", Order = 12)]
+		[Description("The date and time at which the HumanTask has been completed")]
+		public virtual DateTimeOffset? CompletedAt { get; set; }
 
     }
 

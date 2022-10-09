@@ -46,6 +46,17 @@ namespace OpenHumanTask.Runtime.Domain
         }
 
         /// <summary>
+        /// Creates a new <see cref="DomainException"/> thrown when trying to skip an unskipable <see cref="HumanTask"/>
+        /// </summary>
+        /// <param name="task">The ownerless <see cref="HumanTask"/></param>
+        /// <returns>A new <see cref="DomainException"/></returns>
+        public static DomainException UnskipableHumanTask(HumanTask task)
+        {
+            if (task == null) throw new ArgumentNullException(nameof(task));
+            return new DomainException(Neuroglia.StringExtensions.Format(DomainExceptionResources.unskipable_human_task, task.Id));
+        }
+
+        /// <summary>
         /// Creates a new <see cref="DomainException"/> thrown when trying to perform an owner operation on an ownerless <see cref="HumanTask"/>
         /// </summary>
         /// <param name="task">The ownerless <see cref="HumanTask"/></param>

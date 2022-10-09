@@ -24,10 +24,10 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 {
 
 	/// <summary>
-	/// Represents the IDomainEvent fired when a new Comment has been removed from a HumanTask
+	/// Represents the IDomainEvent fired when a HumanTask has been deleted
 	/// </summary>
 	[DataContract]
-	public partial class CommentRemovedFromHumanTaskIntegrationEvent
+	public partial class HumanTaskDeletedIntegrationEvent
 		: IntegrationEvent
 	{
 
@@ -46,18 +46,11 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 		public virtual DateTime CreatedAt { get; set; }
 
 		/// <summary>
-		/// The user that has removed the Comment
+		/// The user that has deleted the HumanTask
 		/// </summary>
 		[DataMember(Name = "user", Order = 3)]
-		[Description("The user that has removed the Comment")]
+		[Description("The user that has deleted the HumanTask")]
 		public virtual UserReference User { get; set; }
-
-		/// <summary>
-		/// The id of the removed Comment
-		/// </summary>
-		[DataMember(Name = "commentId", Order = 4)]
-		[Description("The id of the removed Comment")]
-		public virtual string CommentId { get; set; }
 
     }
 

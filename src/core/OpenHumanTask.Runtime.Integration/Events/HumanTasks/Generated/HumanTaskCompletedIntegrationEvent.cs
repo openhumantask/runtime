@@ -24,10 +24,10 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 {
 
 	/// <summary>
-	/// Represents the IDomainEvent fired when a new Comment has been removed from a HumanTask
+	/// Represents the IDomainEvent fired when a HumanTask has been completed
 	/// </summary>
 	[DataContract]
-	public partial class CommentRemovedFromHumanTaskIntegrationEvent
+	public partial class HumanTaskCompletedIntegrationEvent
 		: IntegrationEvent
 	{
 
@@ -46,18 +46,32 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 		public virtual DateTime CreatedAt { get; set; }
 
 		/// <summary>
-		/// The user that has removed the Comment
+		/// The user that has completed the HumanTask
 		/// </summary>
 		[DataMember(Name = "user", Order = 3)]
-		[Description("The user that has removed the Comment")]
+		[Description("The user that has completed the HumanTask")]
 		public virtual UserReference User { get; set; }
 
 		/// <summary>
-		/// The id of the removed Comment
+		/// The HumanTask's outcome
 		/// </summary>
-		[DataMember(Name = "commentId", Order = 4)]
-		[Description("The id of the removed Comment")]
-		public virtual string CommentId { get; set; }
+		[DataMember(Name = "outcome", Order = 4)]
+		[Description("The HumanTask's outcome")]
+		public virtual object Outcome { get; set; }
+
+		/// <summary>
+		/// The HumanTask's output
+		/// </summary>
+		[DataMember(Name = "output", Order = 5)]
+		[Description("The HumanTask's output")]
+		public virtual object Output { get; set; }
+
+		/// <summary>
+		/// The name of the HumanTask's matching completion behavior
+		/// </summary>
+		[DataMember(Name = "completionBehaviorName", Order = 6)]
+		[Description("The name of the HumanTask's matching completion behavior")]
+		public virtual string CompletionBehaviorName { get; set; }
 
     }
 
