@@ -85,10 +85,12 @@ ${
         var typeName = type.OriginalName switch
         {
             "Object" or "Object?" or "object" or "object?" => "object?",
-            "ExpandoObject" or "ExpandoObject?" => "IDictionary<string, object>?",
+            "ExpandoObject" or "ExpandoObject?" => "Dictionary<string, object>?",
+            "IDictionary" or "IDictionary" or "IReadOnlyDictionary" or "IReadOnlyDictionary?" => "Dictionary",
+            "ICollection" or "ICollection?" or "IReadOnlyCollection" or "IReadOnlyCollection?" or "IEnumerable" or "IEnumerable?" or "IList" or "IList?" or "IReadOnlyList" or "IReadOnlyList?" => "List",
             _ => type.OriginalName
         };
-        if(type.IsPrimitive && type.OriginalName != "string?")
+        if(type.IsPrimitive && type.OriginalName != "string?" && !type.TypeArguments.Any())
             return typeName;
         if(typeName.EndsWith("?"))
             typeName = typeName.Substring(0, typeName.Length - 1);
@@ -204,7 +206,7 @@ ${
     {
         StringBuilder output = new StringBuilder();
         var order = 1;
-        foreach(Property property in c.Properties.Where(p => !p.Attributes.Any(a => a.Name == "JsonIgnore") && !p.Attributes.Any(a => a.Name == "ProjectNever") || p.Attributes.Any(a => a.Name == "Map")))
+        foreach(Property property in c.Properties.Where(p => !p.Attributes.Any(a => a.Name == "ProjectNever") || p.Attributes.Any(a => a.Name == "Map")))
         {
             output.AppendLine();
             if(property.DocComment != null)

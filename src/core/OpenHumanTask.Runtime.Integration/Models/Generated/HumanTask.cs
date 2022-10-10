@@ -1,4 +1,17 @@
-﻿
+﻿// Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License")
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 /*
  * Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
  * <p>
@@ -33,10 +46,10 @@ namespace OpenHumanTask.Runtime.Integration.Models
 	{
 
 		/// <summary>
-		/// The id of the HumanTask's HumanTaskDefinition
+		/// The id of the HumanTask's HumanTaskTemplate
 		/// </summary>
 		[DataMember(Name = "definitionId", Order = 1)]
-		[Description("The id of the HumanTask's HumanTaskDefinition")]
+		[Description("The id of the HumanTask's HumanTaskTemplate")]
 		public virtual string DefinitionId { get; set; }
 
 		/// <summary>
@@ -75,46 +88,95 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		public virtual bool Skipable { get; set; }
 
 		/// <summary>
+		/// An IReadOnlyDictionary that contains the HumanTask's localized title language/value pairs
+		/// </summary>
+		[DataMember(Name = "title", Order = 7)]
+		[Description("An IReadOnlyDictionary that contains the HumanTask's localized title language/value pairs")]
+		public virtual Dictionary<string, string> Title { get; set; }
+
+		/// <summary>
+		/// An IReadOnlyDictionary that contains the HumanTask's localized subject language/value pairs
+		/// </summary>
+		[DataMember(Name = "subject", Order = 8)]
+		[Description("An IReadOnlyDictionary that contains the HumanTask's localized subject language/value pairs")]
+		public virtual Dictionary<string, string> Subject { get; set; }
+
+		/// <summary>
+		/// An IReadOnlyDictionary that contains the HumanTask's localized description language/value pairs
+		/// </summary>
+		[DataMember(Name = "description", Order = 9)]
+		[Description("An IReadOnlyDictionary that contains the HumanTask's localized description language/value pairs")]
+		public virtual Dictionary<string, string> Description { get; set; }
+
+		/// <summary>
 		/// The HumanTask's input
 		/// </summary>
-		[DataMember(Name = "input", Order = 7)]
+		[DataMember(Name = "input", Order = 10)]
 		[Description("The HumanTask's input")]
 		public virtual object Input { get; set; }
 
 		/// <summary>
 		/// The HumanTask's output
 		/// </summary>
-		[DataMember(Name = "output", Order = 8)]
+		[DataMember(Name = "output", Order = 11)]
 		[Description("The HumanTask's output")]
 		public virtual object Output { get; set; }
 
 		/// <summary>
 		/// The HumanTask's outcome
 		/// </summary>
-		[DataMember(Name = "outcome", Order = 9)]
+		[DataMember(Name = "outcome", Order = 12)]
 		[Description("The HumanTask's outcome")]
 		public virtual object Outcome { get; set; }
 
 		/// <summary>
 		/// The name of the completion behavior that allowed the HumanTask's completion, if any
 		/// </summary>
-		[DataMember(Name = "completionBehaviorName", Order = 10)]
+		[DataMember(Name = "completionBehaviorName", Order = 13)]
 		[Description("The name of the completion behavior that allowed the HumanTask's completion, if any")]
 		public virtual string CompletionBehaviorName { get; set; }
 
 		/// <summary>
 		/// The date and time at which the HumanTask has started
 		/// </summary>
-		[DataMember(Name = "startedAt", Order = 11)]
+		[DataMember(Name = "startedAt", Order = 14)]
 		[Description("The date and time at which the HumanTask has started")]
 		public virtual DateTimeOffset? StartedAt { get; set; }
 
 		/// <summary>
 		/// The date and time at which the HumanTask has been completed
 		/// </summary>
-		[DataMember(Name = "completedAt", Order = 12)]
+		[DataMember(Name = "completedAt", Order = 15)]
 		[Description("The date and time at which the HumanTask has been completed")]
 		public virtual DateTimeOffset? CompletedAt { get; set; }
+
+		/// <summary>
+		/// An IReadOnlyCollection containing the HumanTask's Subtasks
+		/// </summary>
+		[DataMember(Name = "subtasks", Order = 16)]
+		[Description("An IReadOnlyCollection containing the HumanTask's Subtasks")]
+		public virtual List<Subtask> Subtasks { get; set; }
+
+		/// <summary>
+		/// An IReadOnlyCollection containing the HumanTask's Attachments
+		/// </summary>
+		[DataMember(Name = "attachments", Order = 17)]
+		[Description("An IReadOnlyCollection containing the HumanTask's Attachments")]
+		public virtual List<Attachment> Attachments { get; set; }
+
+		/// <summary>
+		/// An IReadOnlyCollection containing the HumanTask's Comments
+		/// </summary>
+		[DataMember(Name = "comments", Order = 18)]
+		[Description("An IReadOnlyCollection containing the HumanTask's Comments")]
+		public virtual List<Comment> Comments { get; set; }
+
+		/// <summary>
+		/// An IReadOnlyCollection containing the HumanTask's Faults
+		/// </summary>
+		[DataMember(Name = "faults", Order = 19)]
+		[Description("An IReadOnlyCollection containing the HumanTask's Faults")]
+		public virtual List<Fault> Faults { get; set; }
 
     }
 

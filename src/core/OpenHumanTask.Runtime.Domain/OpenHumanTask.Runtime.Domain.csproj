@@ -13,15 +13,12 @@
   </PropertyGroup>
 
  <ItemGroup>
+   <PackageReference Include="IdentityModel" Version="6.0.0" />
    <PackageReference Include="Neuroglia.Data" Version="2.0.3" />
  </ItemGroup>
 
  <ItemGroup>
    <ProjectReference Include="..\OpenHumanTask.Runtime.Integration\OpenHumanTask.Runtime.Integration.csproj" />
- </ItemGroup>
-
- <ItemGroup>
-   <Folder Include="Events\HumanTaskDefinitions\" />
  </ItemGroup>
 
  <ItemGroup>

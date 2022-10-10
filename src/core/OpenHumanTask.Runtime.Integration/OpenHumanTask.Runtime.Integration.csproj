@@ -65,6 +65,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Commands\Generic\Generated\DeleteCommand.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\Generic\DeleteCommand.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Commands\HumanTasks\Generated\CreateHumanTaskCommand.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\HumanTasks\CreateHumanTaskCommand.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Commands\HumanTaskTemplates\Generated\CreateHumanTaskTemplateCommand.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\HumanTaskTemplates\CreateHumanTaskTemplateCommand.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Commands\PeopleAssignments\Generated\ResolvePeopleAssignmentsCommand.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\PeopleAssignments\ResolvePeopleAssignmentsCommand.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Commands\TaskDefinitions\Generated\CreateTaskDefinitionCommand.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\TaskDefinitions\CreateTaskDefinitionCommand.cs</CustomToolNamespace>
     </Compile>
@@ -134,6 +146,12 @@
     <Compile Update="Events\HumanTasks\Generated\HumanTaskSuspendedIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\HumanTaskSuspendedDomainEvent.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Events\HumanTaskTemplates\Generated\HumanTaskTemplateCreatedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTaskTemplates\HumanTaskTemplateCreatedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Events\HumanTaskTemplates\Generated\HumanTaskTemplateDeletedIntegrationEvent.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTaskTemplates\HumanTaskTemplateDeletedDomainEvent.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Models\Generated\Attachment.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\Attachment.cs</CustomToolNamespace>
     </Compile>
@@ -145,6 +163,9 @@
     </Compile>
     <Compile Update="Models\Generated\HumanTask.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTask.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\HumanTaskTemplate.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTaskTemplate.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Models\Generated\PeopleAssignments.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\PeopleAssignments.cs</CustomToolNamespace>

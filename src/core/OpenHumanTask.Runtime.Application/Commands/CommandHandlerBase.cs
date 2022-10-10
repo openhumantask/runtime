@@ -12,26 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using OpenHumanTask.Runtime.Application.Services;
+
 namespace OpenHumanTask.Runtime.Application.Commands
 {
 
     /// <summary>
     /// Represents the base class for all services used to handle <see cref="ICommand"/>s
     /// </summary>
-    public abstract class CommandHandlerHandlerBase
+    public abstract class CommandHandlerBase
     {
 
         /// <summary>
-        /// Initializes a new <see cref="DomainEventHandlerBase"/>
+        /// Initializes a new <see cref="CommandHandlerBase"/>
         /// </summary>
         /// <param name="loggerFactory">The service used to create <see cref="ILogger"/>s.</param>
         /// <param name="mediator">The service used to mediate calls.</param>
         /// <param name="mapper">The service used to map objects.</param>
-        protected CommandHandlerHandlerBase(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper)
+        /// <param name="userAccessor">The service used to access the current user</param>
+        protected CommandHandlerBase(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IUserAccessor userAccessor)
         {
             this.Logger = loggerFactory.CreateLogger(this.GetType());
             this.Mediator = mediator;
             this.Mapper = mapper;
+            this.UserAccessor = userAccessor;
         }
 
         /// <summary>
@@ -48,6 +52,11 @@ namespace OpenHumanTask.Runtime.Application.Commands
         /// Gets the service used to map objects.
         /// </summary>
         protected IMapper Mapper { get; }
+
+        /// <summary>
+        /// Gets the service used to access the current user
+        /// </summary>
+        protected IUserAccessor UserAccessor { get; }
 
     }
 

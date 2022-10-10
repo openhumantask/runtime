@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+global using CloudNative.CloudEvents;
 global using Microsoft.Extensions.Logging;
 global using Neuroglia;
 global using Neuroglia.Data;
+global using Neuroglia.Eventing;
 global using Neuroglia.Mapping;
 global using Neuroglia.Mediation;
+global using OpenHumanTask.Runtime.Domain.Models;
 global using OpenHumanTask.Sdk.Models;
+global using System.Net.Mime;

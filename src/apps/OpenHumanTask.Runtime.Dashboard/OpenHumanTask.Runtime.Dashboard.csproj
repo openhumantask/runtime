@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj" />
+    <ProjectReference Include="..\..\core\OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

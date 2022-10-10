@@ -1,4 +1,17 @@
-﻿
+﻿// Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License")
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 /*
  * Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
  * <p>
@@ -46,10 +59,10 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 		public virtual DateTime CreatedAt { get; set; }
 
 		/// <summary>
-		/// The id of the HumanTask's HumanTaskDefinition
+		/// The id of the HumanTask's HumanTaskTemplate
 		/// </summary>
 		[DataMember(Name = "definitionId", Order = 3)]
-		[Description("The id of the HumanTask's HumanTaskDefinition")]
+		[Description("The id of the HumanTask's HumanTaskTemplate")]
 		public virtual string DefinitionId { get; set; }
 
 		/// <summary>
@@ -85,21 +98,21 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 		/// </summary>
 		[DataMember(Name = "title", Order = 8)]
 		[Description("A Dictionary that contains the HumanTask's localized title language/value pairs")]
-		public virtual IDictionary<string, string> Title { get; set; }
+		public virtual Dictionary<string, string> Title { get; set; }
 
 		/// <summary>
 		/// A Dictionary that contains the HumanTask's localized subject language/value pairs
 		/// </summary>
 		[DataMember(Name = "subject", Order = 9)]
 		[Description("A Dictionary that contains the HumanTask's localized subject language/value pairs")]
-		public virtual IDictionary<string, string> Subject { get; set; }
+		public virtual Dictionary<string, string> Subject { get; set; }
 
 		/// <summary>
 		/// A Dictionary that contains the HumanTask's localized description language/value pairs
 		/// </summary>
 		[DataMember(Name = "description", Order = 10)]
 		[Description("A Dictionary that contains the HumanTask's localized description language/value pairs")]
-		public virtual IDictionary<string, string> Description { get; set; }
+		public virtual Dictionary<string, string> Description { get; set; }
 
 		/// <summary>
 		/// The HumanTask's input
@@ -113,21 +126,21 @@ namespace OpenHumanTask.Runtime.Integration.Events.HumanTasks
 		/// </summary>
 		[DataMember(Name = "subtasks", Order = 12)]
 		[Description("An IEnumerable containing the HumanTask's Subtasks")]
-		public virtual IEnumerable<Subtask> Subtasks { get; set; }
+		public virtual List<Subtask> Subtasks { get; set; }
 
 		/// <summary>
 		/// An IEnumerable containing the HumanTask's Attachments
 		/// </summary>
 		[DataMember(Name = "attachments", Order = 13)]
 		[Description("An IEnumerable containing the HumanTask's Attachments")]
-		public virtual IEnumerable<Attachment> Attachments { get; set; }
+		public virtual List<Attachment> Attachments { get; set; }
 
 		/// <summary>
 		/// An IEnumerable containing the HumanTask's Comments
 		/// </summary>
 		[DataMember(Name = "comments", Order = 14)]
 		[Description("An IEnumerable containing the HumanTask's Comments")]
-		public virtual IEnumerable<Comment> Comments { get; set; }
+		public virtual List<Comment> Comments { get; set; }
 
     }
 

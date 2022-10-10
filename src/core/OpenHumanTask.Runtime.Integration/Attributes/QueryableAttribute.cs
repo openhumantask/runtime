@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OpenHumanTask.Runtime.Integration
+namespace OpenHumanTask.Runtime
 {
 
     /// <summary>
-    /// Represents the <see cref="Attribute"/> used to mark an entity as queryable
+    /// Represents an <see cref="Attribute"/> used to mark an entity as queryable
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class QueryableAttribute

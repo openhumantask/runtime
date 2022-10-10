@@ -64,9 +64,20 @@ namespace OpenHumanTask.Runtime.Domain
         public static DomainException OwnerlessHumanTask(HumanTask task)
         {
             if (task == null) throw new ArgumentNullException(nameof(task));
-            return new DomainException(Neuroglia.StringExtensions.Format(DomainExceptionResources.ownerless_human_task, task.Id));
+            return new(Neuroglia.StringExtensions.Format(DomainExceptionResources.ownerless_human_task, task.Id));
         }
 
+        /// <summary>
+        /// Creates a new <see cref="DomainException"/> thrown when trying to use a runtime expression language that is not supported
+        /// </summary>
+        /// <param name="language">The runtime expression language that is not supported</param>
+        /// <returns>A new <see cref="DomainException"/></returns>
+        public static DomainException RuntimeExpressionLanguageNotSupported(string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) throw new ArgumentNullException(nameof(language));
+            return new(Neuroglia.StringExtensions.Format(DomainExceptionResources.runtime_expression_language_not_supported, language));
+        }
+    
     }
 
 }

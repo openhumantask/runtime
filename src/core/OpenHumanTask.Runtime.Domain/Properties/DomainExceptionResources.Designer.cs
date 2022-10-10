@@ -70,6 +70,15 @@ namespace OpenHumanTask.Runtime.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The specified runtime expression language &apos;{language}&apos; is not supported.
+        /// </summary>
+        internal static string runtime_expression_language_not_supported {
+            get {
+                return ResourceManager.GetString("runtime_expression_language_not_supported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The human task with id &apos;{id}&apos; cannot be skipped.
         /// </summary>
         internal static string unskipable_human_task {

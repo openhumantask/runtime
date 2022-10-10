@@ -1,7 +1,18 @@
-﻿using OpenHumanTask.Runtime.Domain.Events.HumanTasks;
-using OpenHumanTask.Runtime.Integration.Models;
-using OpenHumanTask.Sdk;
-using System.Data;
+﻿// Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License")
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using OpenHumanTask.Runtime.Domain.Events.HumanTasks;
 
 namespace OpenHumanTask.Runtime.Domain.Models
 {
@@ -22,7 +33,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
         /// <summary>
         /// Initializes a new <see cref="HumanTask"/>
         /// </summary>
-        /// <param name="definition">The <see cref="HumanTask"/>'s <see cref="HumanTaskDefinition"/></param>
+        /// <param name="definition">The <see cref="HumanTask"/>'s <see cref="HumanTaskTemplate"/></param>
         /// <param name="key">The <see cref="HumanTask"/>'s key</param>
         /// <param name="peopleAssignments">The people assigned to the <see cref="HumanTask"/></param>
         /// <param name="priority">The <see cref="HumanTask"/>'s priority</param>
@@ -33,7 +44,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
         /// <param name="subtasks">An <see cref="IEnumerable{T}"/> containing the <see cref="HumanTask"/>'s <see cref="Subtask"/>s</param>
         /// <param name="attachments">An <see cref="IEnumerable{T}"/> containg the <see cref="HumanTask"/>'s <see cref="Attachment"/>s</param>
         /// <param name="comments">An <see cref="IEnumerable{T}"/> containg the <see cref="HumanTask"/>'s <see cref="Comment"/>s</param>
-        public HumanTask(HumanTaskDefinition definition, string key, PeopleAssignments peopleAssignments, int priority, IDictionary<string, string>? title = null, IDictionary<string, string>? subject = null, 
+        public HumanTask(HumanTaskTemplate definition, string key, PeopleAssignments peopleAssignments, int priority, IDictionary<string, string>? title = null, IDictionary<string, string>? subject = null, 
             IDictionary<string, string>? description = null, object? input = null, IEnumerable<Subtask>? subtasks = null, IEnumerable<Attachment>? attachments = null, IEnumerable<Comment>? comments = null)
             : base(BuildId(definition?.Id!, key))
         {
@@ -44,7 +55,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
         }
 
         /// <summary>
-        /// Gets the id of the <see cref="HumanTask"/>'s <see cref="HumanTaskDefinition"/>
+        /// Gets the id of the <see cref="HumanTask"/>'s <see cref="HumanTaskTemplate"/>
         /// </summary>
         public virtual string DefinitionId { get; protected set; } = null!;
 
@@ -854,7 +865,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
         /// <summary>
         /// Builds a new unique identifier for the specified <see cref="HumanTask"/>
         /// </summary>
-        /// <param name="definitionId">The id of the <see cref="HumanTaskDefinition"/> of the <see cref="HumanTask"/> to build a new id for</param>
+        /// <param name="definitionId">The id of the <see cref="HumanTaskTemplate"/> of the <see cref="HumanTask"/> to build a new id for</param>
         /// <param name="key">The key of the <see cref="HumanTask"/> to build a new id for</param>
         /// <returns>A new <see cref="HumanTask"/> unique identifier</returns>
         public static string BuildId(string definitionId, string key)

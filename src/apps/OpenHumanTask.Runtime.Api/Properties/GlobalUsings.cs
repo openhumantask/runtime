@@ -12,3 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+global using Microsoft.AspNetCore.Mvc;
+global using Neuroglia.Mapping;
+global using Neuroglia.Mediation;

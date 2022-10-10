@@ -1,4 +1,22 @@
-﻿namespace OpenHumanTask.Runtime.Domain.Models
+﻿// Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License")
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using IdentityModel;
+using System.Security;
+using System.Security.Claims;
+
+namespace OpenHumanTask.Runtime.Domain.Models
 {
 
     /// <summary>
@@ -76,6 +94,36 @@
 
         /// <inheritdoc/>
         public static implicit operator UserReference?(string? reference) => string.IsNullOrWhiteSpace(reference) ? null : new(reference);
+
+        /// <summary>
+        /// Creates a new <see cref="UserReference"/> based on the specified <see cref="ClaimsPrincipal"/>
+        /// </summary>
+        /// <param name="user">The <see cref="ClaimsPrincipal"/> to create a new <see cref="UserReference"/> for</param>
+        public static implicit operator UserReference(ClaimsPrincipal user)
+        {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            if(user.Identity == null || !user.Identity.IsAuthenticated || user.HasClaim(c => c.Type.Equals(JwtClaimTypes.Subject, StringComparison.InvariantCultureIgnoreCase))) 
+                throw new ArgumentException(nameof(user), new SecurityException($"The specified user is not authenticated or does not defined the required claim '{JwtClaimTypes.Subject}"));
+            var id = user.FindFirst(JwtClaimTypes.Subject)?.Value;
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException(nameof(user), new SecurityException($"The specified user does not defined the required claim '{JwtClaimTypes.Subject}"));
+            var name = user.Identity.Name;
+            return new(id, name);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="UserReference"/> based on the specified <see cref="ClaimsIdentity"/>
+        /// </summary>
+        /// <param name="user">The <see cref="ClaimsIdentity"/> to create a new <see cref="UserReference"/> for</param>
+        public static implicit operator UserReference(ClaimsIdentity user)
+        {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (!user.IsAuthenticated || user.HasClaim(c => c.Type.Equals(JwtClaimTypes.Subject, StringComparison.InvariantCultureIgnoreCase)))
+                throw new ArgumentException(nameof(user), new SecurityException($"The specified user is not authenticated or does not defined the required claim '{JwtClaimTypes.Subject}"));
+            var id = user.FindFirst(JwtClaimTypes.Subject)?.Value;
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException(nameof(user), new SecurityException($"The specified user does not defined the required claim '{JwtClaimTypes.Subject}"));
+            var name = user.Name;
+            return new(id, name);
+        }
 
     }
 

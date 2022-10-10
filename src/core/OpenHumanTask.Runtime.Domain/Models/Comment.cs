@@ -1,4 +1,18 @@
-﻿namespace OpenHumanTask.Runtime.Domain.Models
+﻿// Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License")
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+namespace OpenHumanTask.Runtime.Domain.Models
 {
     /// <summary>
     /// Represents a comment
@@ -31,9 +45,9 @@
         public virtual UserReference AuthorId { get; protected set; } = null!;
 
         /// <summary>
-        /// Gets the user that has last updated the <see cref="Comment"/>'s content
+        /// Gets the user that has last modified the <see cref="Comment"/>
         /// </summary>
-        public virtual UserReference? LastUpdatedBy { get; protected set; } = null!;
+        public virtual UserReference? LastModifiedBy { get; protected set; } = null!;
 
         /// <summary>
         /// Gets the <see cref="Comment"/>'s Markdown (MD) content
@@ -52,7 +66,7 @@
             if (string.IsNullOrWhiteSpace(content)) throw DomainException.ArgumentNullOrWhitespace(nameof(content));
             if (this.Content.Equals(content, StringComparison.InvariantCultureIgnoreCase)) return false;
             this.Content = content;
-            this.LastUpdatedBy = user;
+            this.LastModifiedBy = user;
             this.LastModified = dateTime;
             return true;
         }
