@@ -38,8 +38,9 @@ namespace OpenHumanTask.Runtime.Domain.Models
         /// <param name="stakeholders">An <see cref="IEnumerable{T}"/> containing the <see cref="HumanTask"/>'s stakeholders</param>
         /// <param name="businessAdministrators">An <see cref="IEnumerable{T}"/> containing the <see cref="HumanTask"/>'s business administrators</param>
         /// <param name="notificationRecipients">An <see cref="IEnumerable{T}"/> containing the <see cref="HumanTask"/>'s notification recipients</param>
+        /// <param name="logicalGroups">An <see cref="IDictionary{TKey, TValue}"/> containing the name/users pairs of the <see cref="HumanTask"/>'s logical people groups</param>
         public PeopleAssignments(UserReference actualInitiator, IEnumerable<UserReference>? potentialInitiators = null, IEnumerable<UserReference>? potentialOwners = null, UserReference? actualOwner = null, IEnumerable<UserReference>? excludedOwners = null,
-            IEnumerable<UserReference>? stakeholders = null, IEnumerable<UserReference>? businessAdministrators = null, IEnumerable<UserReference>? notificationRecipients = null)
+            IEnumerable<UserReference>? stakeholders = null, IEnumerable<UserReference>? businessAdministrators = null, IEnumerable<UserReference>? notificationRecipients = null, IDictionary<string, List<UserReference>>? logicalGroups = null)
         {
             if(actualInitiator == null) throw DomainException.ArgumentNull(nameof(actualInitiator));
             this._potentialInitiators = potentialInitiators?.ToList();
@@ -50,6 +51,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
             this._stakeholders = stakeholders?.ToList();
             this._businessAdministrators = businessAdministrators?.ToList();
             this._notificationRecipients = notificationRecipients?.ToList();
+            this._logicalGroups = logicalGroups?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         [Newtonsoft.Json.JsonProperty(nameof(PotentialInitiators))]
@@ -121,6 +123,12 @@ namespace OpenHumanTask.Runtime.Domain.Models
         [Newtonsoft.Json.JsonIgnore]
         [JsonIgnore]
         public virtual IReadOnlyCollection<UserReference>? NotificationRecipients => this._notificationRecipients?.AsReadOnly();
+
+        private Dictionary<string, List<UserReference>>? _logicalGroups;
+        /// <summary>
+        /// Gets an <see cref="IReadOnlyDictionary{TKey, TValue}"/> containing the name/users pairs of the <see cref="HumanTask"/>'s logical people groups
+        /// </summary>
+        public virtual IReadOnlyDictionary<string, List<UserReference>>? LogicalGroups => this._logicalGroups?.AsReadOnly();
 
         /// <summary>
         /// Sets the <see cref="HumanTask"/>'s actual owner 

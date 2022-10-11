@@ -27,10 +27,10 @@ namespace OpenHumanTask.Runtime.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public virtual async Task<IActionResult> Create([FromBody] Integration.Commands.HumanTaskTemplates.CreateHumanTaskCommand command, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Create([FromBody] Integration.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand command, CancellationToken cancellationToken)
         {
             if (!this.ModelState.IsValid) return this.BadRequest(this.ModelState);
-            return this.Process(await this.Mediator.ExecuteAsync(this.Mapper.Map<Application.Commands.HumanTaskTemplates.CreateHumanTaskCommand>(command), cancellationToken));
+            return this.Process(await this.Mediator.ExecuteAsync(this.Mapper.Map<Application.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand>(command), cancellationToken));
         }
 
         /// <summary>

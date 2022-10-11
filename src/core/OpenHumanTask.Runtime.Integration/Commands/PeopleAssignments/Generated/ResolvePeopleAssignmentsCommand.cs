@@ -38,6 +38,13 @@ namespace OpenHumanTask.Runtime.Integration.Commands.PeopleAssignments
 		[Description("The PeopleAssignmentsDefinition to resolve")]
 		public virtual PeopleAssignmentsDefinition PeopleAssignments { get; set; }
 
+		/// <summary>
+		/// The HumanTaskRuntimeContext for which to resolve the specified PeopleAssignmentsDefinition
+		/// </summary>
+		[DataMember(Name = "context", Order = 2)]
+		[Description("The HumanTaskRuntimeContext for which to resolve the specified PeopleAssignmentsDefinition")]
+		public virtual HumanTaskRuntimeContext Context { get; set; }
+
     }
 
 }

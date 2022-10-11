@@ -51,7 +51,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
             if (definition == null) throw DomainException.ArgumentNull(nameof(definition));
             if(peopleAssignments == null) throw DomainException.ArgumentNull(nameof(peopleAssignments));
             if (string.IsNullOrWhiteSpace(key)) throw DomainException.ArgumentNullOrWhitespace(nameof(key));
-            this.On(this.RegisterEvent(new HumanTaskCreatedDomainEvent(this.Id, definition.Id, key, peopleAssignments, priority, definition.Skipable, title, subject, description, input, subtasks, attachments, comments)));
+            this.On(this.RegisterEvent(new HumanTaskCreatedDomainEvent(this.Id, definition.Id, key, peopleAssignments, priority, definition.Definition.Skipable, title, subject, description, input, subtasks, attachments, comments)));
         }
 
         /// <summary>

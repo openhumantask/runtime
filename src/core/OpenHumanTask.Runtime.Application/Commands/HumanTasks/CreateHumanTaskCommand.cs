@@ -14,6 +14,7 @@
 
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using OpenHumanTask.Runtime.Application.Commands.PeopleAssignments;
 using OpenHumanTask.Runtime.Application.Queries.HumanTaskTemplates;
 using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Runtime.Domain;
@@ -107,7 +108,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         }
 
         /// <summary>
-        /// Gets the service used to provide <see cref="IExpressionEvaluator"/>s
+        /// Gets the service used to provide <see cref="Neuroglia.Data.Expressions.IExpressionEvaluator"/>s
         /// </summary>
         protected Neuroglia.Data.Expressions.IExpressionEvaluatorProvider ExpressionEvaluatorProvider { get; }
 
@@ -124,32 +125,54 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         /// <inheritdoc/>
         public virtual async Task<IOperationResult<Integration.Models.HumanTask>> HandleAsync(CreateHumanTaskCommand command, CancellationToken cancellationToken = default)
         {
+            if (this.UserAccessor.User == null || !this.UserAccessor.User.Identity?.IsAuthenticated == true) return this.Forbid();
             var templateId = (await this.Mediator.ExecuteAndUnwrapAsync(new GetHumanTaskTemplateByIdQuery(command.DefinitionReference), cancellationToken)).Id;
             var template = await this.HumanTaskTemplates.FindAsync(templateId, cancellationToken);
             if (template == null) throw DomainException.NullReference(typeof(HumanTaskTemplate), templateId);
-            var input = command.Input;
-            if (input == null) input = template.Definition.InputData?.State;
-            if (input == null) input = new();
-            if(template.Definition.InputData?.Schema != null)
+            var expressionEvaluator = this.ExpressionEvaluatorProvider.GetEvaluator(template.Definition.ExpressionLanguage);
+            if (expressionEvaluator == null) throw HumanTaskDomainExceptions.RuntimeExpressionLanguageNotSupported(template.Definition.ExpressionLanguage);
+            var context = new HumanTaskRuntimeContext()
             {
-                var inputToken = JObject.FromObject(input);
+                ExpressionLanguage = template.Definition.ExpressionLanguage,
+                DefinitionId = template.Definition.Id,
+                PeopleAssignments = new(this.UserAccessor.User)
+            };
+            var inputData = command.Input;
+            if (inputData != null && template.Definition.InputData?.State != null)
+                inputData = expressionEvaluator.Evaluate(template.Definition.InputData.State, inputData, context);
+            if(inputData != null && template.Definition.InputData?.Schema != null)
+            {
+                var inputToken = JObject.FromObject(inputData);
                 if (!inputToken.IsValid(template.Definition.InputData.Schema, out IList<string> errors))
                     return this.Invalid(nameof(command.Input), string.Join('\n', errors));
             }
-            var expressionEvaluator = this.ExpressionEvaluatorProvider.GetEvaluator(template.Definition.ExpressionLanguage);
-            if (expressionEvaluator == null) throw HumanTaskDomainExceptions.RuntimeExpressionLanguageNotSupported(template.Definition.ExpressionLanguage);
+            context.InputData = inputData;
             var key = command.Key;
-            if(string.IsNullOrWhiteSpace(key))
-            {
-                if (string.IsNullOrWhiteSpace(template.Definition.Key))
-                    key = Guid.NewGuid().ToShortString();
-                else if (template.Definition.Key.IsRuntimeExpression())
-                    key = expressionEvaluator.Evaluate<string>(template.Definition.Key, input);
-            }
-            var task = await this.HumanTasks.AddAsync(new(template, key, peopleAssignments, priority, title, subject, description, input), cancellationToken);
+            if (string.IsNullOrWhiteSpace(key)
+                && !string.IsNullOrWhiteSpace(template.Definition.Key) 
+                && template.Definition.Key.IsRuntimeExpression())
+                    key = expressionEvaluator.Evaluate<string>(template.Definition.Key, new { }, context);
+            if (string.IsNullOrWhiteSpace(key))
+                key = Guid.NewGuid().ToShortString();
+            context.Key = key;
+            context.Id = HumanTask.BuildId(template.Id, key);
+            int priority = 0;
+            if (command.Priority.HasValue) priority = command.Priority.Value;
+            else if (template.Definition.Priority is int intBasedPriority) priority = intBasedPriority;
+            else if(template.Definition.Priority is string expressionBasedPriority && !string.IsNullOrWhiteSpace(expressionBasedPriority))
+                priority = expressionEvaluator.Evaluate<int>(expressionBasedPriority, new { }, context);
+            context.Priority = priority;
+            var peopleAssignments = await this.Mediator.ExecuteAndUnwrapAsync(new ResolvePeopleAssignmentsCommand(command.PeopleAssignments == null ? template.Definition.PeopleAssignments : command.PeopleAssignments, context), cancellationToken);
+            context.PeopleAssignments = peopleAssignments;
+            var title = template.Definition.Title == null ? null : expressionEvaluator.EvaluateLocalizedStrings(template.Definition.Title, new { }, context);
+            context.Title = title ?? new();
+            var subject = template.Definition.Subject == null ? null : expressionEvaluator.EvaluateLocalizedStrings(template.Definition.Subject, new { }, context);
+            context.Subject = subject ?? new();
+            var description = template.Definition.Description == null ? null : expressionEvaluator.EvaluateLocalizedStrings(template.Definition.Description, new { }, context);
+            context.Description = description ?? new();
+            var task = await this.HumanTasks.AddAsync(new(template, key, peopleAssignments, priority, title, subject, description, inputData), cancellationToken);
             await this.HumanTasks.SaveChangesAsync(cancellationToken);
             return this.Ok(this.Mapper.Map<Integration.Models.HumanTask>(task));
-
         }
 
     }

@@ -16,7 +16,6 @@ global using FluentAssertions;
 global using Neuroglia;
 global using Neuroglia.Data;
 global using OpenHumanTask.Runtime.Domain.Models;
-global using OpenHumanTask.Runtime.IntegrationTests.Data;
 global using OpenHumanTask.Sdk;
 global using OpenHumanTask.Sdk.Models;
 global using Xunit;

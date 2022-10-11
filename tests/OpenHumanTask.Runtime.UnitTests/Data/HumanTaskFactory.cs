@@ -5,18 +5,18 @@
 
         internal static HumanTask Create()
         {
-            var definition = HumanTaskDefinitionFactory.Create();
+            var template = HumanTaskTemplateFactory.Create();
             var key = "fake-key";
             var peopleAssignments = PeopleAssignmentsFactory.Create();
             var priority = 1;
-            var title = definition.Title?.ToDictionary<string>();
-            var subject = definition.Subject?.ToDictionary<string>();
-            var description = definition.Description?.ToDictionary<string>();
+            var title = template.Definition.Title?.ToDictionary<string>();
+            var subject = template.Definition.Subject?.ToDictionary<string>();
+            var description = template.Definition.Description?.ToDictionary<string>();
             var input = new { foo = "bar", baz = new { bar = "foo" } };
-            var subtasks = new Subtask[] { new(HumanTaskDefinitionFactory.Create()) };
+            var subtasks = new Subtask[] { new(HumanTaskTemplateFactory.Create()) };
             var attachments = new Attachment[] { AttachmentFactory.Create() };
             var comments = new Comment[] { CommentFactory.Create() };
-            var task = new HumanTask(definition, key, peopleAssignments, priority, title, subject, description, input, subtasks, attachments, comments);
+            var task = new HumanTask(template, key, peopleAssignments, priority, title, subject, description, input, subtasks, attachments, comments);
             task.ClearPendingEvents();
             return task;
         }

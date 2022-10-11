@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.3" />
+    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -163,6 +163,9 @@
     </Compile>
     <Compile Update="Models\Generated\HumanTask.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTask.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Models\Generated\HumanTaskRuntimeContext.cs">
+      <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTaskRuntimeContext.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Models\Generated\HumanTaskTemplate.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Models\HumanTaskTemplate.cs</CustomToolNamespace>

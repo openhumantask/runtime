@@ -12,28 +12,28 @@ namespace OpenHumanTask.Runtime.UnitTests.Cases.Domain.Aggregates
         public void Create_Should_Work()
         {
             //arrange
-            var definition = HumanTaskDefinitionFactory.Create();
+            var template = HumanTaskTemplateFactory.Create();
             var key = "fake-key";
             var peopleAssignments = PeopleAssignmentsFactory.Create();
             var priority = 10;
-            var title = definition.Title?.ToDictionary<string>();
-            var subject = definition.Subject?.ToDictionary<string>();
-            var description = definition.Description?.ToDictionary<string>();
+            var title = template.Definition.Title?.ToDictionary<string>();
+            var subject = template.Definition.Subject?.ToDictionary<string>();
+            var description = template.Definition.Description?.ToDictionary<string>();
             var input = new { foo = "bar", baz = new { bar = "foo" } };
-            var subtasks = new Subtask[] { new(HumanTaskDefinitionFactory.Create()) };
+            var subtasks = new Subtask[] { new(HumanTaskTemplateFactory.Create()) };
             var attachments = new Attachment[] { AttachmentFactory.Create() };
             var comments = new Comment[] { CommentFactory.Create() };
            
             //act
-            var task = new HumanTask(definition, key, peopleAssignments, priority, title, subject, description, input, subtasks, attachments, comments);
+            var task = new HumanTask(template, key, peopleAssignments, priority, title, subject, description, input, subtasks, attachments, comments);
 
             //assert
             task.PendingEvents.Should().NotBeNullOrEmpty();
             task.PendingEvents.Should().HaveCount(2);
             task.PendingEvents.OfType<HumanTaskCreatedDomainEvent>().SingleOrDefault().Should().NotBeNull();
             task.PendingEvents.OfType<HumanTaskStatusChangedDomainEvent>().SingleOrDefault().Should().NotBeNull();
-            task.Id.Should().Be(HumanTask.BuildId(definition.Id, key));
-            task.DefinitionId.Should().Be(definition.Id);
+            task.Id.Should().Be(HumanTask.BuildId(template.Id, key));
+            task.DefinitionId.Should().Be(template.Id);
             task.Key.Should().Be(key);
             task.PeopleAssignments.Should().BeEquivalentTo(peopleAssignments);
             task.Priority.Should().Be(priority);
@@ -63,12 +63,12 @@ namespace OpenHumanTask.Runtime.UnitTests.Cases.Domain.Aggregates
         public void Create_With_NullOrWhiteSpace_Key_Should_Throw()
         {
             //arrange
-            var definition = HumanTaskDefinitionFactory.Create();
+            var template = HumanTaskTemplateFactory.Create();
             var peopleAssignments = PeopleAssignmentsFactory.Create();
             var priority = 10;
-            var nullKeyAction = () => new HumanTask(definition, null!, peopleAssignments, priority);
-            var emptyKeyAction = () => new HumanTask(definition, string.Empty, peopleAssignments, priority);
-            var whitespaceKeyAction = () => new HumanTask(definition, " ", peopleAssignments, priority);
+            var nullKeyAction = () => new HumanTask(template, null!, peopleAssignments, priority);
+            var emptyKeyAction = () => new HumanTask(template, string.Empty, peopleAssignments, priority);
+            var whitespaceKeyAction = () => new HumanTask(template, " ", peopleAssignments, priority);
 
             //assert
             nullKeyAction.Should().Throw<DomainArgumentException>();

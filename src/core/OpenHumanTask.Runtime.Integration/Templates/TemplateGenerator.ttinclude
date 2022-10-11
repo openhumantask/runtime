@@ -157,6 +157,7 @@ ${
             "ICollection" or "ICollection?" or "IReadOnlyCollection" or "IReadOnlyCollection?" or "IEnumerable" or "IEnumerable?" or "IList" or "IList?" or "IReadOnlyList" or "IReadOnlyList?" => "List",
             _ => type.OriginalName
         };
+        if(typeName == "TKey") return "object";
         if(type.IsPrimitive && type.OriginalName != "string?" && !type.TypeArguments.Any())
             return typeName;
         if(typeName.EndsWith("?"))

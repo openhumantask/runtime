@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using IdentityModel;
+using Neuroglia.Data.Expressions;
 using OpenHumanTask.Runtime.Application.Services;
+using OpenHumanTask.Runtime.Domain;
 using OpenHumanTask.Sdk;
 using System.Security.Claims;
 
@@ -37,15 +38,22 @@ namespace OpenHumanTask.Runtime.Application.Commands.PeopleAssignments
         /// Initializes a new <see cref="ResolvePeopleAssignmentsCommand"/>
         /// </summary>
         /// <param name="peopleAssignments">The <see cref="PeopleAssignmentsDefinition"/> to resolve</param>
-        public ResolvePeopleAssignmentsCommand(PeopleAssignmentsDefinition peopleAssignments)
+        /// <param name="context">The <see cref="HumanTaskRuntimeContext"/> for which to resolve the specified <see cref="PeopleAssignmentsDefinition"/></param>
+        public ResolvePeopleAssignmentsCommand(PeopleAssignmentsDefinition? peopleAssignments, HumanTaskRuntimeContext context)
         {
             this.PeopleAssignments = peopleAssignments;
+            this.Context = context;
         }
 
         /// <summary>
         /// Gets the <see cref="PeopleAssignmentsDefinition"/> to resolve
         /// </summary>
-        public virtual PeopleAssignmentsDefinition PeopleAssignments { get; protected set; } = null!;
+        public virtual PeopleAssignmentsDefinition? PeopleAssignments { get; protected set; } = null!;
+
+        /// <summary>
+        /// Gets the <see cref="HumanTaskRuntimeContext"/> for which to resolve the specified <see cref="PeopleAssignmentsDefinition"/>
+        /// </summary>
+        public virtual HumanTaskRuntimeContext Context { get; protected set; } = null!;
 
     }
 
@@ -65,16 +73,24 @@ namespace OpenHumanTask.Runtime.Application.Commands.PeopleAssignments
         /// <param name="mapper">The service used to map objects.</param>
         /// <param name="userAccessor">The service used to access the current user</param>
         /// <param name="userManager">The service used to manage users</param>
-        public ResolvePeopleAssignmentsCommandHandler(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IUserAccessor userAccessor, IUserManager userManager) 
+        /// <param name="expressionEvaluatorProvider">The service used to provide <see cref="IExpressionEvaluator"/>s</param>
+        public ResolvePeopleAssignmentsCommandHandler(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IUserAccessor userAccessor, 
+            IUserManager userManager, IExpressionEvaluatorProvider expressionEvaluatorProvider) 
             : base(loggerFactory, mediator, mapper, userAccessor)
         {
             this.UserManager = userManager;
+            this.ExpressionEvaluatorProvider = expressionEvaluatorProvider;
         }
 
         /// <summary>
         /// Gets the service used to manage users
         /// </summary>
         protected IUserManager UserManager { get; }
+
+        /// <summary>
+        /// Gets the service used to provide <see cref="IExpressionEvaluator"/>s
+        /// </summary>
+        protected IExpressionEvaluatorProvider ExpressionEvaluatorProvider { get; }
 
         /// <inheritdoc/>
         public virtual async Task<IOperationResult<Domain.Models.PeopleAssignments>> HandleAsync(ResolvePeopleAssignmentsCommand command, CancellationToken cancellationToken = default)
@@ -83,13 +99,16 @@ namespace OpenHumanTask.Runtime.Application.Commands.PeopleAssignments
             if (user == null || !user.Identity?.IsAuthenticated == true) return this.Forbid();
             var availableUsers = await this.UserManager.ListUsersAsync(cancellationToken);
             var resolvedUsers = new Dictionary<GenericHumanRole, List<UserReference>>() { { GenericHumanRole.Initiator, new() { user } } };
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.PotentialInitiators, cancellationToken);
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.PotentialInitiators, cancellationToken);
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.PotentialOwners, cancellationToken);
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.ExcludedOwners, cancellationToken);
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.Stakeholders, cancellationToken);
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.BusinessAdministrators, cancellationToken);
-            await this.ResolveUsersAsync(availableUsers, resolvedUsers, command.PeopleAssignments.NotificationRecipients, cancellationToken);
+            if (command.PeopleAssignments == null) return this.Ok(new Domain.Models.PeopleAssignments(user));
+            var expressionEvaluator = this.ExpressionEvaluatorProvider.GetEvaluator(command.Context.ExpressionLanguage);
+            if (expressionEvaluator == null) throw HumanTaskDomainExceptions.RuntimeExpressionLanguageNotSupported(command.Context.ExpressionLanguage);
+            var resolvedGroups = this.ResolveLogicalGroups(command.Context, expressionEvaluator, availableUsers, resolvedUsers, command.PeopleAssignments.Groups);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.PotentialInitiators);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.PotentialOwners);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.ExcludedOwners);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.Stakeholders);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.BusinessAdministrators);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.NotificationRecipients);
             return this.Ok(new Domain.Models.PeopleAssignments
             (
                 user, 
@@ -99,50 +118,68 @@ namespace OpenHumanTask.Runtime.Application.Commands.PeopleAssignments
                 resolvedUsers[GenericHumanRole.ExcludedOwner], 
                 resolvedUsers[GenericHumanRole.Stakeholder], 
                 resolvedUsers[GenericHumanRole.BusinessAdministrator], 
-                resolvedUsers[GenericHumanRole.NotificationRecipient]));
+                resolvedUsers[GenericHumanRole.NotificationRecipient],
+                resolvedGroups));
         }
 
-        protected virtual async Task ResolveUsersAsync(List<ClaimsIdentity> availableUsers, IDictionary<GenericHumanRole, List<UserReference>> resolvedUsers, List<PeopleReferenceDefinition>? peopleReferences, CancellationToken cancellationToken)
+        /// <summary>
+        /// Resolves the specified <see cref="LogicalPeopleGroupDefinition"/>s
+        /// </summary>
+        /// <param name="context">The <see cref="HumanTaskRuntimeContext"/> for which to resolve the specified <see cref="PeopleAssignmentsDefinition"/></param>
+        /// <param name="expressionEvaluator">The service used to evaluate runtime expressions</param>
+        /// <param name="availableUsers">A <see cref="List{T}"/> containing all known users</param>
+        /// <param name="resolvedUsers">An <see cref="IDictionary{TKey, TValue}"/> containing the resolved users for each <see cref="GenericHumanRole"/></param>
+        /// <param name="groups">A <see cref="List{T}"/> containing the <see cref="LogicalPeopleGroupDefinition"/>s to resolve</param>
+        /// <returns>A new <see cref="Dictionary{TKey, TValue}"/> containing the resolved users per group</returns>
+        protected virtual Dictionary<string, List<UserReference>> ResolveLogicalGroups(HumanTaskRuntimeContext context, IExpressionEvaluator expressionEvaluator, List<ClaimsIdentity> availableUsers, IDictionary<GenericHumanRole, List<UserReference>> resolvedUsers, List<LogicalPeopleGroupDefinition>? groups)
         {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (expressionEvaluator == null) throw new ArgumentNullException(nameof(expressionEvaluator));
             if (availableUsers == null) throw new ArgumentNullException(nameof(availableUsers));
+            if (resolvedUsers == null) throw new ArgumentNullException(nameof(resolvedUsers));
+            var resolvedGroups = new Dictionary<string, List<UserReference>>();
+            if (groups == null) return resolvedGroups;
+            foreach (var group in groups)
+            {
+                var users = new List<UserReference>();
+                foreach (var peopleReference in group.Members)
+                {
+                    users.AddRange(peopleReference.Resolve(context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups));
+                }
+                resolvedGroups.Add(group.Name, users);
+            }
+            return resolvedGroups;
+        }
+
+        /// <summary>
+        /// Resolves the specified <see cref="PeopleReferenceDefinition"/>s
+        /// </summary>
+        /// <param name="context">The <see cref="HumanTaskRuntimeContext"/> for which to resolve the specified <see cref="PeopleAssignmentsDefinition"/></param>
+        /// <param name="expressionEvaluator">The service used to evaluate runtime expressions</param>
+        /// <param name="availableUsers">A <see cref="List{T}"/> containing all known users</param>
+        /// <param name="resolvedUsers">An <see cref="IDictionary{TKey, TValue}"/> containing the resolved users for each <see cref="GenericHumanRole"/></param>
+        /// <param name="resolvedGroups">An <see cref="IDictionary{TKey, TValue}"/> containing the name/users mappings of the resolved user groups</param>
+        /// <param name="role">The <see cref="GenericHumanRole"/> to resolve the specified <see cref="PeopleReferenceDefinition"/>s for</param>
+        /// <param name="peopleReferences">A <see cref="List{T}"/> containing the <see cref="PeopleReferenceDefinition"/>s to resolve</param>
+        protected virtual void ResolveAssignmentsTo(HumanTaskRuntimeContext context, IExpressionEvaluator expressionEvaluator, List<ClaimsIdentity> availableUsers, IDictionary<GenericHumanRole, List<UserReference>> resolvedUsers, Dictionary<string, List<UserReference>> resolvedGroups, GenericHumanRole role, List<PeopleReferenceDefinition>? peopleReferences)
+        {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (expressionEvaluator == null) throw new ArgumentNullException(nameof(expressionEvaluator));
+            if (availableUsers == null) throw new ArgumentNullException(nameof(availableUsers));
+            if (resolvedUsers == null) throw new ArgumentNullException(nameof(resolvedUsers));
+            if (resolvedGroups == null) throw new ArgumentNullException(nameof(resolvedGroups));
             if (peopleReferences == null) return;
             var users = new List<UserReference>();
             foreach (var peopleReference in peopleReferences)
             {
-                users.AddRange(await this.ResolveUsersAsync(availableUsers, peopleReference, cancellationToken));
+                users.AddRange(peopleReference.Resolve(context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups));
             }
-        }
-
-        protected virtual async Task ResolveUsersAsync(List<ClaimsIdentity> availableUsers, IDictionary<GenericHumanRole, List<UserReference>> resolvedUsers, PeopleReferenceDefinition peopleReference, CancellationToken cancellationToken)
-        {
-            if (availableUsers == null) throw new ArgumentNullException(nameof(availableUsers));
-            if (peopleReference == null) throw new ArgumentNullException(nameof(peopleReference));
-            var users = new List<UserReference>();
-            if (peopleReference.User != null)
+            if(!resolvedUsers.TryGetValue(role, out var usersPerRole))
             {
-                var user = availableUsers.FirstOrDefault(u => u.FindFirst(JwtClaimTypes.Subject)?.Value.Equals(peopleReference.User, StringComparison.InvariantCultureIgnoreCase) == true);
-                if (user != null)
-                    users.Add(user);
+                usersPerRole = new();
+                resolvedUsers[role] = usersPerRole;
             }
-            else if(peopleReference.Users != null)
-            {
-                if (peopleReference.Users.InGenericRole != null)
-                {
-
-                }
-                else if(peopleReference.Users.InGroup != null)
-                {
-
-                }
-                else if (peopleReference.Users.WithClaims != null)
-                {
-                    foreach(var user in availableUsers)
-                    {
-                        if (peopleReference.Users.WithClaims.Filters(user)) users.Add(user);
-                    }
-                }
-            }
-            return users;
+            usersPerRole.AddRange(users);
         }
 
     }

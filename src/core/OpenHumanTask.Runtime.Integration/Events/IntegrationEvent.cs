@@ -22,6 +22,16 @@ namespace OpenHumanTask.Runtime.Integration.Events
         : IDataTransferObject
     {
 
+        /// <summary>
+        /// Gets the id of the aggregate the integration event applies to
+        /// </summary>
+        public virtual object AggregateId { get; set; }
+
+        /// <summary>
+        /// Gets the date and time at which the integration event has been created
+        /// </summary>
+        public DateTimeOffset CreatedAt { get; set; }
+
     }
 
 }

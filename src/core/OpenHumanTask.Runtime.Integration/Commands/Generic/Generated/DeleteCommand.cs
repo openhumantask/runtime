@@ -36,7 +36,7 @@ namespace OpenHumanTask.Runtime.Integration.Commands.Generic
 		/// </summary>
 		[DataMember(Name = "id", Order = 1)]
 		[Description("The id of the entity to delete")]
-		public virtual TKey Id { get; set; }
+		public virtual object Id { get; set; }
 
     }
 

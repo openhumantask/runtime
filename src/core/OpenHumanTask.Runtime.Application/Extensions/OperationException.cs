@@ -17,6 +17,7 @@
 
 namespace OpenHumanTask.Runtime.Application
 {
+
     /// <summary>
     /// Represents an exception thrown whenever an operation returned a non-success <see cref="IOperationResult"/>
     /// </summary>

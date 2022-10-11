@@ -17,6 +17,7 @@ using System.Security.Claims;
 
 namespace OpenHumanTask.Runtime.Application.Services
 {
+
     /// <summary>
     /// Represents the default implementation of the <see cref="IUserAccessor"/> interface
     /// </summary>
