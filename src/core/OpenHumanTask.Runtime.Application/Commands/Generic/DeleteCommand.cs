@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright © 2022-Present The Synapse Authors
+ * Copyright © 2022-Present The Open Human Task Runtime Authors
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.Generic
         /// <param name="mapper">The service used to map objects.</param>
         /// <param name="userAccessor">The service used to access the current user</param>
         /// <param name="repository">The <see cref="IRepository"/> used to manage the entity to delete</param>
-        protected DeleteCommandHandler(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IUserAccessor userAccessor, IRepository<TAggregate, TKey> repository)
+        public DeleteCommandHandler(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IUserAccessor userAccessor, IRepository<TAggregate, TKey> repository)
             : base(loggerFactory, mediator, mapper, userAccessor)
         {
             this.Repository = repository;

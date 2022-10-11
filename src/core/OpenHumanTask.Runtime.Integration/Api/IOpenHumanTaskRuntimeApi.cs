@@ -14,6 +14,7 @@
 
 namespace OpenHumanTask.Runtime.Integration.Api
 {
+
     /// <summary>
     /// Defines the fundamentals of the Open Human Task Runtime API
     /// </summary>
@@ -21,9 +22,9 @@ namespace OpenHumanTask.Runtime.Integration.Api
     {
 
         /// <summary>
-        /// Gets the API used to manage <see cref="HumanTaskDefinition"/>s
+        /// Gets the API used to manage <see cref="HumanTaskTemplate"/>s
         /// </summary>
-        ITaskDefinitionApi TaskDefinitions { get; }
+        IHumanTaskTemplateApi HumanTaskTemplates { get; }
 
     }
 

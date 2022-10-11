@@ -58,7 +58,7 @@ namespace OpenHumanTask.Runtime.Application.Queries.HumanTaskTemplates
 
         /// <inheritdoc/>
         public GetHumanTaskTemplateByIdQueryHandler(ILoggerFactory loggerFactory, IMapper mapper, IMediator mediator, IRepository<Integration.Models.HumanTaskTemplate, string> repository) 
-            : base(loggerFactory, mapper, mediator, repository)
+            : base(loggerFactory, mediator, mapper,  repository)
         {
 
         }

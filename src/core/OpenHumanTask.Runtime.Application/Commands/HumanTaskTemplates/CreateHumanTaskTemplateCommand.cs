@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using OpenHumanTask.Runtime.Application.Queries.HumanTaskTemplates;
-using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Sdk;
 
 namespace OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates
@@ -22,7 +21,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates
     /// <summary>
     /// Represents the <see cref="ICommand"/> used to create a new <see cref="HumanTaskTemplate"/>
     /// </summary>
-    [DataTransferObjectType(typeof(Integration.Commands.TaskDefinitions.CreateTaskDefinitionCommand))]
+    [DataTransferObjectType(typeof(Integration.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand))]
     public class CreateHumanTaskTemplateCommand
         : Command<Integration.Models.HumanTaskTemplate>
     {

@@ -77,9 +77,6 @@
     <Compile Update="Commands\PeopleAssignments\Generated\ResolvePeopleAssignmentsCommand.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\PeopleAssignments\ResolvePeopleAssignmentsCommand.cs</CustomToolNamespace>
     </Compile>
-    <Compile Update="Commands\TaskDefinitions\Generated\CreateTaskDefinitionCommand.cs">
-      <CustomToolNamespace>..\OpenHumanTask.Runtime.Application\Commands\TaskDefinitions\CreateTaskDefinitionCommand.cs</CustomToolNamespace>
-    </Compile>
     <Compile Update="Events\HumanTasks\Generated\AttachmentAddedToHumanTaskIntegrationEvent.cs">
       <CustomToolNamespace>..\OpenHumanTask.Runtime.Domain\Events\HumanTasks\AttachmentAddedToHumanTaskDomainEvent.cs</CustomToolNamespace>
     </Compile>

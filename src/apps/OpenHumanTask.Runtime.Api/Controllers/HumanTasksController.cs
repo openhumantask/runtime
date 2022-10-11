@@ -47,7 +47,7 @@ namespace OpenHumanTask.Runtime.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public virtual async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
         {
-            return this.Process(await this.Mediator.ExecuteAsync(new Application.Queries.Generic.FindByKeyQuery<Integration.Models.HumanTask>(id!), cancellationToken));
+            return this.Process(await this.Mediator.ExecuteAsync(new Application.Queries.Generic.FindByKeyQuery<Integration.Models.HumanTask, string>(id!), cancellationToken));
         }
 
         /// <summary>

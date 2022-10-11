@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright © 2022-Present The Synapse Authors
+ * Copyright © 2022-Present The Open Human Task Runtime Authors
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  *
  */
 
-using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Sdk;
 using System.Security.Claims;
 using System.Text.RegularExpressions;

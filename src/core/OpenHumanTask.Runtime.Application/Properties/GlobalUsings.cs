@@ -19,6 +19,8 @@ global using Neuroglia.Data;
 global using Neuroglia.Eventing;
 global using Neuroglia.Mapping;
 global using Neuroglia.Mediation;
+global using OpenHumanTask.Runtime.Application.Configuration;
 global using OpenHumanTask.Runtime.Domain.Models;
+global using OpenHumanTask.Runtime.Infrastructure.Services;
 global using OpenHumanTask.Sdk.Models;
 global using System.Net.Mime;

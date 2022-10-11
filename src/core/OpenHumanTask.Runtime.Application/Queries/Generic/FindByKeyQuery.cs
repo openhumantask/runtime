@@ -2,59 +2,64 @@
 {
 
     /// <summary>
-    /// Represents the query used to find an entity by key
+    /// Represents an <see cref="IQuery"/> used to get an entity by id
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity to find</typeparam>
-    public class FindByKeyQuery<TEntity>
+    /// <typeparam name="TEntity">The type of entity to query</typeparam>
+    /// <typeparam name="TKey">The type of id used to uniquely identify the entity to get</typeparam>
+    public class FindByKeyQuery<TEntity, TKey>
         : Query<TEntity>
-        where TEntity : class, IIdentifiable
+        where TEntity : class, IIdentifiable<TKey>
+        where TKey : IEquatable<TKey>
     {
 
         /// <summary>
-        /// Initializes a new <see cref="FindByKeyQuery{TEntity}"/>
+        /// Initializes a new <see cref="FindByKeyQuery{TEntity, TKey}"/>
         /// </summary>
-        /// <param name="key">The key of the entity to find</param>
-        public FindByKeyQuery(object key)
+        protected FindByKeyQuery()
         {
-            this.Key = key;
+            this.Id = default!;
         }
 
         /// <summary>
-        /// Gets the key of the entity to find
+        /// Initializes a new <see cref="FindByKeyQuery{TEntity, TKey}"/>
         /// </summary>
-        public object Key { get; }
+        /// <param name="id">The id of the entity to find</param>
+        public FindByKeyQuery(TKey id)
+        {
+            this.Id = id;
+        }
+
+        /// <summary>
+        /// Gets the id of the entity to find
+        /// </summary>
+        public virtual TKey Id { get; }
 
     }
 
     /// <summary>
-    /// Represents the query used to handle <see cref="FindByKeyQuery{TEntity}"/>
+    /// Represents the service used to handle <see cref="FindByKeyQuery{TEntity, TKey}"/> instances
     /// </summary>
     /// <typeparam name="TEntity">The type of entity to find</typeparam>
-    public class FindByKeyQueryHandler<TEntity>
-        : QueryHandlerBase<TEntity>,
-        IQueryHandler<FindByKeyQuery<TEntity>, TEntity>
-        where TEntity : class, IIdentifiable
+    /// <typeparam name="TKey">The type of key used to uniquely identify the entity to find</typeparam>
+    public class FindByKeyQueryHandler<TEntity, TKey>
+        : QueryHandlerBase<TEntity, TKey>,
+        IQueryHandler<FindByKeyQuery<TEntity, TKey>, TEntity>
+        where TEntity : class, IIdentifiable<TKey>
+        where TKey : IEquatable<TKey>
     {
 
-        /// <summary>
-        /// Initializes a new <see cref="QueryHandlerBase{TEntity}"/>
-        /// </summary>
-        /// <param name="loggerFactory">The service used to create <see cref="ILogger"/>s</param>
-        /// <param name="mapper">The service used to map objects</param>
-        /// <param name="mediator">The service used to mediate calls</param>
-        /// <param name="repository">The <see cref="IRepository{TEntity}"/> to query</param>
-        public FindByKeyQueryHandler(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IRepository<TEntity> repository) 
+        /// <inheritdoc/>
+        public FindByKeyQueryHandler(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IRepository<TEntity, TKey> repository)
             : base(loggerFactory, mediator, mapper, repository)
         {
-
         }
 
         /// <inheritdoc/>
-        public virtual async Task<IOperationResult<TEntity>> HandleAsync(FindByKeyQuery<TEntity> query, CancellationToken cancellationToken = default)
+        public virtual async Task<IOperationResult<TEntity>> HandleAsync(FindByKeyQuery<TEntity, TKey> query, CancellationToken cancellationToken = default)
         {
-            TEntity entity = await this.Repository.FindAsync(query.Key, cancellationToken);
+            var entity = await this.Repository.FindAsync(query.Id, cancellationToken);
             if (entity == null)
-                throw DomainException.NullReference(typeof(TEntity), query.Key);
+                throw DomainException.NullReference(typeof(TEntity), query.Id, nameof(query.Id));
             return this.Ok(entity);
         }
 

@@ -1,16 +1,33 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Query.Expressions;
+using OpenHumanTask.Runtime.Application;
+using OpenHumanTask.Runtime.Application.Services;
+using OpenHumanTask.Runtime.Infrastructure.Services;
 
-builder.Services.AddControllers();
+var builder = WebApplication.CreateBuilder(args);
+var searchBinder = new ODataSearchBinder();
+
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddSingleton<ISearchBinder>(searchBinder);
+builder.Services.AddControllers()
+    .AddOData((options, provider) =>
+    {
+        var builder = provider.GetRequiredService<IEdmModelBuilder>();
+        options.AddRouteComponents("api/odata", builder.Build(), services => services.AddSingleton<ISearchBinder>(searchBinder))
+            .EnableQueryFeatures(50);
+        options.RouteOptions.EnableControllerNameCaseInsensitive = true;
+        options.RouteOptions.EnableActionNameCaseInsensitive = true;
+        options.RouteOptions.EnablePropertyNameCaseInsensitive = true;
+    });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(swagger =>
+{
+    swagger.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+});
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthorization();
-app.MapControllers()
-    .RequireAuthorization();
+app.MapControllers().RequireAuthorization();
 await app.RunAsync();

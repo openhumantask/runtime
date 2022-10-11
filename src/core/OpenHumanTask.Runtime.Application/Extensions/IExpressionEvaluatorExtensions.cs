@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright © 2022-Present The Synapse Authors
+ * Copyright © 2022-Present The Open Human Task Runtime Authors
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,9 @@
 using Neuroglia.Data.Expressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OpenHumanTask.Runtime.Application.Services;
 using System.Dynamic;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace OpenHumanTask.Runtime.Application
 {

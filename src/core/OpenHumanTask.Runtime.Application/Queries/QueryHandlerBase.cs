@@ -76,10 +76,10 @@ namespace OpenHumanTask.Runtime.Application.Queries
         /// Initializes a new <see cref="QueryHandlerBase{TEntity, TKey}"/>
         /// </summary>
         /// <param name="loggerFactory">The service used to create <see cref="ILogger"/>s</param>
-        /// <param name="mapper">The service used to map objects</param>
         /// <param name="mediator">The service used to mediate calls</param>
+        /// <param name="mapper">The service used to map objects</param>
         /// <param name="repository">The <see cref="IRepository{TEntity, TKey}"/> to query</param>
-        protected QueryHandlerBase(ILoggerFactory loggerFactory, IMapper mapper, IMediator mediator, IRepository<TEntity, TKey> repository)
+        protected QueryHandlerBase(ILoggerFactory loggerFactory, IMediator mediator, IMapper mapper, IRepository<TEntity, TKey> repository)
             : base(loggerFactory, mediator, mapper, repository)
         {
 
