@@ -34,6 +34,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's potential initiators
 		/// </summary>
 		[DataMember(Name = "potentialInitiators", Order = 1)]
+		[JsonPropertyName("potentialInitiators")]
+		[YamlMember(Alias = "potentialInitiators")]
 		[Description("An IReadOnlyCollection containing the HumanTask's potential initiators")]
 		public virtual List<UserReference> PotentialInitiators { get; set; }
 
@@ -41,6 +43,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's actual initiator
 		/// </summary>
 		[DataMember(Name = "actualInitiator", Order = 2)]
+		[JsonPropertyName("actualInitiator")]
+		[YamlMember(Alias = "actualInitiator")]
 		[Description("The HumanTask's actual initiator")]
 		public virtual UserReference ActualInitiator { get; set; }
 
@@ -48,6 +52,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's potential owners
 		/// </summary>
 		[DataMember(Name = "potentialOwners", Order = 3)]
+		[JsonPropertyName("potentialOwners")]
+		[YamlMember(Alias = "potentialOwners")]
 		[Description("An IReadOnlyCollection containing the HumanTask's potential owners")]
 		public virtual List<UserReference> PotentialOwners { get; set; }
 
@@ -55,6 +61,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's actual owner
 		/// </summary>
 		[DataMember(Name = "actualOwner", Order = 4)]
+		[JsonPropertyName("actualOwner")]
+		[YamlMember(Alias = "actualOwner")]
 		[Description("The HumanTask's actual owner")]
 		public virtual UserReference ActualOwner { get; set; }
 
@@ -62,6 +70,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's excluded owners
 		/// </summary>
 		[DataMember(Name = "excludedOwners", Order = 5)]
+		[JsonPropertyName("excludedOwners")]
+		[YamlMember(Alias = "excludedOwners")]
 		[Description("An IReadOnlyCollection containing the HumanTask's excluded owners")]
 		public virtual List<UserReference> ExcludedOwners { get; set; }
 
@@ -69,6 +79,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's stakeholders
 		/// </summary>
 		[DataMember(Name = "stakeholders", Order = 6)]
+		[JsonPropertyName("stakeholders")]
+		[YamlMember(Alias = "stakeholders")]
 		[Description("An IReadOnlyCollection containing the HumanTask's stakeholders")]
 		public virtual List<UserReference> Stakeholders { get; set; }
 
@@ -76,6 +88,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's business administrators
 		/// </summary>
 		[DataMember(Name = "businessAdministrators", Order = 7)]
+		[JsonPropertyName("businessAdministrators")]
+		[YamlMember(Alias = "businessAdministrators")]
 		[Description("An IReadOnlyCollection containing the HumanTask's business administrators")]
 		public virtual List<UserReference> BusinessAdministrators { get; set; }
 
@@ -83,15 +97,19 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's notification recipients
 		/// </summary>
 		[DataMember(Name = "notificationRecipients", Order = 8)]
+		[JsonPropertyName("notificationRecipients")]
+		[YamlMember(Alias = "notificationRecipients")]
 		[Description("An IReadOnlyCollection containing the HumanTask's notification recipients")]
 		public virtual List<UserReference> NotificationRecipients { get; set; }
 
 		/// <summary>
 		/// An IReadOnlyDictionary containing the name/users pairs of the HumanTask's logical people groups
 		/// </summary>
-		[DataMember(Name = "logicalGroups", Order = 9)]
+		[DataMember(Name = "groups", Order = 9)]
+		[JsonPropertyName("groups")]
+		[YamlMember(Alias = "groups")]
 		[Description("An IReadOnlyDictionary containing the name/users pairs of the HumanTask's logical people groups")]
-		public virtual Dictionary<string, List<UserReference>> LogicalGroups { get; set; }
+		public virtual Dictionary<string, List<UserReference>> Groups { get; set; }
 
     }
 

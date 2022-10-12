@@ -18,7 +18,7 @@
         {
             return state with
             {
-                Items = action.QueryResult.Results
+                Items = action.Results
             };
         }
 

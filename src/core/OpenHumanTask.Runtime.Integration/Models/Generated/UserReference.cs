@@ -34,6 +34,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The referenced user's id
 		/// </summary>
 		[DataMember(Name = "id", Order = 1)]
+		[JsonPropertyName("id")]
+		[YamlMember(Alias = "id")]
 		[Description("The referenced user's id")]
 		public virtual string Id { get; set; }
 
@@ -41,6 +43,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The referenced user's name
 		/// </summary>
 		[DataMember(Name = "name", Order = 2)]
+		[JsonPropertyName("name")]
+		[YamlMember(Alias = "name")]
 		[Description("The referenced user's name")]
 		public virtual string Name { get; set; }
 

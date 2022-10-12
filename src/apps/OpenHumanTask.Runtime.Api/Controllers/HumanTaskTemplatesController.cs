@@ -30,7 +30,7 @@ namespace OpenHumanTask.Runtime.Api.Controllers
         public virtual async Task<IActionResult> Create([FromBody] Integration.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand command, CancellationToken cancellationToken)
         {
             if (!this.ModelState.IsValid) return this.BadRequest(this.ModelState);
-            return this.Process(await this.Mediator.ExecuteAsync(this.Mapper.Map<Application.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand>(command), cancellationToken));
+            return this.Process(await this.Mediator.ExecuteAsync(this.Mapper.Map<Application.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand>(command), cancellationToken), (int)HttpStatusCode.Created);
         }
 
         /// <summary>

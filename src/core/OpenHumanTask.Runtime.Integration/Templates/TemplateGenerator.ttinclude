@@ -313,22 +313,15 @@ ${
                 output.AppendLine(Indent(2, $"/// {SanitizeDocComments(property.DocComment)}"));
                 output.AppendLine(Indent(2, "/// </summary>"));
             }
-            Attribute jsonPropertyAttribute = property.Attributes.FirstOrDefault(a => a.Name == "JsonProperty");
+            Attribute jsonPropertyAttribute = property.Attributes.FirstOrDefault(a => a.Name == "JsonPropertyName");
             var propertyName = jsonPropertyAttribute == null ? property.Name : jsonPropertyAttribute.Arguments.First().Value.ToString();
-            output.AppendLine(Indent(2, $"[DataMember(Name = \"{Char.ToLowerInvariant(propertyName[0]) + propertyName.Substring(1)}\", Order = {order})]"));
-            if(jsonPropertyAttribute != null)
-            {
-                output.AppendLine(Indent(2, $"[Newtonsoft.Json.JsonProperty({jsonPropertyAttribute.Value})]"));
-                output.AppendLine(Indent(2, $"[System.Text.Json.Serialization.JsonPropertyName(\"{propertyName}\")]"));
-                output.AppendLine(Indent(2, $"[YamlDotNet.Serialization.YamlMember(Alias = \"{propertyName}\")]"));
-            }  
+            var propertyType = GetType(property.Type);
+            var jsonPropertyName = Char.ToLowerInvariant(propertyName[0]) + propertyName.Substring(1);
+            output.AppendLine(Indent(2, $"[DataMember(Name = \"{jsonPropertyName}\", Order = {order})]"));
+            output.AppendLine(Indent(2, $"[JsonPropertyName(\"{jsonPropertyName}\"){( propertyType == "object" || propertyType == "object?" ? ", JsonConverter(typeof(JsonElementConverter))" : null)}]"));
+            output.AppendLine(Indent(2, $"[YamlMember(Alias = \"{jsonPropertyName}\")]"));
             if(property.DocComment != null)
                 output.AppendLine(Indent(2, $@"[Description(""{SanitizeDocComments(property.DocComment)}"")]"));
-            if(property.Type.OriginalName == "Metadata")
-            {
-                output.AppendLine(Indent(2, "[Newtonsoft.Json.JsonExtensionData]"));
-                output.AppendLine(Indent(2, "[System.Text.Json.Serialization.JsonExtensionData]"));
-            }
             List<string> attributes = new List<string>(property.Attributes.Count);
             if(property.Attributes.Any(a => a.Name == "Required"))
                 attributes.Add("Required");
@@ -337,7 +330,7 @@ ${
                 attributes.Add($"MinLength({string.Join(", ", attribute.Arguments.Select(a => a.Value))})");
             if(attributes.Any())
                 output.AppendLine(Indent(2, $"[{string.Join(", ", attributes)}]"));
-            output.AppendLine(Indent(2, $"public virtual {GetType(property.Type)} {property.Name} {{ get; set; }}"));
+            output.AppendLine(Indent(2, $"public virtual {propertyType} {property.Name} {{ get; set; }}"));
             order++;
         }
         return output.ToString();

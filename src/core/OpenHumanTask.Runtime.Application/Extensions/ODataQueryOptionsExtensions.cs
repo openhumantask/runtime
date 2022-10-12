@@ -34,12 +34,12 @@ namespace OpenHumanTask.Runtime.Application
         public static ODataQueryOptions<TEntity> WithoutPaging<TEntity>(this ODataQueryOptions<TEntity> queryOptions)
         {
             var clauses = new List<string>();
-            if (!string.IsNullOrWhiteSpace(queryOptions.Apply.RawValue)) clauses.Add($"$apply={queryOptions.Apply.RawValue}");
-            if (!string.IsNullOrWhiteSpace(queryOptions.Compute.RawValue)) clauses.Add($"$compute={queryOptions.Compute.RawValue}");
-            if (!string.IsNullOrWhiteSpace(queryOptions.Count.RawValue)) clauses.Add($"$count={queryOptions.Count.RawValue}");
-            if (!string.IsNullOrWhiteSpace(queryOptions.Filter.RawValue)) clauses.Add($"$filter={queryOptions.Filter.RawValue}");
-            if (!string.IsNullOrWhiteSpace(queryOptions.OrderBy.RawValue)) clauses.Add($"$orderby={queryOptions.OrderBy.RawValue}");
-            if (!string.IsNullOrWhiteSpace(queryOptions.Search.RawValue)) clauses.Add($"$search={queryOptions.Search.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Apply?.RawValue)) clauses.Add($"$apply={queryOptions.Apply.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Compute?.RawValue)) clauses.Add($"$compute={queryOptions.Compute.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Count?.RawValue)) clauses.Add($"$count={queryOptions.Count.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Filter?.RawValue)) clauses.Add($"$filter={queryOptions.Filter.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.OrderBy?.RawValue)) clauses.Add($"$orderby={queryOptions.OrderBy.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Search?.RawValue)) clauses.Add($"$search={queryOptions.Search.RawValue}");
             var context = new DefaultHttpContext();
             context.Request.QueryString = new($"?{string.Join('&', clauses)}");
             return new(queryOptions.Context, context.Request);
@@ -54,8 +54,8 @@ namespace OpenHumanTask.Runtime.Application
         public static ODataQueryOptions<TEntity> WithPagingOnly<TEntity>(this ODataQueryOptions<TEntity> queryOptions)
         {
             var clauses = new List<string>();
-            if (!string.IsNullOrWhiteSpace(queryOptions.Skip.RawValue)) clauses.Add($"$skip={queryOptions.Skip.RawValue}");
-            if (!string.IsNullOrWhiteSpace(queryOptions.Top.RawValue)) clauses.Add($"$top={queryOptions.Top.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Skip?.RawValue)) clauses.Add($"$skip={queryOptions.Skip.RawValue}");
+            if (!string.IsNullOrWhiteSpace(queryOptions.Top?.RawValue)) clauses.Add($"$top={queryOptions.Top.RawValue}");
             var context = new DefaultHttpContext();
             context.Request.QueryString = new($"?{string.Join('&', clauses)}");
             return new(queryOptions.Context, context.Request);

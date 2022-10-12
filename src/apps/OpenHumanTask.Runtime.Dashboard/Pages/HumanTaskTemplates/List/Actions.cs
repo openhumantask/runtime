@@ -61,16 +61,16 @@ namespace OpenHumanTask.Runtime.Dashboard.Pages.HumanTaskTemplates.List
         /// <summary>
         /// Initializes a new <see cref="HandleHumanTaskTemplateQueryResults"/>
         /// </summary>
-        /// <param name="queryResult">A <see cref="QueryResult{T}"/> that contains the differed results of the <see cref="QueryHumanTaskTemplates"/> action</param>
-        public HandleHumanTaskTemplateQueryResults(QueryResult<HumanTaskTemplate> queryResult)
+        /// <param name="results">A <see cref="List{T}"/> that contains the differed results of the <see cref="QueryHumanTaskTemplates"/> action</param>
+        public HandleHumanTaskTemplateQueryResults(List<HumanTaskTemplate> results)
         {
-            this.QueryResult = queryResult;
+            this.Results = results;
         }
 
         /// <summary>
-        /// Gets a <see cref="QueryResult{T}"/> that contains the differed results of the <see cref="QueryHumanTaskTemplates"/> action
+        /// Gets a <see cref="List{T}"/> that contains the differed results of the <see cref="QueryHumanTaskTemplates"/> action
         /// </summary>
-        public QueryResult<HumanTaskTemplate> QueryResult { get; }
+        public List<HumanTaskTemplate> Results { get; }
 
     }
 

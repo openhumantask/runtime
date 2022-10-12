@@ -25,16 +25,25 @@ namespace OpenHumanTask.Runtime.Integration.Models
         /// <summary>
         /// Gets the entity's unique identifier
         /// </summary>
+        [DataMember(Name = "id", Order = 1)]
+        [JsonPropertyName("id")]
+        [YamlMember(Alias = "id")]
         public virtual string Id { get; set; }
 
         /// <summary>
         /// Gets the date and time the entity has been created at
         /// </summary>
+        [DataMember(Name = "createdAt", Order = 1)]
+        [JsonPropertyName("createdAt")]
+        [YamlMember(Alias = "createdAt")]
         public virtual DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Gets the date and time the entity has been last modified at
         /// </summary>
+        [DataMember(Name = "lastModified", Order = 1)]
+        [JsonPropertyName("lastModified")]
+        [YamlMember(Alias = "lastModified")]
         public virtual DateTimeOffset LastModified { get; set; }
 
         /// <inheritdoc/>

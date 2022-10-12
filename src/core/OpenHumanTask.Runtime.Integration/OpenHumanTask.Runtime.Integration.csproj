@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.4" />
+    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.7" />
   </ItemGroup>
 
   <ItemGroup>

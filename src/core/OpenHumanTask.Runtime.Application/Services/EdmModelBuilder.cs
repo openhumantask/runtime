@@ -14,6 +14,7 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using OpenHumanTask.Runtime.Integration.Models;
 using System.Dynamic;
 
 namespace OpenHumanTask.Runtime.Application.Services

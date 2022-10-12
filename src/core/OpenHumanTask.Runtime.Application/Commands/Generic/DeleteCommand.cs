@@ -94,7 +94,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.Generic
             var aggregate = await this.Repository.FindAsync(command.Id, cancellationToken);
             if (aggregate == null)
                 throw DomainException.NullReference(typeof(TAggregate), command.Id);
-            aggregate.Delete();
+            aggregate.Delete(this.UserAccessor.User);
             await this.Repository.UpdateAsync(aggregate, cancellationToken);
             await this.Repository.RemoveAsync(aggregate, cancellationToken);
             await this.Repository.SaveChangesAsync(cancellationToken);

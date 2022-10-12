@@ -18,7 +18,6 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Events\Domain\" />
     <Folder Include="Mapping\Configuration\" />
   </ItemGroup>
 	
@@ -32,6 +31,7 @@
     <PackageReference Include="Neuroglia.Eventing.CloudEvents" Version="2.0.3" />
     <PackageReference Include="Neuroglia.Mapping" Version="2.0.3" />
     <PackageReference Include="Neuroglia.Mediation.FluentValidation" Version="2.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
   </ItemGroup>
 	

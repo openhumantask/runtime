@@ -20,8 +20,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.10" PrivateAssets="all" />
     <PackageReference Include="Neuroglia.Data.Flux.ReduxDevTools" Version="2.0.3" />
-    <PackageReference Include="OData.QueryBuilder" Version="2.9.6" />
-    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.4" />
+    <PackageReference Include="OData.QueryBuilder" Version="2.9.7" />
+    <PackageReference Include="OpenHumanTask.Sdk" Version="0.1.7" />
   </ItemGroup>
 
   <ItemGroup>

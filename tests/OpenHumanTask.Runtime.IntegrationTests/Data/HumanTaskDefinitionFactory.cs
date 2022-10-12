@@ -1,6 +1,6 @@
 ﻿using OpenHumanTask.Sdk.Services.FluentBuilders;
 
-namespace OpenHumanTask.Runtime.UnitTests.Data
+namespace OpenHumanTask.Runtime.IntegrationTests.Data
 {
 
     internal static class HumanTaskDefinitionFactory
@@ -9,9 +9,9 @@ namespace OpenHumanTask.Runtime.UnitTests.Data
         internal static HumanTaskDefinition Create()
         {
             var definition = new HumanTaskDefinitionBuilder()
-                .WithName("fake-task")
-                .WithNamespace("oht.sdk.unit-tests")
-                .WithVersion("1.0.0-unitTest")
+                .WithName(Guid.NewGuid().ToShortString())
+                .WithNamespace("oht.sdk.integration-tests")
+                .WithVersion("1.0.0")
                 .UseSpecVersion("0.1.0")
                 .UseExpressionLanguage("jq")
                 .UseAutomaticCompletionBehavior("reviewed", complete =>
@@ -46,21 +46,16 @@ namespace OpenHumanTask.Runtime.UnitTests.Data
                             view
                                 .OfType("jsonform")
                                 .WithTemplate("fake-jsonform-template")))
-                .UseStartDeadline(deadline =>
+                .UseStartDeadline("fake-start-deadline", deadline =>
                     deadline
                         .ElapsesAfter(TimeSpan.FromMinutes(30))
                         .Escalates(then =>
-                            then.Reassign()))
-                .UseCompletionDeadline(deadline =>
+                            then.WithName("fake-escalation").Reassign()))
+                .UseCompletionDeadline("fake-completion-deadline", deadline =>
                     deadline
                         .ElapsesAt(new(2023, 4, 4, 12, 30, 00, TimeSpan.Zero))
                         .Escalates(then =>
-                            then.StartSubtask("fake-subtask-1", subtask =>
-                                subtask
-                                    .WithDefinition("fake-namespace.fake-other-task:1.0.0-unitTest")
-                                    .WithInput("${ $CONTEXT.form.inputData }"))))
-                .AddSubtask("fake-subtask-2", subtask =>
-                    subtask.WithDefinition("fake-namespace.fake-other-task:1.5.1-unitTest"))
+                            then.WithName("fake-escalation").Reassign()))
                 .AnnotateWith("fake-annotation-key", "fake-annotation-value")
                 .CanBeSkipped()
                 .Build();

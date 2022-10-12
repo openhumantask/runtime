@@ -56,9 +56,11 @@ namespace OpenHumanTask.Runtime.Domain.Models
         /// <summary>
         /// Deletes the <see cref="HumanTaskTemplate"/>
         /// </summary>
-        public virtual void Delete()
+        /// <param name="user">The user deleting the <see cref="HumanTaskTemplate"/></param>
+        public virtual void Delete(UserReference user)
         {
-            this.On(this.RegisterEvent(new HumanTaskTemplateDeletedDomainEvent(this.Id)));
+            if (user == null) throw DomainException.ArgumentNull(nameof(user));
+            this.On(this.RegisterEvent(new HumanTaskTemplateDeletedDomainEvent(this.Id, user)));
         }
 
         /// <summary>

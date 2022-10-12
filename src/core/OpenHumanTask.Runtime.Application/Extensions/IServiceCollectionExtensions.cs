@@ -25,6 +25,7 @@ using OpenHumanTask.Runtime.Application.Mapping;
 using OpenHumanTask.Runtime.Application.Queries.Generic;
 using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Sdk;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -45,6 +46,8 @@ namespace OpenHumanTask.Runtime.Application
         /// <returns>The configured <see cref="IServiceCollection"/></returns>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             var mapperAssemblies = new Assembly[] { typeof(MappingProfile).Assembly };
             var writeModelTypes = TypeCacheUtil.FindFilteredTypes("syn:models-write", t => t.IsClass && !t.IsAbstract && typeof(IAggregateRoot).IsAssignableFrom(t), typeof(HumanTask).Assembly).ToList();
             var readModelTypes = writeModelTypes
@@ -80,9 +83,8 @@ namespace OpenHumanTask.Runtime.Application
                 builder.WithBrokerUri(new("https://test.com")); //todo
             });
             services.AddOpenHumanTask();
-            services.AddAuthentication();
             services.AddAuthorization();
-            services.AddJQExpressionEvaluator();
+            services.AddJQExpressionEvaluator(options => options.UseSerializer<JsonSerializer>());
             services.AddHttpContextAccessor();
             services.AddScoped<IUserAccessor, HttpContextUserAccessor>();
             services.AddSingleton<PluginManager>();
@@ -109,7 +111,7 @@ namespace OpenHumanTask.Runtime.Application
                 services.Add(new ServiceDescriptor(typeof(IMiddleware<,>).MakeGenericType(queryType, resultType), typeof(DomainExceptionHandlingMiddleware<,>).MakeGenericType(queryType, resultType), serviceLifetime));
 
                 queryType = typeof(FilterQuery<>).MakeGenericType(queryableType);
-                resultType = typeof(IOperationResult<>).MakeGenericType(typeof(Integration.Models.QueryResult<>).MakeGenericType(queryableType));
+                resultType = typeof(IOperationResult<>).MakeGenericType(typeof(List<>).MakeGenericType(queryableType));
                 handlerServiceType = typeof(IRequestHandler<,>).MakeGenericType(queryType, resultType);
                 handlerImplementationType = typeof(FilterQueryHandler<>).MakeGenericType(queryableType);
                 services.Add(new ServiceDescriptor(handlerServiceType, handlerImplementationType, serviceLifetime));

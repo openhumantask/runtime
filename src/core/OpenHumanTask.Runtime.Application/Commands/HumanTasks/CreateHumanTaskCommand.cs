@@ -44,7 +44,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         /// <param name="peopleAssignments">An object used to configure the people assignments of the <see cref="HumanTask"/> to create. Overrides possible values set by the <see cref="HumanTaskDefinition"/></param>
         /// <param name="priority">The priority of the <see cref="HumanTask"/> to create</param>
         /// <param name="input">The input of the <see cref="HumanTask"/> to create</param>
-        public CreateHumanTaskCommand(TaskDefinitionReference definitionReference, string? key, PeopleAssignmentsDefinition? peopleAssignments, int? priority, object? input)
+        public CreateHumanTaskCommand(HumanTaskDefinitionReference definitionReference, string? key, PeopleAssignmentsDefinition? peopleAssignments, int? priority, object? input)
         {
             this.DefinitionReference = definitionReference;
             this.Key = key;
@@ -56,7 +56,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         /// <summary>
         /// Gets an object used to reference the <see cref="HumanTaskDefinition"/> to instanciate
         /// </summary>
-        public virtual TaskDefinitionReference DefinitionReference { get; protected set; } = null!;
+        public virtual HumanTaskDefinitionReference DefinitionReference { get; protected set; } = null!;
 
         /// <summary>
         /// Gets the key of the <see cref="HumanTask"/>. Overrides possible values set by the <see cref="HumanTaskDefinition"/>.

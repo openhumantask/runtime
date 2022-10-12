@@ -102,10 +102,10 @@ namespace OpenHumanTask.Runtime.Domain.Models
         public static implicit operator UserReference(ClaimsPrincipal user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
-            if(user.Identity == null || !user.Identity.IsAuthenticated || user.HasClaim(c => c.Type.Equals(JwtClaimTypes.Subject, StringComparison.InvariantCultureIgnoreCase))) 
-                throw new ArgumentException(nameof(user), new SecurityException($"The specified user is not authenticated or does not defined the required claim '{JwtClaimTypes.Subject}"));
+            if(user.Identity == null || !user.Identity.IsAuthenticated || !user.HasClaim(c => c.Type.Equals(JwtClaimTypes.Subject, StringComparison.InvariantCultureIgnoreCase))) 
+                throw new ArgumentException(nameof(user), new SecurityException($"The specified user is not authenticated or does not defined the required claim '{JwtClaimTypes.Subject}'"));
             var id = user.FindFirst(JwtClaimTypes.Subject)?.Value;
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException(nameof(user), new SecurityException($"The specified user does not defined the required claim '{JwtClaimTypes.Subject}"));
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException(nameof(user), new SecurityException($"The specified user does not defined the required claim '{JwtClaimTypes.Subject}'"));
             var name = user.Identity.Name;
             return new(id, name);
         }
@@ -117,7 +117,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
         public static implicit operator UserReference(ClaimsIdentity user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
-            if (!user.IsAuthenticated || user.HasClaim(c => c.Type.Equals(JwtClaimTypes.Subject, StringComparison.InvariantCultureIgnoreCase)))
+            if (!user.IsAuthenticated || !user.HasClaim(c => c.Type.Equals(JwtClaimTypes.Subject, StringComparison.InvariantCultureIgnoreCase)))
                 throw new ArgumentException(nameof(user), new SecurityException($"The specified user is not authenticated or does not defined the required claim '{JwtClaimTypes.Subject}"));
             var id = user.FindFirst(JwtClaimTypes.Subject)?.Value;
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException(nameof(user), new SecurityException($"The specified user does not defined the required claim '{JwtClaimTypes.Subject}"));

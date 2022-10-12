@@ -7,7 +7,7 @@ namespace OpenHumanTask.Runtime.Api.Controllers
     /// <summary>
     /// Represents the API controller used to manage human tasks
     /// </summary>
-    [Route("api/v1/tasks/templates")]
+    [Route("api/v1/tasks")]
     public class HumanTasksController
         : ApiController
     {
@@ -27,10 +27,10 @@ namespace OpenHumanTask.Runtime.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public virtual async Task<IActionResult> Create([FromBody] Integration.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand command, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Create([FromBody] Integration.Commands.HumanTasks.CreateHumanTaskCommand command, CancellationToken cancellationToken)
         {
             if (!this.ModelState.IsValid) return this.BadRequest(this.ModelState);
-            return this.Process(await this.Mediator.ExecuteAsync(this.Mapper.Map<Application.Commands.HumanTaskTemplates.CreateHumanTaskTemplateCommand>(command), cancellationToken));
+            return this.Process(await this.Mediator.ExecuteAsync(this.Mapper.Map<Application.Commands.HumanTasks.CreateHumanTaskCommand>(command), cancellationToken), (int)HttpStatusCode.Created);
         }
 
         /// <summary>
@@ -64,6 +64,24 @@ namespace OpenHumanTask.Runtime.Api.Controllers
         public async Task<IActionResult> Get(ODataQueryOptions<Integration.Models.HumanTask> queryOptions, CancellationToken cancellationToken)
         {
             return this.Process(await this.Mediator.ExecuteAsync(new Application.Queries.Generic.FilterQuery<Integration.Models.HumanTask>(queryOptions), cancellationToken));
+        }
+
+
+        /// <summary>
+        /// Deletes the human task with the specified id
+        /// </summary>
+        /// <param name="id">The id of the human task to delete</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
+        /// <returns>A new <see cref="IActionResult"/></returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Integration.Models.HumanTaskTemplate), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
+        {
+            return this.Process(await this.Mediator.ExecuteAsync(new Application.Commands.Generic.DeleteCommand<Domain.Models.HumanTask, string>(id), cancellationToken));
         }
 
     }

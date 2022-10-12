@@ -104,11 +104,11 @@ namespace OpenHumanTask.Runtime.Application.Commands.PeopleAssignments
             if (expressionEvaluator == null) throw HumanTaskDomainExceptions.RuntimeExpressionLanguageNotSupported(command.Context.ExpressionLanguage);
             var resolvedGroups = this.ResolveLogicalGroups(command.Context, expressionEvaluator, availableUsers, resolvedUsers, command.PeopleAssignments.Groups);
             this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.PotentialInitiators);
-            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.PotentialOwners);
-            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.ExcludedOwners);
-            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.Stakeholders);
-            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.BusinessAdministrators);
-            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialInitiator, command.PeopleAssignments.NotificationRecipients);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.PotentialOwner, command.PeopleAssignments.PotentialOwners);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.ExcludedOwner, command.PeopleAssignments.ExcludedOwners);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.Stakeholder, command.PeopleAssignments.Stakeholders);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.BusinessAdministrator, command.PeopleAssignments.BusinessAdministrators);
+            this.ResolveAssignmentsTo(command.Context, expressionEvaluator, availableUsers, resolvedUsers, resolvedGroups, GenericHumanRole.NotificationRecipient, command.PeopleAssignments.NotificationRecipients);
             return this.Ok(new Domain.Models.PeopleAssignments
             (
                 user, 
@@ -168,7 +168,11 @@ namespace OpenHumanTask.Runtime.Application.Commands.PeopleAssignments
             if (availableUsers == null) throw new ArgumentNullException(nameof(availableUsers));
             if (resolvedUsers == null) throw new ArgumentNullException(nameof(resolvedUsers));
             if (resolvedGroups == null) throw new ArgumentNullException(nameof(resolvedGroups));
-            if (peopleReferences == null) return;
+            if (peopleReferences == null)
+            {
+                if (!resolvedUsers.ContainsKey(role)) resolvedUsers[role] = new();
+                return;
+            }
             var users = new List<UserReference>();
             foreach (var peopleReference in peopleReferences)
             {

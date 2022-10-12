@@ -18,3 +18,5 @@ global using OpenHumanTask.Sdk.Models;
 global using System.ComponentModel;
 global using System.Runtime.Serialization;
 global using System.Text.Json.Serialization;
+global using System.Text.Json.Serialization.Converters;
+global using YamlDotNet.Serialization;

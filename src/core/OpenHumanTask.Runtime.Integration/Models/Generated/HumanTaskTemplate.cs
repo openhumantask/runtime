@@ -36,6 +36,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The user that has created the HumanTaskTemplate
 		/// </summary>
 		[DataMember(Name = "createdBy", Order = 1)]
+		[JsonPropertyName("createdBy")]
+		[YamlMember(Alias = "createdBy")]
 		[Description("The user that has created the HumanTaskTemplate")]
 		public virtual UserReference CreatedBy { get; set; }
 
@@ -43,6 +45,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTaskDefinition of templated HumanTasks
 		/// </summary>
 		[DataMember(Name = "definition", Order = 2)]
+		[JsonPropertyName("definition")]
+		[YamlMember(Alias = "definition")]
 		[Description("The HumanTaskDefinition of templated HumanTasks")]
 		public virtual HumanTaskDefinition Definition { get; set; }
 

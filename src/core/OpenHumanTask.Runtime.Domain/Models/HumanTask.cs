@@ -22,7 +22,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
     /// </summary>
     [DataTransferObjectType(typeof(Integration.Models.HumanTask))]
     public class HumanTask
-        : AggregateRoot<string>
+        : AggregateRoot<string>, IDeletable
     {
 
         /// <summary>

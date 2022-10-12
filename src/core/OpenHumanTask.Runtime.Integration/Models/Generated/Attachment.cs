@@ -35,6 +35,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The id of the user that has created the Attachment
 		/// </summary>
 		[DataMember(Name = "author", Order = 1)]
+		[JsonPropertyName("author")]
+		[YamlMember(Alias = "author")]
 		[Description("The id of the user that has created the Attachment")]
 		public virtual UserReference Author { get; set; }
 
@@ -42,6 +44,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The Attachment's name
 		/// </summary>
 		[DataMember(Name = "name", Order = 2)]
+		[JsonPropertyName("name")]
+		[YamlMember(Alias = "name")]
 		[Description("The Attachment's name")]
 		public virtual string Name { get; set; }
 
@@ -49,6 +53,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The Attachment's content type
 		/// </summary>
 		[DataMember(Name = "contentType", Order = 3)]
+		[JsonPropertyName("contentType")]
+		[YamlMember(Alias = "contentType")]
 		[Description("The Attachment's content type")]
 		public virtual string ContentType { get; set; }
 

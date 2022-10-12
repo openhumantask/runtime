@@ -16,17 +16,18 @@ using System.Security.Claims;
 
 namespace OpenHumanTask.Runtime.Application.Services
 {
+
     /// <summary>
     /// Represents the default implementation of the <see cref="IUserManager"/> interface
     /// </summary>
     public class InMemoryUserManager
-        : IUserManager
+        : List<ClaimsIdentity>, IUserManager
     {
 
         /// <inheritdoc/>
-        public Task<List<ClaimsIdentity>> ListUsersAsync(CancellationToken cancellationToken = default)
+        public async Task<List<ClaimsIdentity>> ListUsersAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException(); //todo
+            return await Task.FromResult(this);
         }
 
     }

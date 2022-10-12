@@ -36,6 +36,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The id of the HumanTask's HumanTaskTemplate
 		/// </summary>
 		[DataMember(Name = "definitionId", Order = 1)]
+		[JsonPropertyName("definitionId")]
+		[YamlMember(Alias = "definitionId")]
 		[Description("The id of the HumanTask's HumanTaskTemplate")]
 		public virtual string DefinitionId { get; set; }
 
@@ -43,6 +45,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's key
 		/// </summary>
 		[DataMember(Name = "key", Order = 2)]
+		[JsonPropertyName("key")]
+		[YamlMember(Alias = "key")]
 		[Description("The HumanTask's key")]
 		public virtual string Key { get; set; }
 
@@ -50,6 +54,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's status
 		/// </summary>
 		[DataMember(Name = "status", Order = 3)]
+		[JsonPropertyName("status")]
+		[YamlMember(Alias = "status")]
 		[Description("The HumanTask's status")]
 		public virtual HumanTaskStatus Status { get; set; }
 
@@ -57,6 +63,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The people assigned to the HumanTask
 		/// </summary>
 		[DataMember(Name = "peopleAssignments", Order = 4)]
+		[JsonPropertyName("peopleAssignments")]
+		[YamlMember(Alias = "peopleAssignments")]
 		[Description("The people assigned to the HumanTask")]
 		public virtual PeopleAssignments PeopleAssignments { get; set; }
 
@@ -64,6 +72,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's priority
 		/// </summary>
 		[DataMember(Name = "priority", Order = 5)]
+		[JsonPropertyName("priority")]
+		[YamlMember(Alias = "priority")]
 		[Description("The HumanTask's priority")]
 		public virtual int Priority { get; set; }
 
@@ -71,6 +81,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// A boolean indicating whether or not the HumanTask can be skipped
 		/// </summary>
 		[DataMember(Name = "skipable", Order = 6)]
+		[JsonPropertyName("skipable")]
+		[YamlMember(Alias = "skipable")]
 		[Description("A boolean indicating whether or not the HumanTask can be skipped")]
 		public virtual bool Skipable { get; set; }
 
@@ -78,6 +90,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyDictionary that contains the HumanTask's localized title language/value pairs
 		/// </summary>
 		[DataMember(Name = "title", Order = 7)]
+		[JsonPropertyName("title")]
+		[YamlMember(Alias = "title")]
 		[Description("An IReadOnlyDictionary that contains the HumanTask's localized title language/value pairs")]
 		public virtual Dictionary<string, string> Title { get; set; }
 
@@ -85,6 +99,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyDictionary that contains the HumanTask's localized subject language/value pairs
 		/// </summary>
 		[DataMember(Name = "subject", Order = 8)]
+		[JsonPropertyName("subject")]
+		[YamlMember(Alias = "subject")]
 		[Description("An IReadOnlyDictionary that contains the HumanTask's localized subject language/value pairs")]
 		public virtual Dictionary<string, string> Subject { get; set; }
 
@@ -92,6 +108,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyDictionary that contains the HumanTask's localized description language/value pairs
 		/// </summary>
 		[DataMember(Name = "description", Order = 9)]
+		[JsonPropertyName("description")]
+		[YamlMember(Alias = "description")]
 		[Description("An IReadOnlyDictionary that contains the HumanTask's localized description language/value pairs")]
 		public virtual Dictionary<string, string> Description { get; set; }
 
@@ -99,6 +117,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's input
 		/// </summary>
 		[DataMember(Name = "input", Order = 10)]
+		[JsonPropertyName("input"), JsonConverter(typeof(JsonElementConverter))]
+		[YamlMember(Alias = "input")]
 		[Description("The HumanTask's input")]
 		public virtual object Input { get; set; }
 
@@ -106,6 +126,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's output
 		/// </summary>
 		[DataMember(Name = "output", Order = 11)]
+		[JsonPropertyName("output"), JsonConverter(typeof(JsonElementConverter))]
+		[YamlMember(Alias = "output")]
 		[Description("The HumanTask's output")]
 		public virtual object Output { get; set; }
 
@@ -113,6 +135,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The HumanTask's outcome
 		/// </summary>
 		[DataMember(Name = "outcome", Order = 12)]
+		[JsonPropertyName("outcome"), JsonConverter(typeof(JsonElementConverter))]
+		[YamlMember(Alias = "outcome")]
 		[Description("The HumanTask's outcome")]
 		public virtual object Outcome { get; set; }
 
@@ -120,6 +144,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The name of the completion behavior that allowed the HumanTask's completion, if any
 		/// </summary>
 		[DataMember(Name = "completionBehaviorName", Order = 13)]
+		[JsonPropertyName("completionBehaviorName")]
+		[YamlMember(Alias = "completionBehaviorName")]
 		[Description("The name of the completion behavior that allowed the HumanTask's completion, if any")]
 		public virtual string CompletionBehaviorName { get; set; }
 
@@ -127,6 +153,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The date and time at which the HumanTask has started
 		/// </summary>
 		[DataMember(Name = "startedAt", Order = 14)]
+		[JsonPropertyName("startedAt")]
+		[YamlMember(Alias = "startedAt")]
 		[Description("The date and time at which the HumanTask has started")]
 		public virtual DateTimeOffset? StartedAt { get; set; }
 
@@ -134,6 +162,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The date and time at which the HumanTask has been completed
 		/// </summary>
 		[DataMember(Name = "completedAt", Order = 15)]
+		[JsonPropertyName("completedAt")]
+		[YamlMember(Alias = "completedAt")]
 		[Description("The date and time at which the HumanTask has been completed")]
 		public virtual DateTimeOffset? CompletedAt { get; set; }
 
@@ -141,6 +171,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's Subtasks
 		/// </summary>
 		[DataMember(Name = "subtasks", Order = 16)]
+		[JsonPropertyName("subtasks")]
+		[YamlMember(Alias = "subtasks")]
 		[Description("An IReadOnlyCollection containing the HumanTask's Subtasks")]
 		public virtual List<Subtask> Subtasks { get; set; }
 
@@ -148,6 +180,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's Attachments
 		/// </summary>
 		[DataMember(Name = "attachments", Order = 17)]
+		[JsonPropertyName("attachments")]
+		[YamlMember(Alias = "attachments")]
 		[Description("An IReadOnlyCollection containing the HumanTask's Attachments")]
 		public virtual List<Attachment> Attachments { get; set; }
 
@@ -155,6 +189,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's Comments
 		/// </summary>
 		[DataMember(Name = "comments", Order = 18)]
+		[JsonPropertyName("comments")]
+		[YamlMember(Alias = "comments")]
 		[Description("An IReadOnlyCollection containing the HumanTask's Comments")]
 		public virtual List<Comment> Comments { get; set; }
 
@@ -162,6 +198,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// An IReadOnlyCollection containing the HumanTask's Faults
 		/// </summary>
 		[DataMember(Name = "faults", Order = 19)]
+		[JsonPropertyName("faults")]
+		[YamlMember(Alias = "faults")]
 		[Description("An IReadOnlyCollection containing the HumanTask's Faults")]
 		public virtual List<Fault> Faults { get; set; }
 

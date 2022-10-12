@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.OData.Query.Expressions;
 using OpenHumanTask.Runtime.Application;
 using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Runtime.Infrastructure.Services;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var searchBinder = new ODataSearchBinder();
@@ -10,6 +12,11 @@ var searchBinder = new ODataSearchBinder();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddSingleton<ISearchBinder>(searchBinder);
 builder.Services.AddControllers()
+    .AddJsonOptions(json =>
+    {
+        json.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+        json.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    })
     .AddOData((options, provider) =>
     {
         var builder = provider.GetRequiredService<IEdmModelBuilder>();

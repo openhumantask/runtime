@@ -23,7 +23,8 @@ namespace OpenHumanTask
         /// <summary>
         /// Deletes the objects
         /// </summary>
-        void Delete();
+        /// <param name="user">The user deleting the object</param>
+        void Delete(UserReference user);
 
     }
 

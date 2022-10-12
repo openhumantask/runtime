@@ -34,6 +34,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's runtime expression language
 		/// </summary>
 		[DataMember(Name = "expressionLanguage", Order = 1)]
+		[JsonPropertyName("expressionLanguage")]
+		[YamlMember(Alias = "expressionLanguage")]
 		[Description("Gets/sets the HumanTask's runtime expression language")]
 		public virtual string ExpressionLanguage { get; set; }
 
@@ -41,6 +43,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's id
 		/// </summary>
 		[DataMember(Name = "id", Order = 2)]
+		[JsonPropertyName("id")]
+		[YamlMember(Alias = "id")]
 		[Description("Gets/sets the HumanTask's id")]
 		public virtual string Id { get; set; }
 
@@ -48,6 +52,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's key
 		/// </summary>
 		[DataMember(Name = "key", Order = 3)]
+		[JsonPropertyName("key")]
+		[YamlMember(Alias = "key")]
 		[Description("Gets/sets the HumanTask's key")]
 		public virtual string Key { get; set; }
 
@@ -55,6 +61,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the id of the HumanTask's HumanTaskDefinition
 		/// </summary>
 		[DataMember(Name = "definitionId", Order = 4)]
+		[JsonPropertyName("definitionId")]
+		[YamlMember(Alias = "definitionId")]
 		[Description("Gets/sets the id of the HumanTask's HumanTaskDefinition")]
 		public virtual string DefinitionId { get; set; }
 
@@ -62,6 +70,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's status
 		/// </summary>
 		[DataMember(Name = "status", Order = 5)]
+		[JsonPropertyName("status")]
+		[YamlMember(Alias = "status")]
 		[Description("Gets/sets the HumanTask's status")]
 		public virtual HumanTaskStatus Status { get; set; }
 
@@ -69,6 +79,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's priority
 		/// </summary>
 		[DataMember(Name = "priority", Order = 6)]
+		[JsonPropertyName("priority")]
+		[YamlMember(Alias = "priority")]
 		[Description("Gets/sets the HumanTask's priority")]
 		public virtual int? Priority { get; set; }
 
@@ -76,6 +88,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's localized titles mapped by their language two-letter ISO 639-1 code
 		/// </summary>
 		[DataMember(Name = "title", Order = 7)]
+		[JsonPropertyName("title")]
+		[YamlMember(Alias = "title")]
 		[Description("Gets/sets the HumanTask's localized titles mapped by their language two-letter ISO 639-1 code")]
 		public virtual Dictionary<string, string> Title { get; set; }
 
@@ -83,6 +97,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's localized subjects mapped by their language two-letter ISO 639-1 code
 		/// </summary>
 		[DataMember(Name = "subject", Order = 8)]
+		[JsonPropertyName("subject")]
+		[YamlMember(Alias = "subject")]
 		[Description("Gets/sets the HumanTask's localized subjects mapped by their language two-letter ISO 639-1 code")]
 		public virtual Dictionary<string, string> Subject { get; set; }
 
@@ -90,6 +106,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's localized descriptions mapped by their language two-letter ISO 639-1 code
 		/// </summary>
 		[DataMember(Name = "description", Order = 9)]
+		[JsonPropertyName("description")]
+		[YamlMember(Alias = "description")]
 		[Description("Gets/sets the HumanTask's localized descriptions mapped by their language two-letter ISO 639-1 code")]
 		public virtual Dictionary<string, string> Description { get; set; }
 
@@ -97,6 +115,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's PeopleAssignments
 		/// </summary>
 		[DataMember(Name = "peopleAssignments", Order = 10)]
+		[JsonPropertyName("peopleAssignments")]
+		[YamlMember(Alias = "peopleAssignments")]
 		[Description("Gets/sets the HumanTask's PeopleAssignments")]
 		public virtual PeopleAssignments PeopleAssignments { get; set; }
 
@@ -104,6 +124,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's input data
 		/// </summary>
 		[DataMember(Name = "inputData", Order = 11)]
+		[JsonPropertyName("inputData"), JsonConverter(typeof(JsonElementConverter))]
+		[YamlMember(Alias = "inputData")]
 		[Description("Gets/sets the HumanTask's input data")]
 		public virtual object InputData { get; set; }
 
@@ -111,6 +133,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's output data
 		/// </summary>
 		[DataMember(Name = "outputData", Order = 12)]
+		[JsonPropertyName("outputData"), JsonConverter(typeof(JsonElementConverter))]
+		[YamlMember(Alias = "outputData")]
 		[Description("Gets/sets the HumanTask's output data")]
 		public virtual object OutputData { get; set; }
 
@@ -118,6 +142,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's Comments
 		/// </summary>
 		[DataMember(Name = "comments", Order = 13)]
+		[JsonPropertyName("comments")]
+		[YamlMember(Alias = "comments")]
 		[Description("Gets/sets the HumanTask's Comments")]
 		public virtual List<Comment> Comments { get; set; }
 
@@ -125,6 +151,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// Gets/sets the HumanTask's Attachments
 		/// </summary>
 		[DataMember(Name = "attachments", Order = 14)]
+		[JsonPropertyName("attachments")]
+		[YamlMember(Alias = "attachments")]
 		[Description("Gets/sets the HumanTask's Attachments")]
 		public virtual List<Attachment> Attachments { get; set; }
 

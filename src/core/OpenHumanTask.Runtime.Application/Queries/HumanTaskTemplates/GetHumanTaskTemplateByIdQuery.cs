@@ -36,7 +36,7 @@ namespace OpenHumanTask.Runtime.Application.Queries.HumanTaskTemplates
         /// Initializes a new <see cref="GetHumanTaskTemplateByIdQuery"/>
         /// </summary>
         /// <param name="reference">The reference of the <see cref="HumanTaskTemplate"/> to get</param>
-        public GetHumanTaskTemplateByIdQuery(TaskDefinitionReference reference)
+        public GetHumanTaskTemplateByIdQuery(HumanTaskDefinitionReference reference)
         {
             this.Reference = reference;
         }
@@ -44,7 +44,7 @@ namespace OpenHumanTask.Runtime.Application.Queries.HumanTaskTemplates
         /// <summary>
         /// Gets the reference of the <see cref="HumanTaskTemplate"/> to get
         /// </summary>
-        public virtual TaskDefinitionReference Reference { get; protected set; } = null!;
+        public virtual HumanTaskDefinitionReference Reference { get; protected set; } = null!;
 
     }
 

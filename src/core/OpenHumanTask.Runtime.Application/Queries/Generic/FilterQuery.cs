@@ -18,7 +18,6 @@
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Query.Expressions;
 using Microsoft.OData.Edm;
-using OpenHumanTask.Runtime.Integration.Models;
 using System.Collections;
 using System.Linq.Expressions;
 
@@ -30,7 +29,7 @@ namespace OpenHumanTask.Runtime.Application.Queries.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of <see cref="IEntity"/>The type of entities to query</typeparam>
     public class FilterQuery<TEntity>
-        : Query<QueryResult<TEntity>>
+        : Query<List<TEntity>>
         where TEntity : class, IIdentifiable
     {
 
@@ -64,7 +63,7 @@ namespace OpenHumanTask.Runtime.Application.Queries.Generic
     /// <typeparam name="TEntity">The type of entity to filter</typeparam>
     public class FilterQueryHandler<TEntity>
         : QueryHandlerBase<TEntity>,
-        IQueryHandler<FilterQuery<TEntity>, QueryResult<TEntity>>
+        IQueryHandler<FilterQuery<TEntity>, List<TEntity>>
         where TEntity : class, IIdentifiable
     {
 
@@ -87,7 +86,7 @@ namespace OpenHumanTask.Runtime.Application.Queries.Generic
         protected IEdmModel EdmModel { get; }
 
         /// <inheritdoc/>
-        public virtual async Task<IOperationResult<QueryResult<TEntity>>> HandleAsync(FilterQuery<TEntity> query, CancellationToken cancellationToken = default)
+        public virtual async Task<IOperationResult<List<TEntity>>> HandleAsync(FilterQuery<TEntity> query, CancellationToken cancellationToken = default)
         {
             var toFilter = (await this.Repository.ToListAsync(cancellationToken)).AsQueryable();
             if (query.Options?.Search != null)
@@ -95,29 +94,10 @@ namespace OpenHumanTask.Runtime.Application.Queries.Generic
                 var searchExpression = (Expression<Func<TEntity, bool>>)this.SearchBinder.BindSearch(query.Options.Search.SearchClause, new(this.EdmModel, new(), typeof(TEntity)));
                 toFilter = toFilter.Where(searchExpression);
             }
-
-            var options = query.Options;
-            if (options != null)
-                options = options.WithoutPaging();
-            var filtered = options?.ApplyTo(toFilter);
+            var filtered = query.Options?.ApplyTo(toFilter);
             if (filtered == null)
                 filtered = toFilter;
-            var totalCount = toFilter.Count();
-            var totalResultCount = filtered.Count();
-            if (query.Options != null)
-                options = query.Options.WithPagingOnly();
-            if (options == null && filtered.Count() > 50)
-                filtered = toFilter.Take(50);
-            else
-                filtered = options?.ApplyTo(toFilter);
-            var resultsCount = (short)filtered.Count();
-            var resultsPerPage = (short)(options?.Top == null ? 50 : options.Top.Value);
-            if (resultsPerPage > 50) resultsPerPage = 50;
-            var skippedCount = options?.Skip == null ? 0 : options.Skip.Value;
-            var totalPages = totalResultCount / resultsPerPage;
-            var page = skippedCount / resultsPerPage;
-            if (page < 1) page = 1;
-            return this.Ok(new(page, totalPages, resultsPerPage, resultsCount, totalResultCount, totalCount, filtered!.OfType<TEntity>().ToList()));
+            return this.Ok(filtered.OfType<TEntity>().ToList());
         }
 
     }

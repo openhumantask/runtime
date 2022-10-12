@@ -33,11 +33,17 @@ namespace OpenHumanTask.Runtime.Domain.Events.HumanTaskTemplates
         /// Initializes a new <see cref="HumanTaskTemplateDeletedDomainEvent"/>
         /// </summary>
         /// <param name="id">The id of the deleted <see cref="HumanTask"/></param>
-        public HumanTaskTemplateDeletedDomainEvent(string id)
+        /// <param name="user">The user that has deleted the <see cref="HumanTask"/></param>
+        public HumanTaskTemplateDeletedDomainEvent(string id, UserReference user)
             : base(id)
         {
-
+            this.User = user;
         }
+
+        /// <summary>
+        /// Gets the user that has deleted the <see cref="HumanTask"/>
+        /// </summary>
+        public virtual UserReference User { get; protected set; } = null!;
 
     }
 

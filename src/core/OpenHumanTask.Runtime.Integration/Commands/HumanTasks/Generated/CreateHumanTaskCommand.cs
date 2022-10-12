@@ -36,7 +36,7 @@ namespace OpenHumanTask.Runtime.Integration.Commands.HumanTasks
 		/// </summary>
 		[DataMember(Name = "definitionReference", Order = 1)]
 		[Description("An object used to reference the HumanTaskDefinition to instanciate")]
-		public virtual TaskDefinitionReference DefinitionReference { get; set; }
+		public virtual HumanTaskDefinitionReference DefinitionReference { get; set; }
 
 		/// <summary>
 		/// The key of the HumanTask. Overrides possible values set by the HumanTaskDefinition.

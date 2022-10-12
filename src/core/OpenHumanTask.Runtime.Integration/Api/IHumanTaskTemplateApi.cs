@@ -26,10 +26,10 @@ namespace OpenHumanTask.Runtime.Integration.Api
         /// <summary>
         /// Gets the referenced <see cref="HumanTaskTemplate"/>
         /// </summary>
-        /// <param name="reference">The <see cref="TaskDefinitionReference"/> used to reference the <see cref="HumanTaskTemplate"/> to get</param>
+        /// <param name="reference">The <see cref="HumanTaskDefinitionReference"/> used to reference the <see cref="HumanTaskTemplate"/> to get</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
         /// <returns>The referenced <see cref="HumanTaskTemplate"/></returns>
-        Task<HumanTaskTemplate> GetByReferenceAsync(TaskDefinitionReference reference, CancellationToken cancellationToken = default);
+        Task<HumanTaskTemplate> GetByReferenceAsync(HumanTaskDefinitionReference reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the <see cref="HumanTaskTemplate"/>s matching the specified ODATA query
@@ -37,7 +37,7 @@ namespace OpenHumanTask.Runtime.Integration.Api
         /// <param name="query">The ODATA query to perform</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
         /// <returns>A new object that describes the result of the query</returns>
-        Task<QueryResult<HumanTaskTemplate>> GetAsync(string? query = null, CancellationToken cancellationToken = default);
+        Task<List<HumanTaskTemplate>> GetAsync(string? query = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new <see cref="HumanTaskTemplate"/>
@@ -50,10 +50,10 @@ namespace OpenHumanTask.Runtime.Integration.Api
         /// <summary>
         /// Deletes the referenced <see cref="HumanTaskTemplate"/>
         /// </summary>
-        /// <param name="reference">The <see cref="TaskDefinitionReference"/> used to reference the <see cref="HumanTaskTemplate"/> to delete</param>
+        /// <param name="reference">The <see cref="HumanTaskDefinitionReference"/> used to reference the <see cref="HumanTaskTemplate"/> to delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
         /// <returns>A new awaitable <see cref="Task"/></returns>
-        Task DeleteAsync(TaskDefinitionReference reference, CancellationToken cancellationToken = default);
+        Task DeleteAsync(HumanTaskDefinitionReference reference, CancellationToken cancellationToken = default);
 
     }
 

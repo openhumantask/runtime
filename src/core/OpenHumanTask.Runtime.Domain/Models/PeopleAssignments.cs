@@ -51,7 +51,7 @@ namespace OpenHumanTask.Runtime.Domain.Models
             this._stakeholders = stakeholders?.ToList();
             this._businessAdministrators = businessAdministrators?.ToList();
             this._notificationRecipients = notificationRecipients?.ToList();
-            this._logicalGroups = logicalGroups?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            this._groups = logicalGroups?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         [Newtonsoft.Json.JsonProperty(nameof(PotentialInitiators))]
@@ -124,11 +124,11 @@ namespace OpenHumanTask.Runtime.Domain.Models
         [JsonIgnore]
         public virtual IReadOnlyCollection<UserReference>? NotificationRecipients => this._notificationRecipients?.AsReadOnly();
 
-        private Dictionary<string, List<UserReference>>? _logicalGroups;
+        private Dictionary<string, List<UserReference>>? _groups;
         /// <summary>
         /// Gets an <see cref="IReadOnlyDictionary{TKey, TValue}"/> containing the name/users pairs of the <see cref="HumanTask"/>'s logical people groups
         /// </summary>
-        public virtual IReadOnlyDictionary<string, List<UserReference>>? LogicalGroups => this._logicalGroups?.AsReadOnly();
+        public virtual IReadOnlyDictionary<string, List<UserReference>>? Groups => this._groups?.AsReadOnly();
 
         /// <summary>
         /// Sets the <see cref="HumanTask"/>'s actual owner 

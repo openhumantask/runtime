@@ -1,17 +1,4 @@
-﻿// Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License")
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
+﻿
 /*
  * Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
  * <p>
@@ -48,6 +35,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The Comment's author
 		/// </summary>
 		[DataMember(Name = "authorId", Order = 1)]
+		[JsonPropertyName("authorId")]
+		[YamlMember(Alias = "authorId")]
 		[Description("The Comment's author")]
 		public virtual UserReference AuthorId { get; set; }
 
@@ -55,6 +44,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The user that has last modified the Comment
 		/// </summary>
 		[DataMember(Name = "lastModifiedBy", Order = 2)]
+		[JsonPropertyName("lastModifiedBy")]
+		[YamlMember(Alias = "lastModifiedBy")]
 		[Description("The user that has last modified the Comment")]
 		public virtual UserReference LastModifiedBy { get; set; }
 
@@ -62,6 +53,8 @@ namespace OpenHumanTask.Runtime.Integration.Models
 		/// The Comment's Markdown (MD) content
 		/// </summary>
 		[DataMember(Name = "content", Order = 3)]
+		[JsonPropertyName("content")]
+		[YamlMember(Alias = "content")]
 		[Description("The Comment's Markdown (MD) content")]
 		public virtual string Content { get; set; }
 
