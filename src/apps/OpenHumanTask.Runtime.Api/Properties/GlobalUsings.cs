@@ -13,5 +13,13 @@
 // limitations under the License.
 
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.OData;
+global using Microsoft.AspNetCore.OData.Query.Expressions;
+global using Neuroglia.Eventing;
 global using Neuroglia.Mapping;
 global using Neuroglia.Mediation;
+global using OpenHumanTask.Runtime.Application;
+global using OpenHumanTask.Runtime.Application.Services;
+global using OpenHumanTask.Runtime.Infrastructure.Services;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;

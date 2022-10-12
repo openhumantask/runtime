@@ -7,7 +7,7 @@ namespace OpenHumanTask.Runtime.Api.Controllers
     /// <summary>
     /// Represents the API controller used to manage human tasks
     /// </summary>
-    [Route("api/v1/tasks")]
+    [Route("api/v1/tasks/instances")]
     public class HumanTasksController
         : ApiController
     {

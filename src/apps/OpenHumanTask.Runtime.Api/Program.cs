@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.OData;
-using Microsoft.AspNetCore.OData.Query.Expressions;
-using OpenHumanTask.Runtime.Application;
-using OpenHumanTask.Runtime.Application.Services;
-using OpenHumanTask.Runtime.Infrastructure.Services;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
+using OpenHumanTask.Runtime.Application.Mapping;
+using OpenHumanTask.Runtime.Integration.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 var searchBinder = new ODataSearchBinder();
@@ -27,14 +24,49 @@ builder.Services.AddControllers()
         options.RouteOptions.EnablePropertyNameCaseInsensitive = true;
     });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(swagger =>
+builder.Services.AddSwaggerGen(builder =>
 {
-    swagger.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+    builder.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+    builder.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Open Human Task Runtime API",
+        Version = "v1",
+        Description = "The Open API documentation for the Open Human Task Runtime API",
+        Contact = new()
+        {
+            Name = "The Open Human Task Specification Authors",
+            Url = new Uri("https://openhumantask.io/")
+        }
+    });
+    builder.IncludeXmlComments(typeof(MappingProfile).Assembly.Location.Replace(".dll", ".xml"));
+    builder.IncludeXmlComments(typeof(HumanTask).Assembly.Location.Replace(".dll", ".xml"));
 });
 
 var app = builder.Build();
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+    app.UseWebAssemblyDebugging();
+else
+    app.UseExceptionHandler("/error");
+app.UseCloudEvents();
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+app.UseODataRouteDebug();
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers().RequireAuthorization();
+app.UseSwagger(builder =>
+{
+    builder.RouteTemplate = "api/{documentName}/doc/oas.{json|yaml}";
+});
+app.UseSwaggerUI(builder =>
+{
+    builder.DocExpansion(DocExpansion.None);
+    builder.SwaggerEndpoint("/api/v1/doc/oas.json", "Open Human Task  Runtime API v1");
+    builder.RoutePrefix = "api/doc";
+});
+app.MapControllers()
+    .RequireAuthorization();
+app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("/tasks/{param?}", "index.html");
+app.MapFallbackToFile("/tasks/definitions/{param?}", "index.html");
 await app.RunAsync();

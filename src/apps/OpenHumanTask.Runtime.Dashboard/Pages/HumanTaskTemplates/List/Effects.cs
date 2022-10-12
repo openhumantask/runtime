@@ -16,9 +16,17 @@
         /// <returns>A new awaitable <see cref="Task"/></returns>
         public static async Task On(QueryHumanTaskTemplates action, IEffectContext context)
         {
-            var api = context.Services.GetRequiredService<IOpenHumanTaskRuntimeApiClient>();
-            var results = await api.HumanTaskTemplates.GetAsync(action.Query);
-            context.Dispatcher.Dispatch(new HandleHumanTaskTemplateQueryResults(results));
+            try
+            {
+                var api = context.Services.GetRequiredService<IOpenHumanTaskRuntimeApiClient>();
+                var results = await api.HumanTaskTemplates.GetAsync(action.Query);
+                context.Dispatcher.Dispatch(new HandleHumanTaskTemplateQueryResults(results));
+            }
+            catch(Exception ex)
+            {
+                var logger = context.Services.GetRequiredService<ILogger<QueryHumanTaskTemplates>>();
+                logger.LogError(ex.ToString());
+            }
         }
 
     }

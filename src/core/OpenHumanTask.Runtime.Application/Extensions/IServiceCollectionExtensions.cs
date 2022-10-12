@@ -58,7 +58,13 @@ namespace OpenHumanTask.Runtime.Application
             readModelTypes = readModelTypes.Distinct().ToList();
 
             services.Configure<ApplicationOptions>(configuration);
-            services.AddLogging();
+            services.AddLogging(builder =>
+            {
+                builder.AddSimpleConsole(options =>
+                {
+                    options.TimestampFormat = "[MM/dd/yyyy HH:mm:ss] ";
+                });
+            });
             services.AddMediator(builder =>
             {
                 builder.ScanAssembly(typeof(IServiceCollectionExtensions).Assembly);

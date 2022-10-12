@@ -26,6 +26,11 @@ namespace OpenHumanTask.Runtime.Integration.Api
         /// </summary>
         IHumanTaskTemplateApi HumanTaskTemplates { get; }
 
+        /// <summary>
+        /// Gets the API used to manage <see cref="HumanTask"/>s
+        /// </summary>
+        IHumanTaskApi HumanTasks { get; }
+
     }
 
 }

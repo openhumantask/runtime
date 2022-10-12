@@ -16,13 +16,15 @@ namespace OpenHumanTask.Runtime.Integration.Api
 {
 
     /// <summary>
-    /// Defines the fundamentals of a service used to communicate with an Open Human Task Runtime API
+    /// Represents the options used to configure an <see cref="IOpenHumanTaskRuntimeApiClient"/>
     /// </summary>
-    public interface IOpenHumanTaskRuntimeApiClient
-        : IOpenHumanTaskRuntimeApi
+    public class OpenHumanTaskRuntimeApiClientOptions
     {
 
-
+        /// <summary>
+        /// Gets/sets the options used to configure the Open Human Task Runtime API server to use
+        /// </summary>
+        public OpenHumanTaskRuntimeApiServerOptions Server { get; set; } = new();
 
     }
 
