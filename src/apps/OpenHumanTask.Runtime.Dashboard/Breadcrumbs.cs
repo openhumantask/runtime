@@ -14,7 +14,7 @@ namespace OpenHumanTask.Runtime.Dashboard
         /// <summary>
         /// Gets an <see cref="IEnumerable{T}"/> containing the 'Task Definitions' breadcrumb chain
         /// </summary>
-        public static IEnumerable<IBreadcrumbItem> TaskDefinitions = new List<IBreadcrumbItem>(Home) { new BreadcrumbItem("Task Definitions", "/tasks/definitions", "bi-file-code") };
+        public static IEnumerable<IBreadcrumbItem> TaskDefinitions = new List<IBreadcrumbItem>(Home) { new BreadcrumbItem("Task Templates", "/tasks/templates", "bi-file-code") };
 
     }
 }

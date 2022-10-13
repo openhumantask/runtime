@@ -1,0 +1,63 @@
+﻿@*
+    Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*@
+
+@namespace OpenHumanTask.Runtime.Dashboard.Components
+
+<div class="form-group mb-3">
+    <div class="input-group search-box"> 
+        <div class="input-left">
+            <input class="form-control border-end-0 border rounded-2" type="text" placeholder="@PlaceHolder" value="@Term" @onchange="OnTermInputChange">
+            <button type="button" class="btn bg-transparent reset" @onclick="OnClearButtonClick">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <span class="input-group-append">
+            <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-2 ms-n3" type="button" @onclick="OnSearchButtonClick">
+                <i class="bi bi-search"></i>
+            </button>
+        </span>
+    </div>
+</div>
+@code {
+
+    [Parameter] public string? PlaceHolder { get; set; } 
+
+    [Parameter] public EventCallback<string> OnTermChange { get; set; } 
+
+    [Parameter] public EventCallback<string> OnSearch { get; set; } 
+
+    [Parameter] public EventCallback<string> OnClear { get; set; } 
+
+    public string? Term { get; private set; }
+
+    private async Task OnTermInputChange(ChangeEventArgs e)
+    {
+        this.Term = e.Value as string;
+        await this.OnSearch.InvokeAsync(this.Term);
+    }
+
+    private async Task OnSearchButtonClick(MouseEventArgs e)
+    {
+        await this.OnSearch.InvokeAsync(this.Term);
+    }
+
+    private async Task OnClearButtonClick(MouseEventArgs e)
+    {
+        this.Term = string.Empty;
+        await this.OnClear.InvokeAsync(this.Term);
+    }
+
+}

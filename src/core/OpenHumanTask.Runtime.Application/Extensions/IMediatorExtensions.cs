@@ -15,6 +15,8 @@
  *
  */
 
+using System.Security.Claims;
+
 namespace OpenHumanTask.Runtime.Application
 {
 
@@ -77,6 +79,31 @@ namespace OpenHumanTask.Runtime.Application
             if (!result.Succeeded)
                 throw new OperationException(result);
             return result.Data;
+        }
+
+        /// <summary>
+        /// Configures the specified <see cref="ClaimsPrincipal"/> to use when performing requests with the <see cref="IMediator"/>
+        /// </summary>
+        /// <param name="mediator">The <see cref="IMediator"/> to configure</param>
+        /// <param name="user">The <see cref="ClaimsPrincipal"/> to act as</param>
+        /// <returns>The configured <see cref="IMediator"/></returns>
+        public static IMediator ActAs(this IMediator mediator, ClaimsPrincipal user)
+        {
+            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            Thread.CurrentPrincipal = user;
+            return mediator;
+        }
+
+        /// <summary>
+        /// Configures the system's <see cref="ClaimsPrincipal"/> to use when performing requests with the <see cref="IMediator"/>
+        /// </summary>
+        /// <param name="mediator">The <see cref="IMediator"/> to configure</param>
+        /// <returns>The configured <see cref="IMediator"/></returns>
+        internal static IMediator ActAsSystem(this IMediator mediator)
+        {
+            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
+            return mediator.ActAs(Users.System);
         }
 
     }

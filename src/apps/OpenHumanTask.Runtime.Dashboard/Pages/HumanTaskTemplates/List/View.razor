@@ -14,16 +14,26 @@
     limitations under the License.
 *@
 
-@page "/tasks/definitions"
+@page "/tasks/templates"
 @inherits StatefulComponentBase<ListState>
 @inject NavigationManager NavigationManager
 @inject IBreadcrumbManager BreadcrumbManager
 
-<PageTitle>Task definitions</PageTitle>
+<PageTitle>Task templates</PageTitle>
 
 <Header>
-    <span class="h5 m-0 p-0">Task definitions</span>
+    <span class="h5 m-0 p-0">Task templates</span>
 </Header>
+
+<LeftMenu>
+    <button class="btn btn-outline-dark">Create new human task template</button>
+</LeftMenu>
+
+<div class="row">
+    <div class="col-6">
+        <SearchBox PlaceHolder="Search templates..." OnSearch="OnSearchHumanTaskTemplates" OnClear="OnClearHumanTaskTemplateSearch" />
+    </div>
+</div>
 
 @if(versionsPerDefinition != null)
 {
@@ -47,6 +57,10 @@
         </tbody>
     </table>
 }
+else
+{
+    <Spinner />
+}
 
 @code {
     private IDisposable? subscription;
@@ -64,6 +78,16 @@
                    .ToDictionary(g => g.Key, g => g.OrderByDescending(c => SemVersion.Parse(c.Definition.Version, SemVersionStyles.Any)).ToList())!;
                this.StateHasChanged();
            });
+        this.Dispatcher.Dispatch(new QueryHumanTaskTemplates());
+    }
+
+    void OnSearchHumanTaskTemplates(string term)
+    {
+        this.Dispatcher.Dispatch(new QueryHumanTaskTemplates(term));
+    }
+
+    void OnClearHumanTaskTemplateSearch()
+    {
         this.Dispatcher.Dispatch(new QueryHumanTaskTemplates());
     }
 

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection.PortableExecutable;
-
-namespace OpenHumanTask.Runtime.Dashboard.Services
+﻿namespace OpenHumanTask.Runtime.Dashboard.Services
 {
 
     /// <summary>
@@ -16,6 +13,8 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
         /// </summary>
         Header? Header { get; set; }
 
+        LeftMenu ? LeftMenu { get; set; }
+
         /// <summary>
         /// Gets/sets the layout's footer
         /// </summary>
@@ -25,6 +24,16 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
         /// Updates the header
         /// </summary>
         void UpdateHeader();
+
+        /// <summary>
+        /// Updates the left menu
+        /// </summary>
+        void UpdateLeftMenu();
+
+        /// <summary>
+        /// Updates the footer
+        /// </summary>
+        void UpdateFooter();
 
     }
 

@@ -14,26 +14,10 @@
     limitations under the License.
 *@
 
-@inherits LayoutComponentBase
 @namespace OpenHumanTask.Runtime.Dashboard.Components
 
-<div class="page h-100 d-flex flex-column">
-
-    <MainMenu />
-
-    <div class="main p-4 d-flex flex-column flex-grow-1">
-
-        <Breadcrumb />
-
-        <div class="w-100 flex-grow flex-lg-row flex-column d-flex">
-            <LeftMenu />
-            <div class="content flex-grow">
-                @Body
-            </div>
-        </div>
-
+<div class="text-center">
+    <div class="p-3">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="mx-3">Please wait while loading...</span>
     </div>
-    
-    <Footer />
-
 </div>

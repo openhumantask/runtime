@@ -18,6 +18,7 @@
 using Microsoft.Extensions.Options;
 using OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates;
 using OpenHumanTask.Sdk.Services.IO;
+using System.Security.Claims;
 
 namespace OpenHumanTask.Runtime.Application.Services
 {
@@ -133,7 +134,9 @@ namespace OpenHumanTask.Runtime.Application.Services
                 using var stream = File.OpenRead(filePath);
                 var definition = await this.HuamnTaskDefinitionReader.ReadAsync(stream);
                 using var scope = this.ServiceProvider.CreateScope();
-                await scope.ServiceProvider.GetRequiredService<IMediator>().ExecuteAndUnwrapAsync(new CreateHumanTaskTemplateCommand(definition, ifNotExists), this.CancellationTokenSource.Token);
+                await scope.ServiceProvider.GetRequiredService<IMediator>()
+                    .ActAsSystem()
+                    .ExecuteAndUnwrapAsync(new CreateHumanTaskTemplateCommand(definition, ifNotExists), this.CancellationTokenSource.Token);
             }
             catch (IOException ex) when (ex.HResult == -2147024864) { }
             catch (Exception ex)

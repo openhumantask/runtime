@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.IntegrationTests", "tests\OpenHumanTask.Runtime.IntegrationTests\OpenHumanTask.Runtime.IntegrationTests.csproj", "{A8DCD56F-CB02-4176-8983-223576744AF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Infrastructure", "src\core\OpenHumanTask.Runtime.Infrastructure\OpenHumanTask.Runtime.Infrastructure.csproj", "{978B7E4A-E294-4581-BB89-1F2D3A8B47CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Infrastructure", "src\core\OpenHumanTask.Runtime.Infrastructure\OpenHumanTask.Runtime.Infrastructure.csproj", "{978B7E4A-E294-4581-BB89-1F2D3A8B47CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

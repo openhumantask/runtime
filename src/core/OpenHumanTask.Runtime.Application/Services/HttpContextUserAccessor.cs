@@ -39,7 +39,7 @@ namespace OpenHumanTask.Runtime.Application.Services
         public HttpContext? HttpContext { get; }
 
         /// <inheritdoc/>
-        public ClaimsPrincipal? User => this.HttpContext?.User;
+        public ClaimsPrincipal? User => this.HttpContext?.User ?? ClaimsPrincipal.Current;
 
     }
 

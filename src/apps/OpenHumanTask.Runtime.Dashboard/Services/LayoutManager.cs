@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.ComponentModel;
 
 namespace OpenHumanTask.Runtime.Dashboard.Services
 {
@@ -35,10 +34,21 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
             }
         }
 
+        private LeftMenu? _leftMenu;
+        /// <inheritdoc/>
+        public LeftMenu? LeftMenu
+        {
+            get => this._leftMenu;
+            set
+            {
+                if (this._leftMenu == value) return;
+                this._leftMenu = value;
+                this.UpdateHeader();
+            }
+        }
+
         private Footer? _footer;
-        /// <summary>
-        /// Gets/sets the layout's footer
-        /// </summary>
+        /// <inheritdoc/>
         public Footer? Footer
         {
             get => this._footer;
@@ -54,9 +64,19 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
         public void UpdateHeader()
         {
             if (this.PropertyChanged != null)
-            {
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Header)));
-            }
+        }
+
+        public void UpdateLeftMenu()
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.LeftMenu)));
+        }
+
+        public void UpdateFooter()
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Footer)));
         }
 
     }
