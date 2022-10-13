@@ -35,15 +35,22 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates
         /// Initializes a new <see cref="CreateHumanTaskTemplateCommand"/>
         /// </summary>
         /// <param name="definition">The <see cref="HumanTaskDefinition"/> of the <see cref="HumanTaskTemplate"/> to create</param>
-        public CreateHumanTaskTemplateCommand(HumanTaskDefinition definition)
+        /// <param name="ifNotExists">A boolean indicating whether the <see cref="HumanTaskTemplate"/> should be created only if it does not already exist. Defaults to false, in which case the <see cref="HumanTaskDefinition"/> is automatically versionned</param>
+        public CreateHumanTaskTemplateCommand(HumanTaskDefinition definition, bool ifNotExists)
         {
             this.Definition = definition;
+            this.IfNotExists = ifNotExists;
         }
 
         /// <summary>
         /// Gets the <see cref="HumanTaskDefinition"/> of the <see cref="HumanTaskTemplate"/> to create
         /// </summary>
         public virtual HumanTaskDefinition Definition { get; protected set; } = null!;
+
+        /// <summary>
+        /// Gets a boolean indicating whether the <see cref="HumanTaskTemplate"/> should be created only if it does not already exist. Defaults to false, in which case the <see cref="HumanTaskDefinition"/> is automatically versionned
+        /// </summary>
+        public virtual bool IfNotExists { get; protected set; }
 
     }
 
@@ -85,6 +92,9 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates
                 if (subtask == null)
                     throw DomainException.NullReference(typeof(HumanTaskTemplate), $"Failed to find the referenced human task template '{subtaskDefinition.Task}'");
             }
+            if (command.IfNotExists
+              && await this.HumanTaskTemplates.ContainsAsync(command.Definition.Id, cancellationToken))
+                return this.NotModified();
             while (await this.HumanTaskTemplates.ContainsAsync(command.Definition.Id, cancellationToken))
             {
                 var version = SemanticVersion.Parse(command.Definition.Version);

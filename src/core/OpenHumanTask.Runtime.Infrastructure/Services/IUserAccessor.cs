@@ -26,7 +26,7 @@ namespace OpenHumanTask.Runtime.Infrastructure.Services
         /// <summary>
         /// Gets the current <see cref="ClaimsPrincipal"/>
         /// </summary>
-        ClaimsPrincipal User { get; }
+        ClaimsPrincipal? User { get; }
 
     }
 

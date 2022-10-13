@@ -55,7 +55,7 @@ namespace OpenHumanTask.Runtime.Application
             where TResult : IOperationResult<T>
         {
             var result = await mediator.ExecuteAsync(request, cancellationToken);
-            if (!result.Succeeded)
+            if (!result.Succeeded || result.Code != OperationResultCode.Ok)
                 throw new OperationException(result);
             return result.Data;
         }

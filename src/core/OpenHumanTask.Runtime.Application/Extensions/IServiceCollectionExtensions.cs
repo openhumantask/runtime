@@ -97,6 +97,7 @@ namespace OpenHumanTask.Runtime.Application
             services.AddSingleton<IPluginManager>(provider => provider.GetRequiredService<PluginManager>());
             services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<PluginManager>());
             services.AddSingleton<IUserManager, InMemoryUserManager>();
+            services.AddHostedService<DefinitionFileMonitor>();
             services.AddScoped<IRepositoryFactory, PluginBasedRepositoryFactory>();
             services.AddRepositories(writeModelTypes, ServiceLifetime.Scoped, ApplicationDataModelType.WriteModel);
             services.AddRepositories(readModelTypes, ServiceLifetime.Scoped,  ApplicationDataModelType.ReadModel);

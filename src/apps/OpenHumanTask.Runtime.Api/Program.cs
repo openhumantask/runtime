@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using Neuroglia.Caching;
 using OpenHumanTask.Runtime.Application.Mapping;
 using OpenHumanTask.Runtime.Integration.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var searchBinder = new ODataSearchBinder();
 
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddMemoryDistributedCache();
 builder.Services.AddSingleton<ISearchBinder>(searchBinder);
 builder.Services.AddControllers()
     .AddJsonOptions(json =>
@@ -52,8 +54,8 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseODataRouteDebug();
 app.UseRouting();
-app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
 app.UseSwagger(builder =>
 {
     builder.RouteTemplate = "api/{documentName}/doc/oas.{json|yaml}";
@@ -64,8 +66,8 @@ app.UseSwaggerUI(builder =>
     builder.SwaggerEndpoint("/api/v1/doc/oas.json", "Open Human Task  Runtime API v1");
     builder.RoutePrefix = "api/doc";
 });
-app.MapControllers()
-    .RequireAuthorization();
+app.MapControllers();
+    //.RequireAuthorization();
 app.MapFallbackToFile("index.html");
 app.MapFallbackToFile("/tasks/{param?}", "index.html");
 app.MapFallbackToFile("/tasks/definitions/{param?}", "index.html");

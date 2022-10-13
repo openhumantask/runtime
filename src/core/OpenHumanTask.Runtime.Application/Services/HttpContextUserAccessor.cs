@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
 namespace OpenHumanTask.Runtime.Application.Services
@@ -37,10 +36,10 @@ namespace OpenHumanTask.Runtime.Application.Services
         /// <summary>
         /// Gets the current <see cref="Microsoft.AspNetCore.Http.HttpContext"/>
         /// </summary>
-        public HttpContext HttpContext { get; }
+        public HttpContext? HttpContext { get; }
 
         /// <inheritdoc/>
-        public ClaimsPrincipal User => this.HttpContext.User;
+        public ClaimsPrincipal? User => this.HttpContext?.User;
 
     }
 

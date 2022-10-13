@@ -38,6 +38,13 @@ namespace OpenHumanTask.Runtime.Integration.Commands.HumanTaskTemplates
 		[Description("The HumanTaskDefinition of the HumanTaskTemplate to create")]
 		public virtual HumanTaskDefinition Definition { get; set; }
 
+		/// <summary>
+		/// A boolean indicating whether the HumanTaskTemplate should be created only if it does not already exist. Defaults to false, in which case the HumanTaskDefinition is automatically versionned
+		/// </summary>
+		[DataMember(Name = "ifNotExists", Order = 2)]
+		[Description("A boolean indicating whether the HumanTaskTemplate should be created only if it does not already exist. Defaults to false, in which case the HumanTaskDefinition is automatically versionned")]
+		public virtual bool IfNotExists { get; set; }
+
     }
 
 }

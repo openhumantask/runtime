@@ -25,18 +25,28 @@
     <span class="h5 m-0 p-0">Task definitions</span>
 </Header>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-
-        </tr>
-    </tbody>
-</table>
+@if(versionsPerDefinition != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Latest</th>
+                <th>Versions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var group in versionsPerDefinition)
+            {
+                <tr>
+                    <td>@group.Key</td>
+                    <td>@group.Value.First().Definition.Version</td>
+                    <td>@group.Value.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
     private IDisposable? subscription;
