@@ -13,7 +13,10 @@
         /// </summary>
         Header? Header { get; set; }
 
-        LeftMenu ? LeftMenu { get; set; }
+        /// <summary>
+        /// Gets/sets the layout's left menu
+        /// </summary>
+        LeftMenu? LeftMenu { get; set; }
 
         /// <summary>
         /// Gets/sets the layout's footer

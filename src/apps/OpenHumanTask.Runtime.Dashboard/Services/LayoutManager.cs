@@ -19,6 +19,11 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
         /// </summary>
         public RenderFragment? HeaderFragment => this.Header?.ChildContent;
 
+        /// <summary>
+        /// Gets the layout's left menu <see cref="RenderFragment"/>
+        /// </summary>
+        public RenderFragment? LeftMenuFragment => this.LeftMenu?.ChildContent;
+
         private Header? _header;
         /// <summary>
         /// Gets/sets the layout's header
@@ -43,7 +48,7 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
             {
                 if (this._leftMenu == value) return;
                 this._leftMenu = value;
-                this.UpdateHeader();
+                this.UpdateLeftMenu();
             }
         }
 
@@ -56,7 +61,7 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
             {
                 if (this._footer == value) return;
                 this._footer = value;
-                this.UpdateHeader();
+                this.UpdateFooter();
             }
         }
 
@@ -67,12 +72,14 @@ namespace OpenHumanTask.Runtime.Dashboard.Services
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Header)));
         }
 
+        /// <inheritdoc/>
         public void UpdateLeftMenu()
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.LeftMenu)));
         }
 
+        /// <inheritdoc/>
         public void UpdateFooter()
         {
             if (this.PropertyChanged != null)

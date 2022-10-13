@@ -14,37 +14,39 @@
     limitations under the License.
 *@
 
+@using System.ComponentModel
 @namespace OpenHumanTask.Runtime.Dashboard.Components
 
 @inject ILayoutManager Layout;
 @implements IDisposable
 
+@if (Layout.LeftMenu != null)
+{
+    <div class="left-sidebar ms-4">
+        @Layout.LeftMenu?.ChildContent
+    </div>
+}
+
 @code
 {
-
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        if (this.Layout != null)
-            this.Layout.LeftMenu = this;
+        await base.OnInitializedAsync();
+        this.Layout.PropertyChanged += OnLayoutChanged;
     }
 
-    protected override bool ShouldRender()
+    private void OnLayoutChanged(object? sender, PropertyChangedEventArgs e)
     {
-        var shouldRender = base.ShouldRender();
-        if (shouldRender)
-            this.Layout.UpdateLeftMenu();
-        return shouldRender;
+        if (e.PropertyName == nameof(ILayoutManager.LeftMenu))
+        {
+            this.StateHasChanged();
+        }
     }
 
     public void Dispose()
     {
         if (this.Layout != null)
-            this.Layout.LeftMenu = null;
+            this.Layout.PropertyChanged -= this.OnLayoutChanged;
         GC.SuppressFinalize(this);
     }
-
 }
