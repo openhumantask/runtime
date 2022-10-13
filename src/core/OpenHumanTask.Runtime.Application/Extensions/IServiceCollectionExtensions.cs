@@ -16,8 +16,11 @@
  */
 
 using CloudNative.CloudEvents.SystemTextJson;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Adapters;
+using Microsoft.IdentityModel.Tokens;
 using Neuroglia.Data.Expressions.JQ;
 using Neuroglia.Serialization;
 using OpenHumanTask.Runtime.Application.Commands.Generic;
@@ -27,6 +30,7 @@ using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Sdk;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
 namespace OpenHumanTask.Runtime.Application
@@ -43,8 +47,9 @@ namespace OpenHumanTask.Runtime.Application
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to configure</param>
         /// <param name="configuration">The current <see cref="IConfiguration"/></param>
+        /// <param name="environment">The current <see cref="IHostEnvironment"/></param>
         /// <returns>The configured <see cref="IServiceCollection"/></returns>
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -56,6 +61,9 @@ namespace OpenHumanTask.Runtime.Application
                 .ToList();
             readModelTypes.AddRange(TypeCacheUtil.FindFilteredTypes("syn:models-read", t => t.IsClass && !t.IsAbstract && t.TryGetCustomAttribute<ReadModelAttribute>(out _)));
             readModelTypes = readModelTypes.Distinct().ToList();
+
+            var applicationOptions = new ApplicationOptions();
+            configuration.Bind(applicationOptions);
 
             services.Configure<ApplicationOptions>(configuration);
             services.AddLogging(builder =>
@@ -89,6 +97,24 @@ namespace OpenHumanTask.Runtime.Application
                 builder.WithBrokerUri(new("https://test.com")); //todo
             });
             services.AddOpenHumanTask();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(bearer =>
+                {
+                    bearer.Authority = applicationOptions.Authentication.Authority;
+                    bearer.Audience = applicationOptions.Authentication.Audience;
+                    bearer.TokenValidationParameters = new()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = LoadJwtIssuerSigningKey(applicationOptions.Authentication.IssuerSigningKey),
+                        NameClaimType = JwtClaimTypes.Name,
+                        RoleClaimType = JwtClaimTypes.Role
+                    };
+                    if (environment.IsDevelopment())
+                        bearer.BackchannelHttpHandler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = (request, cert, chain, errors) => true };
+                });
             services.AddAuthorization();
             services.AddJQExpressionEvaluator(options => options.UseSerializer<JsonSerializer>());
             services.AddHttpContextAccessor();
@@ -177,6 +203,14 @@ namespace OpenHumanTask.Runtime.Application
                 services.AddRepository(entityType, lifetime, modelType);
             }
             return services;
+        }
+
+        private static SecurityKey LoadJwtIssuerSigningKey(string base64Key)
+        {
+            byte[] keyBytes = Convert.FromBase64String(base64Key);
+            RSA rsa = RSA.Create();
+            rsa.ImportSubjectPublicKeyInfo(keyBytes, out _);
+            return new RsaSecurityKey(rsa);
         }
 
     }

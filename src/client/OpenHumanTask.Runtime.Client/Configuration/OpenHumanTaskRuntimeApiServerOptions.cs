@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OpenHumanTask.Runtime.Integration.Api
+namespace OpenHumanTask.Runtime
 {
 
     /// <summary>
-    /// Defines the fundamentals of a service used to communicate with an Open Human Task Runtime API
+    /// Represents the options used to configure the Open Human Task Runtime API server to use
     /// </summary>
-    public interface IOpenHumanTaskRuntimeApiClient
-        : IOpenHumanTaskRuntimeApi
+    public class OpenHumanTaskRuntimeApiServerOptions
     {
 
-
+        /// <summary>
+        /// Gets/sets the base address of the Open Human Task Runtime API server to use
+        /// </summary>
+        public virtual Uri? BaseAddress { get; set; }
 
     }
 

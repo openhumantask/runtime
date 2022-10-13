@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.10" PrivateAssets="all" />
     <PackageReference Include="Neuroglia.Data.Flux.ReduxDevTools" Version="2.0.3" />
     <PackageReference Include="OData.QueryBuilder" Version="2.9.7" />
@@ -26,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\OpenHumanTask.Runtime.Integration\OpenHumanTask.Runtime.Integration.csproj" />
+    <ProjectReference Include="..\..\client\OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

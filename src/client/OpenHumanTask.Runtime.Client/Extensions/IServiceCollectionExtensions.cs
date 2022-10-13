@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenHumanTask.Runtime.Integration.Api;
 
-namespace OpenHumanTask.Runtime
+namespace OpenHumanTask.Runtime.Client
 {
+
     /// <summary>
     /// Defines extensions for <see cref="IServiceCollection"/>s
     /// </summary>
@@ -32,6 +32,8 @@ namespace OpenHumanTask.Runtime
         /// <returns>The configured <see cref="IServiceCollection"/></returns>
         public static IServiceCollection AddOpenHumanTaskRuntimeApi(this IServiceCollection services, Action<OpenHumanTaskRuntimeApiClientOptions> setupAction)
         {
+            var options = new OpenHumanTaskRuntimeApiClientOptions();
+            setupAction(options);
             services.Configure(setupAction);
             var httpConfig = (IServiceProvider provider, HttpClient http) =>
             {
@@ -41,8 +43,10 @@ namespace OpenHumanTask.Runtime
             services.AddSingleton<IOpenHumanTaskRuntimeApiClient, OpenHumanTaskRuntimeApiClient>();
             services.AddSingleton<IHumanTaskTemplateApi, HumanTaskTemplateApi>();
             services.AddSingleton<IHumanTaskApi, HumanTaskApi>();
-            services.AddHttpClient(nameof(IHumanTaskTemplateApi), httpConfig);
-            services.AddHttpClient(nameof(IHumanTaskApi), httpConfig);
+            var httpClientBuilder = services.AddHttpClient(nameof(IHumanTaskTemplateApi), httpConfig);
+            options.HttpClientSetup?.Invoke(httpClientBuilder);
+            httpClientBuilder = services.AddHttpClient(nameof(IHumanTaskApi), httpConfig);
+            options.HttpClientSetup?.Invoke(httpClientBuilder);
             return services;
         }
 

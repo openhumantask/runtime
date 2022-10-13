@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <ProjectGuid>fb8b51b7-e4f9-4475-b3d2-66cac1112c0e</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerServiceName>openhumantask.runtime.api</DockerServiceName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include=".env" />
+    <None Include="configuration\keycloak\imports\ohtr.realm.json" />
+    <None Include="configuration\traefik\certs\cert.pem" />
+    <None Include="configuration\traefik\certs\key.pem" />
+    <None Include="configuration\traefik\config\acme.json" />
+    <None Include="configuration\traefik\config\traefik.config.live.yaml" />
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>

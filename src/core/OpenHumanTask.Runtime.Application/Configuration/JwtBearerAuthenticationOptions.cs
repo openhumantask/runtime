@@ -12,18 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OpenHumanTask.Runtime.Integration.Api
+namespace OpenHumanTask.Runtime.Application.Configuration
 {
     /// <summary>
-    /// Represents the options used to configure the Open Human Task Runtime API server to use
+    /// Represents the options used to configure the application's JWT Bearer authentication
     /// </summary>
-    public class OpenHumanTaskRuntimeApiServerOptions
+    public class JwtBearerAuthenticationOptions
     {
 
         /// <summary>
-        /// Gets/sets the base address of the Open Human Task Runtime API server to use
+        /// Gets/sets the JWT Bearer authority
         /// </summary>
-        public Uri? BaseAddress { get; set; }
+        public virtual string Authority { get; set; } = null!;
+
+        /// <summary>
+        /// Gets/sets the required audience for tokens consumed by the application
+        /// </summary>
+        public virtual string? Audience { get; set; } = "api";
+
+        /// <summary>
+        /// Gets/sets the base 64 encoded signing key of the issuer of tokens consumed by the application
+        /// </summary>
+        public virtual string IssuerSigningKey { get; set; } = null!;
 
     }
 

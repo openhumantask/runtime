@@ -22,6 +22,11 @@ namespace OpenHumanTask.Runtime.Application.Configuration
     {
 
         /// <summary>
+        /// Gets/sets the options used to configure the application's JWT Bearer authentication
+        /// </summary>
+        public virtual JwtBearerAuthenticationOptions Authentication { get; set; } = new();
+
+        /// <summary>
         /// Gets/sets the options used to configure the application's cloud eventss
         /// </summary>
         public virtual CloudEventOptions CloudEvents { get; set; } = new();

@@ -12,45 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using OpenHumanTask.Runtime.Integration.Commands.HumanTaskTemplates;
+using OpenHumanTask.Runtime.Integration.Commands.HumanTasks;
 
-namespace OpenHumanTask.Runtime.Integration.Api
+namespace OpenHumanTask.Runtime.Integration.Services
 {
-
     /// <summary>
-    /// Defines the fundamentals of the API used to manage <see cref="HumanTaskTemplate"/>s
+    /// Defines the fundamentals of the API used to manage <see cref="HumanTask"/>s
     /// </summary>
-    public interface IHumanTaskTemplateApi
+    public interface IHumanTaskApi
     {
 
         /// <summary>
-        /// Gets the referenced <see cref="HumanTaskTemplate"/>
+        /// Gets the referenced <see cref="HumanTask"/>
         /// </summary>
-        /// <param name="id">The id of the <see cref="HumanTaskTemplate"/> to get</param>
+        /// <param name="id">The id of the <see cref="HumanTask"/> to get</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
-        /// <returns>The referenced <see cref="HumanTaskTemplate"/></returns>
-        Task<HumanTaskTemplate> GetByIdAsync(string id, CancellationToken cancellationToken = default);
+        /// <returns>The <see cref="HumanTask"/> with the specified id</returns>
+        Task<HumanTask> GetByIdAsync(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Gets the <see cref="HumanTaskTemplate"/>s matching the specified ODATA query
+        /// Gets the <see cref="HumanTask"/>s matching the specified ODATA query
         /// </summary>
         /// <param name="query">The ODATA query to perform</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
         /// <returns>A new object that describes the result of the query</returns>
-        Task<List<HumanTaskTemplate>> GetAsync(string? query = null, CancellationToken cancellationToken = default);
+        Task<List<HumanTask>> GetAsync(string? query = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Creates a new <see cref="HumanTaskTemplate"/>
+        /// Creates a new <see cref="HumanTask"/>
         /// </summary>
         /// <param name="command">An object that describes the command to execute</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
-        /// <returns>The newly created <see cref="HumanTaskTemplate"/></returns>
-        Task<HumanTaskTemplate> CreateAsync(CreateHumanTaskTemplateCommand command, CancellationToken cancellationToken = default);
+        /// <returns>The newly created <see cref="HumanTask"/></returns>
+        Task<HumanTask> CreateAsync(CreateHumanTaskCommand command, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Deletes the referenced <see cref="HumanTaskTemplate"/>
+        /// Deletes the referenced <see cref="HumanTask"/>
         /// </summary>
-        /// <param name="id">The id of the <see cref="HumanTaskTemplate"/> to get</param>
+        /// <param name="id">The id of the <see cref="HumanTask"/> to delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/></param>
         /// <returns>A new awaitable <see cref="Task"/></returns>
         Task DeleteAsync(string id, CancellationToken cancellationToken = default);

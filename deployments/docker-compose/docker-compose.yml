@@ -1,0 +1,135 @@
+version: '3.4'
+
+services:
+
+  traefik:
+    image: "traefik:2.4"
+    restart: always
+    command:
+        - "--global.sendAnonymousUsage=false"
+        - "--log.level=DEBUG"
+        - "--api.insecure=true"
+        - "--api.dashboard=true"
+        - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+        - "--providers.docker.watch=true"
+        - "--providers.docker.exposedByDefault=false"
+        - "--providers.file.filename=${TRAEFIK_DYNAMIC_CONFIG}"
+        - "--providers.file.watch=true"
+        - "--entrypoints.http.address=:80"
+        - "--entrypoints.https.address=:443"
+    ports:
+        - "80:80"
+        - "443:443"
+        - "8080:8080"
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik.entrypoints=http"
+        - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_HOST_EXTERNAL}`)"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=test:$$apr1$$jv7cdlma$$h2v8lksPcj0N4JaZb1YNG0"
+        - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*" # /!\ should be more restrictive /!\
+        - "traefik.http.middlewares.cors.headers.accesscontrolallowheaders=*"
+        - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=GET,POST,PUT,PATCH,DELETE,OPTIONS"
+        - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+        - "traefik.http.routers.traefik-secure.entrypoints=https"
+        - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_HOST_EXTERNAL}`)"
+        - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+        - "traefik.http.routers.traefik-secure.tls=true"
+        - "traefik.http.routers.traefik-secure.service=api@internal"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+    volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        - "./configuration/traefik/config/traefik.config.yaml:${TRAEFIK_DYNAMIC_CONFIG}:ro"
+        - "./configuration/traefik/certs:/etc/certs:ro"
+    networks:
+        traefik:
+            ipv4_address: 172.13.1.1
+        default:
+
+  postgres:
+    image: postgres
+    environment:
+        POSTGRES_DB: keycloak
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: password
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+        DB_VENDOR: POSTGRES
+        DB_ADDR: postgres
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_SCHEMA: public
+        DB_PASSWORD: password
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: Pa55w0rd
+        PROXY_ADDRESS_FORWARDING: "true"
+        KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/ohtr.realm.json -Dkeycloak.profile.feature.upload_scripts=enabled  
+    labels:
+        - "traefik.enable=true"
+        - "traefik.port=8080"
+        - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
+        - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_HOST_EXTERNAL}`)"
+        - "traefik.http.routers.keycloak.entrypoints=http"
+        - "traefik.http.routers.keycloak.middlewares=redirect@file"
+        - "traefik.http.routers.keycloak-secure.rule=Host(`${KEYCLOAK_HOST_EXTERNAL}`)"
+        - "traefik.http.routers.keycloak-secure.entrypoints=https"
+        - "traefik.http.routers.keycloak-secure.tls=true"
+        - "traefik.http.routers.keycloak-lh.rule=Host(`localhost`)"
+        - "traefik.http.routers.keycloak-lh.entrypoints=http"
+        - "traefik.http.routers.keycloak-lh.middlewares=redirect@file"
+        - "traefik.http.routers.keycloak-lh-secure.rule=Host(`localhost`)"
+        - "traefik.http.routers.keycloak-lh-secure.entrypoints=https"
+        - "traefik.http.routers.keycloak-lh-secure.tls=true"
+    volumes:
+        - ./configuration/keycloak/imports:/opt/jboss/keycloak/imports
+    depends_on:
+        - postgres
+
+  ohtr:
+    image: ${DOCKER_REGISTRY-}ohtr
+    build:
+      context: ../../
+      dockerfile: src/apps/OpenHumanTask.Runtime.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: 'http://+:80'
+      AUTHENTICATION__AUTHORITY: https://keycloak.localhost/auth/realms/ohtr
+      AUTHENTICATION__ISSUERSIGNINGKEY: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAipPaqj269wXpiC1xaA/LBn+DSHLWhwxa2Fl4l0ZGaoL/Sjz1z5VtBU4/q75G54KSpvrVUHIjQ5k19al37/0ZfYpB3vPhCqltJ0vx7AK3Z8Klzl/vGeRBMdfQJIlZcdq3Wnxx9fyzsK6jYy3NeleBwzSdifyRycSX0V+nL2xQNhR+64coSDHMdWBeuSvkz/ZUfOFc/e3krDSk4M0MAXO9jimZZP1xyGdrxalO1vPhPEArMIfTowXKZvd28e1yoJTayKVF44wC1HzbvcH5dZsvXHo7xYcgriJQVxyi1UssUcodZ37pbp8TwC3RDXYKTFo63LH8+/cawDbxKTesjOowoQIDAQAB
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.widget-manager.rule=Host(`${OHTR_HOST_EXTERNAL}`)"
+      - "traefik.http.routers.widget-manager.entrypoints=http"
+      - "traefik.http.routers.widget-manager.middlewares=cors"
+      - "traefik.http.routers.widget-manager.middlewares=redirect@file"
+      - "traefik.http.routers.widget-manager-secure.rule=Host(`${OHTR_HOST_EXTERNAL}`)"
+      - "traefik.http.routers.widget-manager-secure.entrypoints=https"
+      - "traefik.http.routers.widget-manager-secure.tls=true"
+      - "traefik.http.routers.widget-manager-secure.middlewares=cors"
+    depends_on:
+      - keycloak
+    networks:
+      default:
+      traefik:
+    extra_hosts:
+      - "keycloak.localhost:172.13.1.1"
+
+volumes:
+    postgres_data:
+        driver: local
+    mongo_data:
+        driver: local
+    eventstore_data:
+        driver: local
+
+networks:
+  default:
+    name: ohtr_default
+  traefik:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.13.1.0/16

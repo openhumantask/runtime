@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>519c1261-9d4e-41b7-b27b-d72080673abf</UserSecretsId>
+	<DockerfileTag>openhumantask.runtime</DockerfileTag>
   </PropertyGroup>
 
   <ItemGroup>

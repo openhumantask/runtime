@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Query.Expressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Neuroglia.Caching;
@@ -20,10 +21,12 @@ namespace OpenHumanTask.Runtime.IntegrationTests
     {
 
         private readonly IConfiguration _configuration;
+        private readonly IHostEnvironment _environment;
 
-        public ApiConfiguration(IConfiguration configuration)
+        public ApiConfiguration(IConfiguration configuration, IHostEnvironment environment)
         {
             this._configuration = configuration;
+            this._environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -32,7 +35,7 @@ namespace OpenHumanTask.Runtime.IntegrationTests
             var searchBinder = new ODataSearchBinder();
 
             services.AddSingleton<ISearchBinder>(searchBinder);
-            services.AddApplicationServices(this._configuration);
+            services.AddApplicationServices(this._configuration, this._environment);
             services.AddMemoryDistributedCache();
             services.AddHostedService<IntegrationTestDbInitializer>();
             services.AddSingleton<IntegrationTestData>();

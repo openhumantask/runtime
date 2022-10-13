@@ -1,0 +1,11 @@
+﻿@namespace OpenHumanTask.Runtime.Dashboard.Components
+@inject NavigationManager Navigation
+@code 
+{
+
+    protected override void OnInitialized()
+    {
+        this.Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(this.Navigation.Uri)}");
+    }
+
+}

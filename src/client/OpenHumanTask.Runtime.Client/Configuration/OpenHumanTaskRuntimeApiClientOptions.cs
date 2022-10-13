@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OpenHumanTask.Runtime.Integration.Api
+
+namespace OpenHumanTask.Runtime
 {
 
     /// <summary>
@@ -24,7 +25,12 @@ namespace OpenHumanTask.Runtime.Integration.Api
         /// <summary>
         /// Gets/sets the options used to configure the Open Human Task Runtime API server to use
         /// </summary>
-        public OpenHumanTaskRuntimeApiServerOptions Server { get; set; } = new();
+        public virtual OpenHumanTaskRuntimeApiServerOptions Server { get; set; } = new();
+
+        /// <summary>
+        /// Gets/sets the action used to configure the <see cref="IOpenHumanTaskRuntimeApiClient"/>'s <see cref="HttpClient"/>
+        /// </summary>
+        public virtual Action<IHttpClientBuilder>? HttpClientSetup { get; set; }
 
     }
 

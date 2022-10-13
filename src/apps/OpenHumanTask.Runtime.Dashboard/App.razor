@@ -13,11 +13,25 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 *@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager NavigationManager
+@inject IAccessTokenProvider AccessTokenProvider
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout)">
+            <NotAuthorized>
+                @if (!context.User.Identity?.IsAuthenticated == true)
+                {
+                    <RedirectToLogin />
+                }
+                else
+                {
+                    <p>You are not authorized to access this resource.</p>
+                }
+            </NotAuthorized>
+        </AuthorizeRouteView>
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -26,3 +40,15 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code
+{
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (!this.NavigationManager.Uri.Contains("authentication/logged-out") && !this.NavigationManager.Uri.Contains("authentication/logout") && !(await this.AccessTokenProvider.RequestAccessToken()).TryGetToken(out _))
+            this.NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(this.NavigationManager.Uri)}");
+    }
+
+}
