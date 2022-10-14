@@ -27,30 +27,37 @@
         <img src="/img/logo_white.svg" height="35" />
     </a>
     <div class="navbar-collapse @NavMenuCssClass">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <small class="bi bi-house" aria-hidden="true"></small><span class="btn-label">Home</span>
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="tasks/templates" Match="NavLinkMatch.Prefix">
-                    <small class="bi bi-file-code" aria-hidden="true"></small><span class="btn-label">Task Templates</span>
-                </NavLink>
-            </li>
-        </ul>
-        @if (authenticationState != null)
+        @if (authenticationState != null && authenticationState.User?.Identity?.IsAuthenticated == true)
         {
-            <div class="dropdown ms-auto">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                    @(authenticationState.User.HasClaim(c => c.Type == JwtClaimTypes.PreferredUserName) ? authenticationState.User.FindFirst(JwtClaimTypes.PreferredUserName)!.Value : authenticationState.User.Identity!.Name)
-                </button>
-                <ul class="dropdown-menu">
-                    @*<li><a class="dropdown-item">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>*@
-                    <li><a @onclick="LogoutAsync" class="dropdown-item d-inline">Logout</a></li>
-                </ul>
-            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <small class="bi bi-house" aria-hidden="true"></small><span class="btn-label">Home</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="tasks/templates" Match="NavLinkMatch.Prefix">
+                        <small class="bi bi-file-code" aria-hidden="true"></small><span class="btn-label">Task Templates</span>
+                    </NavLink>
+                </li>
+            </ul>
+
+            <DropdownMenu CssClass="ms-auto" DropDownMenuTag="ul">
+                <Header>
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        @(authenticationState.User.HasClaim(c => c.Type == JwtClaimTypes.PreferredUserName) ? authenticationState.User.FindFirst(JwtClaimTypes.PreferredUserName)!.Value : authenticationState.User.Identity!.Name)
+                    </button>
+                </Header>
+                <Body>
+                    <li><a class="dropdown-item">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a @onclick="LogoutAsync" class="dropdown-item">Logout</a></li>
+                </Body>
+            </DropdownMenu>
+        }
+        else
+        {
+            <a href="/authentication/login" class="btn btn-outline-light text-light ms-auto">Login</a>
         }
     </div>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -85,7 +92,7 @@
     private async Task LogoutAsync(MouseEventArgs args)
     {
         await this.SignOutManager.SetSignOutState();
-        this.NavigationManager.NavigateTo("authentication/logout");
+        this.NavigationManager.NavigateTo("/authentication/logout");
     }
 
 }

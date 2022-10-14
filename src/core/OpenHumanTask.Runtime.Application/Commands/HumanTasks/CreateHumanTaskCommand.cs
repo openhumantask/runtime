@@ -16,7 +16,6 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using OpenHumanTask.Runtime.Application.Commands.PeopleAssignments;
 using OpenHumanTask.Runtime.Application.Queries.HumanTaskTemplates;
-using OpenHumanTask.Runtime.Application.Services;
 using OpenHumanTask.Runtime.Domain;
 using OpenHumanTask.Sdk;
 
@@ -39,14 +38,14 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         /// <summary>
         /// Initializes a new <see cref="CreateHumanTaskCommand"/>
         /// </summary>
-        /// <param name="definitionReference">An object used to reference the <see cref="HumanTaskDefinition"/> to instanciate</param>
-        /// <param name="key">The key of the <see cref="HumanTask"/>. Overrides possible values set by the <see cref="HumanTaskDefinition"/></param>
-        /// <param name="peopleAssignments">An object used to configure the people assignments of the <see cref="HumanTask"/> to create. Overrides possible values set by the <see cref="HumanTaskDefinition"/></param>
+        /// <param name="definitionReference">An object used to reference the <see cref="HumanTaskTemplate"/> to instanciate</param>
+        /// <param name="key">The key of the <see cref="HumanTask"/>. Overrides possible values set by the <see cref="HumanTaskTemplate"/></param>
+        /// <param name="peopleAssignments">An object used to configure the people assignments of the <see cref="HumanTask"/> to create. Overrides possible values set by the <see cref="HumanTaskTemplate"/></param>
         /// <param name="priority">The priority of the <see cref="HumanTask"/> to create</param>
         /// <param name="input">The input of the <see cref="HumanTask"/> to create</param>
         public CreateHumanTaskCommand(HumanTaskDefinitionReference definitionReference, string? key, PeopleAssignmentsDefinition? peopleAssignments, int? priority, object? input)
         {
-            this.DefinitionReference = definitionReference;
+            this.TemplateReference = definitionReference;
             this.Key = key;
             this.PeopleAssignments = peopleAssignments;
             this.Priority = priority;
@@ -54,22 +53,22 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         }
 
         /// <summary>
-        /// Gets an object used to reference the <see cref="HumanTaskDefinition"/> to instanciate
+        /// Gets an object used to reference the <see cref="HumanTaskTemplate"/> to instanciate
         /// </summary>
-        public virtual HumanTaskDefinitionReference DefinitionReference { get; protected set; } = null!;
+        public virtual HumanTaskDefinitionReference TemplateReference { get; protected set; } = null!;
 
         /// <summary>
-        /// Gets the key of the <see cref="HumanTask"/>. Overrides possible values set by the <see cref="HumanTaskDefinition"/>.
+        /// Gets the key of the <see cref="HumanTask"/>. Overrides possible values set by the <see cref="HumanTaskTemplate"/>.
         /// </summary>
         public virtual string? Key { get; protected set; }
 
         /// <summary>
-        /// Gets an object used to configure the people assignments of the <see cref="HumanTask"/> to create. Overrides possible values set by the <see cref="HumanTaskDefinition"/>
+        /// Gets an object used to configure the people assignments of the <see cref="HumanTask"/> to create. Overrides possible values set by the <see cref="HumanTaskTemplate"/>
         /// </summary>
         public virtual PeopleAssignmentsDefinition? PeopleAssignments { get; protected set; }
 
         /// <summary>
-        /// Gets the <see cref="HumanTask"/>'s priority. Overrides possible values set by the <see cref="HumanTaskDefinition"/>
+        /// Gets the <see cref="HumanTask"/>'s priority. Overrides possible values set by the <see cref="HumanTaskTemplate"/>
         /// </summary>
         public virtual int? Priority { get; protected set; }
 
@@ -126,7 +125,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTasks
         public virtual async Task<IOperationResult<Integration.Models.HumanTask>> HandleAsync(CreateHumanTaskCommand command, CancellationToken cancellationToken = default)
         {
             if (this.UserAccessor.User == null || !this.UserAccessor.User.Identity?.IsAuthenticated == true) return this.Forbid();
-            var templateId = (await this.Mediator.ExecuteAndUnwrapAsync(new GetHumanTaskTemplateByIdQuery(command.DefinitionReference), cancellationToken)).Id;
+            var templateId = (await this.Mediator.ExecuteAndUnwrapAsync(new GetHumanTaskTemplateByIdQuery(command.TemplateReference), cancellationToken)).Id;
             var template = await this.HumanTaskTemplates.FindAsync(templateId, cancellationToken);
             if (template == null) throw DomainException.NullReference(typeof(HumanTaskTemplate), templateId);
             var expressionEvaluator = this.ExpressionEvaluatorProvider.GetEvaluator(template.Definition.ExpressionLanguage);

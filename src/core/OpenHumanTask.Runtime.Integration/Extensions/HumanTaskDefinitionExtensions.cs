@@ -21,6 +21,16 @@ namespace OpenHumanTask.Runtime
     {
 
         /// <summary>
+        /// Gets the <see cref="HumanTaskDefinition"/>'s versionless identifier
+        /// </summary>
+        /// <param name="definition">The <see cref="HumanTaskDefinition"/> to get the versionless identifier of</param>
+        /// <returns>The <see cref="HumanTaskDefinition"/>'s versionless identifier</returns>
+        public static string GetVersionlessIdentifier(this HumanTaskDefinition definition)
+        {
+            return definition.Id.Split(':', StringSplitOptions.RemoveEmptyEntries).First();
+        }
+
+        /// <summary>
         /// Gets all <see cref="SubtaskDefinition"/>s declared in the <see cref="HumanTaskDefinition"/>
         /// </summary>
         /// <param name="definition">The <see cref="HumanTaskDefinition"/> that declares the <see cref="SubtaskDefinition"/>s to get</param>

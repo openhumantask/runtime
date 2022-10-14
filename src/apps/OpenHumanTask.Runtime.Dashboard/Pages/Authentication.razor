@@ -1,11 +1,21 @@
 ﻿@page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-<RemoteAuthenticatorView Action="@Action" />
+@inject IBreadcrumbManager BreadcrumbManager
+
+<div class="text-center">
+    <RemoteAuthenticatorView Action="@Action" />
+</div>
 
 @code
 {
 
     [Parameter]
     public string Action { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        this.BreadcrumbManager.Clear();
+    }
 
 }

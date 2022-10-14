@@ -85,7 +85,7 @@ namespace OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates
         public virtual async Task<IOperationResult<Integration.Models.HumanTaskTemplate>> HandleAsync(CreateHumanTaskTemplateCommand command, CancellationToken cancellationToken = default)
         {
             if (this.UserAccessor.User == null || !this.UserAccessor.User.Identity?.IsAuthenticated == true) return this.Forbid();
-            command.Definition.Id = HumanTaskDefinition.BuildId(command.Definition.Name, command.Definition.Name, command.Definition.Version);
+            command.Definition.Id = HumanTaskDefinition.BuildId(command.Definition.Name, command.Definition.Namespace, command.Definition.Version);
             //todo: validate definition
             foreach (var subtaskDefinition in command.Definition.GetSubtaskDefinitions())
             {

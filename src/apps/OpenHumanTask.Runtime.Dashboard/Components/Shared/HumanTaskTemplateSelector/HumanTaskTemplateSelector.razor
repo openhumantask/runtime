@@ -1,0 +1,136 @@
+﻿@*
+    Copyright © 2022-Present The Open Human Task Specification Authors. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*@
+
+@using OpenHumanTask.Runtime.Dashboard.Pages.HumanTaskTemplates.List
+@using OpenHumanTask.Sdk.Models
+@namespace OpenHumanTask.Runtime.Dashboard.Components
+@inherits StatefulComponentBase<ListState>
+
+@if (versionsPerTemplate != null)
+{
+    <div class="input-group">
+        <select value="@selectedTemplateId" class="form-control"
+        @onchange="async e => await OnIdChangedAsync((string)e.Value!)">
+            <option disabled selected="@(string.IsNullOrWhiteSpace(selectedTemplateId))" value> -- select a workflow -- </option>
+            @foreach (var workflowGroup in versionsPerTemplate)
+            {
+                <option value="@workflowGroup.Key" title="@workflowGroup.Value.First().Definition.Description" selected="@(workflowGroup.Key == selectedTemplateId)">@workflowGroup.Key</option>
+            }
+        </select>
+        <select value="@selectedTemplateVersion" class="form-control"
+        @onchange="async e => await OnVersionChangedAsync((string)e.Value!)">
+            <option value="latest" selected="@(string.IsNullOrWhiteSpace(selectedTemplateVersion) || selectedTemplateVersion == "latest")" title="The latest version">latest</option>
+            @if (!string.IsNullOrWhiteSpace(selectedTemplateId))
+            {
+                Console.WriteLine($"Expected: {selectedTemplateId}");
+                Console.WriteLine($"Actual: {versionsPerTemplate.First().Key}");
+
+                foreach (var workflow in versionsPerTemplate.First(g => g.Key == selectedTemplateId).Value)
+                {
+                    <option value="@workflow.Definition.Version" title="@workflow.Definition.Id @workflow.Definition.Version" selected="@(workflow.Definition.Version == selectedTemplateVersion)">@workflow.Definition.Version</option>
+                }
+            }
+        </select>
+    </div>
+}
+else
+{
+    <Spinner />
+}
+
+@code {
+
+    private IDisposable? subscription;
+    private Dictionary<string, List<HumanTaskTemplate>>? versionsPerTemplate;
+    private HumanTaskTemplate? selectedTemplate;
+
+    private string? selectedTemplateId;
+    [Parameter] public string? SelectedTemplateId { get; set; }
+
+    private string? selectedTemplateVersion;
+    [Parameter] public string? SelectedTemplateVersion { get; set; }
+
+    [Parameter] public EventCallback<HumanTaskDefinitionReference> OnChange { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        this.subscription = this.Feature
+           .Subscribe(state =>
+           {
+               this.versionsPerTemplate = state.Items?
+                   .GroupBy(c => c.Definition.GetVersionlessIdentifier())
+                   .ToDictionary(g => g.Key, g => g.OrderByDescending(c => SemVersion.Parse(c.Definition.Version, SemVersionStyles.Any)).ToList())!;
+               this.StateHasChanged();
+           });
+        this.Dispatcher.Dispatch(new QueryHumanTaskTemplates());
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        var updated = false;
+        if (this.selectedTemplateId != this.SelectedTemplateId)
+        {
+            this.selectedTemplateId = this.SelectedTemplateId;
+            updated = true;
+        }
+        if (this.selectedTemplateVersion != this.SelectedTemplateVersion)
+        {
+            this.selectedTemplateVersion = this.SelectedTemplateVersion;
+            updated = true;
+        }
+        if (!updated) return;
+        this.StateHasChanged();
+    }
+
+    void UpdateSelectionState()
+    {
+        if (this.versionsPerTemplate == null)
+            return;
+        var workflowVersions = this.versionsPerTemplate.FirstOrDefault(g => g.Key == this.selectedTemplateId);
+        if (string.IsNullOrWhiteSpace(this.selectedTemplateVersion) || this.selectedTemplateVersion == "latest")
+            this.selectedTemplate = workflowVersions.Value?.First();
+        else
+            this.selectedTemplate = workflowVersions.Value?.First(w => w.Definition.Version == this.selectedTemplateVersion);
+        this.StateHasChanged();
+    }
+
+    async Task OnIdChangedAsync(string? id)
+    {
+        this.selectedTemplateId = id;
+        this.selectedTemplateVersion = "latest";
+        this.UpdateSelectionState();
+        await this.OnChange.InvokeAsync(this.selectedTemplate?.Id!);
+        this.StateHasChanged();
+    }
+
+    async Task OnVersionChangedAsync(string? version)
+    {
+        this.selectedTemplateVersion = version;
+        this.UpdateSelectionState();
+        await this.OnChange.InvokeAsync(this.selectedTemplate?.Id!);
+        this.StateHasChanged();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+            this.subscription?.Dispose();
+    }
+
+}

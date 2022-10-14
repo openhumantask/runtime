@@ -15,15 +15,12 @@
 *@
 
 @page "/tasks/templates"
+@attribute [Authorize]
 @inherits StatefulComponentBase<ListState>
 @inject NavigationManager NavigationManager
 @inject IBreadcrumbManager BreadcrumbManager
 
 <PageTitle>Task templates</PageTitle>
-
-<Header>
-    <span class="h5 m-0 p-0">Task templates</span>
-</Header>
 
 <LeftMenu>
     <button class="btn btn-outline-dark">Create new template</button>
@@ -35,7 +32,7 @@
     </div>
 </div>
 
-@if(versionsPerDefinition != null)
+@if(versionsPerTemplate != null)
 {
     <table class="table table-striped">
         <thead>
@@ -43,15 +40,17 @@
                 <th>Name</th>
                 <th>Latest</th>
                 <th>Versions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var group in versionsPerDefinition)
+            @foreach (var group in versionsPerTemplate)
             {
                 <tr>
                     <td>@group.Key</td>
                     <td>@group.Value.First().Definition.Version</td>
                     <td>@group.Value.Count</td>
+                    <td><button @onclick="() => OnViewHumanTaskTemplate(group.Value.First().Id)" @onclick:stopPropagation="true" class="btn btn-outline-dark"><small class="bi bi-info-circle"></small><span class="btn-label">Details</span></button></td>
                 </tr>
             }
         </tbody>
@@ -64,17 +63,17 @@ else
 
 @code {
     private IDisposable? subscription;
-    private Dictionary<string, List<HumanTaskTemplate>>? versionsPerDefinition;
+    private Dictionary<string, List<HumanTaskTemplate>>? versionsPerTemplate;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        this.BreadcrumbManager.Use(Breadcrumbs.TaskDefinitions);
+        this.BreadcrumbManager.Use(Breadcrumbs.HumanTaskTemplates);
         this.subscription = this.Feature
            .Subscribe(state =>
            {
-               this.versionsPerDefinition = state.Items?
-                   .GroupBy(c => c.Definition.Name)
+               this.versionsPerTemplate = state.Items?
+                   .GroupBy(c => c.Definition.GetVersionlessIdentifier())
                    .ToDictionary(g => g.Key, g => g.OrderByDescending(c => SemVersion.Parse(c.Definition.Version, SemVersionStyles.Any)).ToList())!;
                this.StateHasChanged();
            });
@@ -89,6 +88,11 @@ else
     void OnClearHumanTaskTemplateSearch()
     {
         this.Dispatcher.Dispatch(new QueryHumanTaskTemplates());
+    }
+
+    void OnViewHumanTaskTemplate(string id)
+    {
+        this.NavigationManager.NavigateTo($"/tasks/templates/{id}");
     }
 
 }

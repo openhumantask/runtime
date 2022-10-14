@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{A20F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "user-management", "user-management", "{077E0179-553F-4AF1-AA36-7CF06AD03CED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak", "src\plugins\user-management\OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak\OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak.csproj", "{550E51E7-CAD8-4126-9EED-0AEC13A910E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak", "src\plugins\user-management\OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak\OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak.csproj", "{550E51E7-CAD8-4126-9EED-0AEC13A910E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{7B1976C3-AD10-4B15-BEAB-0B7A2BADEAC6}"
 	ProjectSection(SolutionItems) = preProject

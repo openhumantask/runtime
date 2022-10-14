@@ -130,9 +130,6 @@ namespace OpenHumanTask.Runtime.Application.Services
             this.FileSystemWatcher.Deleted += this.OnPluginFileDeletedAsync;
             this.FileSystemWatcher.EnableRaisingEvents = true;
             this.StartupTaskCompletionSource.SetResult();
-
-
-            var users = await this.ServiceProvider.GetRequiredService<IUserManager>().ListUsersAsync(); //todo: remove
         }
 
         /// <summary>

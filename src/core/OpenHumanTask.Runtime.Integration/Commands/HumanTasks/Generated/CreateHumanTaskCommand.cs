@@ -32,31 +32,31 @@ namespace OpenHumanTask.Runtime.Integration.Commands.HumanTasks
 	{
 
 		/// <summary>
-		/// An object used to reference the HumanTaskDefinition to instanciate
+		/// An object used to reference the HumanTaskTemplate to instanciate
 		/// </summary>
-		[DataMember(Name = "definitionReference", Order = 1)]
-		[Description("An object used to reference the HumanTaskDefinition to instanciate")]
-		public virtual HumanTaskDefinitionReference DefinitionReference { get; set; }
+		[DataMember(Name = "templateReference", Order = 1)]
+		[Description("An object used to reference the HumanTaskTemplate to instanciate")]
+		public virtual HumanTaskDefinitionReference TemplateReference { get; set; }
 
 		/// <summary>
-		/// The key of the HumanTask. Overrides possible values set by the HumanTaskDefinition.
+		/// The key of the HumanTask. Overrides possible values set by the HumanTaskTemplate.
 		/// </summary>
 		[DataMember(Name = "key", Order = 2)]
-		[Description("The key of the HumanTask. Overrides possible values set by the HumanTaskDefinition.")]
+		[Description("The key of the HumanTask. Overrides possible values set by the HumanTaskTemplate.")]
 		public virtual string Key { get; set; }
 
 		/// <summary>
-		/// An object used to configure the people assignments of the HumanTask to create. Overrides possible values set by the HumanTaskDefinition
+		/// An object used to configure the people assignments of the HumanTask to create. Overrides possible values set by the HumanTaskTemplate
 		/// </summary>
 		[DataMember(Name = "peopleAssignments", Order = 3)]
-		[Description("An object used to configure the people assignments of the HumanTask to create. Overrides possible values set by the HumanTaskDefinition")]
+		[Description("An object used to configure the people assignments of the HumanTask to create. Overrides possible values set by the HumanTaskTemplate")]
 		public virtual PeopleAssignmentsDefinition PeopleAssignments { get; set; }
 
 		/// <summary>
-		/// The HumanTask's priority. Overrides possible values set by the HumanTaskDefinition
+		/// The HumanTask's priority. Overrides possible values set by the HumanTaskTemplate
 		/// </summary>
 		[DataMember(Name = "priority", Order = 4)]
-		[Description("The HumanTask's priority. Overrides possible values set by the HumanTaskDefinition")]
+		[Description("The HumanTask's priority. Overrides possible values set by the HumanTaskTemplate")]
 		public virtual int? Priority { get; set; }
 
 		/// <summary>

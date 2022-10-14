@@ -7513,3 +7513,12 @@ a, .btn-link {
 .blazor-error-boundary::after {
   content: "An error has occurred.";
 }
+
+ul.dropdown-menu {
+  width: 100%;
+}
+
+ul.dropdown-menu li {
+  cursor: pointer;
+  user-select: none;
+}
