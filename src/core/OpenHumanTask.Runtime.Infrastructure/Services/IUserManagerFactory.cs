@@ -12,30 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OpenHumanTask.Runtime
+namespace OpenHumanTask.Runtime.Infrastructure.Services
 {
     /// <summary>
-    /// Enumerates all supported plugin types
+    /// Defines the fundamentals of a service used to create <see cref="IUserManagement"/>s
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    [JsonConverter(typeof(StringEnumConverterFactory))]
-    public enum PluginType
+    public interface IUserManagerFactory
     {
+
         /// <summary>
-        /// Indicates a generic plugin
+        /// Creates a new <see cref="IUserManager"/>
         /// </summary>
-        [EnumMember(Value = "generic")]
-        Generic = 0,
-        /// <summary>
-        /// Indicates a 'repository' plugin
-        /// </summary>
-        [EnumMember(Value = "repository")]
-        Repository = 1,
-        /// <summary>
-        /// Indicates a 'user-management' plugin
-        /// </summary>
-        [EnumMember(Value = "user-management")]
-        UserManagement = 2,
+        /// <returns>A new <see cref="IUserManager"/></returns>
+        IUserManager Create();
+
     }
 
 }

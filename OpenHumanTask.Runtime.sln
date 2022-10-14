@@ -33,7 +33,13 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "deploymen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdk", "sdk", "{E96C820A-49D3-45E1-BDD5-91B8CA5A82C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Client", "src\client\OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj", "{026C6756-1C19-4B30-9E2A-209D8EA9E42E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHumanTask.Runtime.Client", "src\client\OpenHumanTask.Runtime.Client\OpenHumanTask.Runtime.Client.csproj", "{026C6756-1C19-4B30-9E2A-209D8EA9E42E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{A20FDA77-1251-49F6-B7F8-07E013D4AE91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "user-management", "user-management", "{077E0179-553F-4AF1-AA36-7CF06AD03CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak", "src\plugins\user-management\OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak\OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak.csproj", "{550E51E7-CAD8-4126-9EED-0AEC13A910E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +87,10 @@ Global
 		{026C6756-1C19-4B30-9E2A-209D8EA9E42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{026C6756-1C19-4B30-9E2A-209D8EA9E42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{026C6756-1C19-4B30-9E2A-209D8EA9E42E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{550E51E7-CAD8-4126-9EED-0AEC13A910E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550E51E7-CAD8-4126-9EED-0AEC13A910E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550E51E7-CAD8-4126-9EED-0AEC13A910E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550E51E7-CAD8-4126-9EED-0AEC13A910E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +109,9 @@ Global
 		{FB8B51B7-E4F9-4475-B3D2-66CAC1112C0E} = {4966B415-7C7D-4648-8FFE-C53A4C13011D}
 		{E96C820A-49D3-45E1-BDD5-91B8CA5A82C7} = {DE9C402B-E461-4C45-908D-6A374E998EBF}
 		{026C6756-1C19-4B30-9E2A-209D8EA9E42E} = {E96C820A-49D3-45E1-BDD5-91B8CA5A82C7}
+		{A20FDA77-1251-49F6-B7F8-07E013D4AE91} = {DE9C402B-E461-4C45-908D-6A374E998EBF}
+		{077E0179-553F-4AF1-AA36-7CF06AD03CED} = {A20FDA77-1251-49F6-B7F8-07E013D4AE91}
+		{550E51E7-CAD8-4126-9EED-0AEC13A910E1} = {077E0179-553F-4AF1-AA36-7CF06AD03CED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBB5C2EB-0935-4742-A54D-7D7E2F09A376}

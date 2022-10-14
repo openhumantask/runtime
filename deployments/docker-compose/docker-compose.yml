@@ -99,6 +99,7 @@ services:
       ASPNETCORE_URLS: 'http://+:80'
       AUTHENTICATION__AUTHORITY: https://keycloak.localhost/auth/realms/ohtr
       AUTHENTICATION__ISSUERSIGNINGKEY: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAipPaqj269wXpiC1xaA/LBn+DSHLWhwxa2Fl4l0ZGaoL/Sjz1z5VtBU4/q75G54KSpvrVUHIjQ5k19al37/0ZfYpB3vPhCqltJ0vx7AK3Z8Klzl/vGeRBMdfQJIlZcdq3Wnxx9fyzsK6jYy3NeleBwzSdifyRycSX0V+nL2xQNhR+64coSDHMdWBeuSvkz/ZUfOFc/e3krDSk4M0MAXO9jimZZP1xyGdrxalO1vPhPEArMIfTowXKZvd28e1yoJTayKVF44wC1HzbvcH5dZsvXHo7xYcgriJQVxyi1UssUcodZ37pbp8TwC3RDXYKTFo63LH8+/cawDbxKTesjOowoQIDAQAB
+      USERMANAGEMENT__PLUGIN: Keycloak
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.widget-manager.rule=Host(`${OHTR_HOST_EXTERNAL}`)"

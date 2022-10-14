@@ -32,14 +32,19 @@ namespace OpenHumanTask.Runtime.Application.Configuration
         public virtual CloudEventOptions CloudEvents { get; set; } = new();
 
         /// <summary>
-        /// Gets/sets the options sued to configure the application's persistence layer
+        /// Gets/sets the options used to configure the application's persistence layer
         /// </summary>
         public virtual PersistenceOptions Persistence { get; set; } = new();
 
         /// <summary>
-        /// Gets/sets the options sued to configure the application's plugins directory
+        /// Gets/sets the options used to configure the application's plugins directory
         /// </summary>
         public virtual PluginsOptions Plugins { get; set; } = new();
+
+        /// <summary>
+        /// Gets/sets the options used to configure the application's user management
+        /// </summary>
+        public virtual UserManagementOptions UserManagement { get; set; } = new();
 
         /// <summary>
         /// Gets/sets the path to the directory used to monitor human task definition files

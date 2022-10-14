@@ -1,0 +1,12 @@
+﻿{
+  "type": "user-management",
+  "name": "Keycloak",
+  "description": "The official Synapse user management plugin for Keycloak",
+  "tags": [ "user", "management", "Keycloak" ],
+  "authors": "The Open Human Task Specification Authors",
+  "copyright": "Copyright © 2022-Present The Open Human Task Specification Authors. All Rights Reserved.",
+  "licenseUri": "https://raw.githubusercontent.com/openhumantask/runtime/main/LICENSE",
+  "repositoryUri": "https://github.com/serverlessworkflow/synapse",
+  "version": "0.1.0",
+  "assemblyFile": "OpenHumanTask.Runtime.Plugins.UserManagement.Keycloak.dll"
+}

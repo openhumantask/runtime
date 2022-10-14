@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Neuroglia.Serialization;
 using OpenHumanTask.Runtime.Infrastructure.Plugins;
 using OpenHumanTask.Runtime.Integration.Models;
+using System;
 
 namespace OpenHumanTask.Runtime.Application.Services
 {
@@ -129,6 +130,9 @@ namespace OpenHumanTask.Runtime.Application.Services
             this.FileSystemWatcher.Deleted += this.OnPluginFileDeletedAsync;
             this.FileSystemWatcher.EnableRaisingEvents = true;
             this.StartupTaskCompletionSource.SetResult();
+
+
+            var users = await this.ServiceProvider.GetRequiredService<IUserManager>().ListUsersAsync(); //todo: remove
         }
 
         /// <summary>
