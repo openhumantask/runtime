@@ -1,7 +1,7 @@
 <p align="center">
 <img src="assets/images/ohtr-logo.svg" />
 
-<center><h1>Open Human Task Runtime (OHTR)</h1></center>
+<h1 align="center">Open Human Task Runtime (OHTR)</h1>
 
 <hr>
 
