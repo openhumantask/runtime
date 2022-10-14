@@ -43,5 +43,6 @@ builder.Services.AddFlux(flux =>
 });
 builder.Services.AddScoped<ILayoutManager, LayoutManager>();
 builder.Services.AddScoped<IBreadcrumbManager, BreadcrumbManager>();
+builder.Services.AddScoped<IApplicationStatusMonitor, ApplicationStatusMonitor>();
 
 await builder.Build().RunAsync();

@@ -21,13 +21,15 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 @inject SignOutSessionStateManager SignOutManager
+@inject IApplicationStatusMonitor ApplicationStatusMonitor
 
 <nav class="header navbar navbar-expand-lg flex-row navbar-dark bg-dark">
-    <a class="navbar-brand d-flex flex-row align-items-center justify-content-center" href="https://github.com/openhumantask/runtime">
+    <a class="navbar-brand d-flex flex-row align-items-center justify-content-center" href="https://github.com/openhumantask/runtime" target="_blank">
         <img src="/img/logo_white.svg" height="35" />
     </a>
     <div class="navbar-collapse @NavMenuCssClass">
-        @if (authenticationState != null && authenticationState.User?.Identity?.IsAuthenticated == true)
+
+        @if (isUserAuthenticated)
         {
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -41,26 +43,33 @@
                     </NavLink>
                 </li>
             </ul>
+        }
 
-            <DropdownMenu CssClass="ms-auto" DropDownMenuTag="ul">
-                <Header>
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                        @(authenticationState.User.HasClaim(c => c.Type == JwtClaimTypes.PreferredUserName) ? authenticationState.User.FindFirst(JwtClaimTypes.PreferredUserName)!.Value : authenticationState.User.Identity!.Name)
-                    </button>
-                </Header>
-                <Body>
+        <div class="ms-auto d-flex align-items-center h-100">
+
+            <h4 class="bi-plugin mx-3 my-0 p-0 @(isApplicationOnline ? "text-success" : "text-danger")"></h4>
+
+            @if (isUserAuthenticated)
+            {
+                <DropdownMenu DropDownMenuTag="ul">
+                    <Header>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">@username</button>
+                    </Header>
+                    <Body>
                     <li><a class="dropdown-item">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a @onclick="LogoutAsync" class="dropdown-item">Logout</a></li>
-                </Body>
-            </DropdownMenu>
-        }
-        else
-        {
-            <a href="/authentication/login" class="btn btn-outline-light text-light ms-auto">Login</a>
-        }
+                    </Body>
+                </DropdownMenu>
+            }
+            else
+            {
+                <a href="/authentication/login" class="btn btn-outline-light text-light ms-auto">Login</a>
+            }
+        </div>
+
     </div>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+    <button class="navbar-toggler" @onclick="OnToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
@@ -69,9 +78,14 @@
     private bool collapseNavMenu = true;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
     private AuthenticationState? authenticationState;
+    private bool isApplicationOnline;
 
     [CascadingParameter]
     private Task<AuthenticationState> GetAuthenticationStateAsync { get; set; } = null!;
+
+    private bool isUserAuthenticated => authenticationState != null && authenticationState.User?.Identity?.IsAuthenticated == true;
+
+    private string? username => this.authenticationState == null ? null : authenticationState.User.HasClaim(c => c.Type == JwtClaimTypes.PreferredUserName) ? authenticationState.User.FindFirst(JwtClaimTypes.PreferredUserName)!.Value : authenticationState.User.Identity!.Name;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,12 +95,20 @@
             this.authenticationState = await this.GetAuthenticationStateAsync;
             this.StateHasChanged();
         };
+        this.ApplicationStatusMonitor.OnOnlineStatusChanged += this.OnOnlineStatusChanged!;
+        await this.ApplicationStatusMonitor.InitializeAsync();
         await base.OnInitializedAsync();
     }
 
-    private void ToggleNavMenu()
+    private void OnToggleNavMenu()
     {
         this.collapseNavMenu = !this.collapseNavMenu;
+    }
+
+    private void OnOnlineStatusChanged(object sender, bool isOnline)
+    {
+        this.isApplicationOnline = isOnline;
+        this.StateHasChanged();
     }
 
     private async Task LogoutAsync(MouseEventArgs args)

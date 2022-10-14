@@ -18,7 +18,6 @@
 using Microsoft.Extensions.Options;
 using OpenHumanTask.Runtime.Application.Commands.HumanTaskTemplates;
 using OpenHumanTask.Sdk.Services.IO;
-using System.Security.Claims;
 
 namespace OpenHumanTask.Runtime.Application.Services
 {
